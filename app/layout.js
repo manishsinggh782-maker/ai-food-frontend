@@ -47,7 +47,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   
-  // --- 2. GOOGLE SCHEMA (JSON-LD) - Isse Search me 5-Star Rating dikhegi ---
+  // --- 2. GOOGLE SCHEMA (JSON-LD) ---
   const googleSchema = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -75,6 +75,7 @@ export default function RootLayout({ children }) {
 
   return (
     <ClerkProvider
+      publishableKey="pk_test_cmF0aW9uYWwtaHVza3ktNTEuY2xlcmsuYWNjb3VudHMuZGV2JA"
       appearance={{
         baseTheme: neobrutalism,
       }}

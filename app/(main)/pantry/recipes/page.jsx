@@ -17,6 +17,7 @@ import useFetch from "@/hooks/use-fetch";
 import { getRecipesByPantryIngredients } from "@/actions/recipe.actions";
 import RecipeCard from "@/components/RecipeCard";
 import PricingModal from "@/components/PricingModal";
+export const dynamic = 'force-dynamic';
 
 export default function PantryRecipesPage() {
   const {

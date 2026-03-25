@@ -87,7 +87,7 @@ export default function ContactPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-3">
                     <label className="text-sm font-bold text-stone-900 ml-1">Your Name</label>
-                    <Input placeholder="John Doe" className="h-14 rounded-2xl border-stone-200 focus:border-orange-600 focus:ring-orange-600 bg-stone-50/50" />
+                    <Input type="text" placeholder="John Doe" className="h-14 rounded-2xl border-stone-200 focus:border-orange-600 focus:ring-orange-600 bg-stone-50/50" />
                   </div>
                   <div className="space-y-3">
                     <label className="text-sm font-bold text-stone-900 ml-1">Email Address</label>
@@ -97,7 +97,7 @@ export default function ContactPage() {
 
                 <div className="space-y-3">
                   <label className="text-sm font-bold text-stone-900 ml-1">Subject</label>
-                  <Input placeholder="How can we help?" className="h-14 rounded-2xl border-stone-200 focus:border-orange-600 focus:ring-orange-600 bg-stone-50/50" />
+                  <Input type="text" placeholder="How can we help?" className="h-14 rounded-2xl border-stone-200 focus:border-orange-600 focus:ring-orange-600 bg-stone-50/50" />
                 </div>
 
                 <div className="space-y-3">

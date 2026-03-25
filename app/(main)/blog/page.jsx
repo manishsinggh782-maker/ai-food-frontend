@@ -3,7 +3,16 @@ import Link from "next/link";
 import { Calendar, ArrowRight, UserCheck, Star } from "lucide-react";
 import Script from "next/script";
 
-// 1. DYNAMIC SEO METADATA (Google Ranking ke liye)
+// --- 1. DYNAMIC CONFIG (Isse 'Dynamic server usage' error theek ho jayega) ---
+export const dynamic = 'force-dynamic';
+
+// --- 2. VIEWPORT CONFIG (Isse 'Unsupported metadata viewport' warning hat jayegi) ---
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
+// --- 3. SEO METADATA ---
 export const metadata = {
   title: "Manish Singh Official Blog | AI Cooking, Recipes & Tech Insights",
   description: "Explore advanced culinary stories, AI-driven recipe secrets, and professional cooking tips by Master AI Chef Manish Singh.",
@@ -15,7 +24,7 @@ export const metadata = {
     siteName: "RecipeoAI",
     images: [
       {
-        url: "https://www.recipeoai.com/og-image.jpg", // Apne blog ka ek main banner image dalo
+        url: "https://www.recipeoai.com/og-image.jpg",
         width: 1200,
         height: 630,
       },
@@ -26,16 +35,22 @@ export const metadata = {
 };
 
 export default async function BlogPage() {
-  const blogs = await getBlogs();
+  // Fetch blogs with error handling
+  let blogs = [];
+  try {
+    blogs = await getBlogs() || [];
+  } catch (error) {
+    console.error("Blog fetch error:", error);
+  }
 
-  // Strapi v4/v5 compatibility fix
-  const sortedBlogs = blogs ? [...blogs].sort((a, b) => {
+  // Strapi v4/v5 compatibility fix & sorting
+  const sortedBlogs = blogs.length > 0 ? [...blogs].sort((a, b) => {
     const dateA = new Date(a.attributes?.createdAt || a.createdAt);
     const dateB = new Date(b.attributes?.createdAt || b.createdAt);
     return dateB - dateA;
   }) : [];
 
-  // 2. GOOGLE SCHEMA (JSON-LD) - Isse Google mein Stars aur Trust badhega
+  // GOOGLE SCHEMA (JSON-LD)
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Blog",
@@ -58,7 +73,6 @@ export default async function BlogPage() {
 
   return (
     <div className="min-h-screen bg-stone-50/50 pt-28 pb-20 px-4 font-sans">
-      {/* Schema Injection for Google Stars */}
       <Script
         id="blog-schema"
         type="application/ld+json"
@@ -85,24 +99,24 @@ export default async function BlogPage() {
         {sortedBlogs.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             {sortedBlogs.map((post) => {
-              // Strapi v4/v5 data handling
               const data = post.attributes || post;
               const postSlug = data.Slug || data.slug;
               const imageUrl = data.Banner?.url || data.Banner?.data?.attributes?.url;
-              const fullImageUrl = imageUrl ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${imageUrl}` : "/placeholder.jpg";
+              
+              // Fallback image handling
+              const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || '';
+              const fullImageUrl = imageUrl ? (imageUrl.startsWith('http') ? imageUrl : `${strapiUrl}${imageUrl}`) : "/placeholder.jpg";
 
               return (
                 <div key={post.id} className="group flex flex-col bg-white rounded-[3rem] overflow-hidden shadow-sm hover:-translate-y-3 transition-all duration-700 ring-1 ring-stone-100">
-                  {/* Image */}
                   <div className="aspect-[16/10] relative overflow-hidden bg-stone-200">
                     <img 
                       src={fullImageUrl} 
-                      alt={data.Title}
+                      alt={data.Title || "Blog Post"}
                       className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-1000"
                     />
                   </div>
 
-                  {/* Content */}
                   <div className="p-10 flex flex-col flex-grow">
                     <h2 className="text-2xl md:text-3xl font-black text-stone-900 mb-4 line-clamp-2">
                       {data.Title}
@@ -114,7 +128,7 @@ export default async function BlogPage() {
                     <div className="mt-auto flex items-center justify-between border-t border-stone-50 pt-8">
                       <span className="flex items-center gap-2 text-stone-400 text-[10px] font-black uppercase">
                         <Calendar size={12} className="text-orange-500" /> 
-                        {new Date(data.createdAt).toLocaleDateString("en-US", { day: 'numeric', month: 'short', year: 'numeric' })}
+                        {data.createdAt ? new Date(data.createdAt).toLocaleDateString("en-US", { day: 'numeric', month: 'short', year: 'numeric' }) : "Recently"}
                       </span>
 
                       <Link 
