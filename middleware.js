@@ -1,26 +1,66 @@
-import { NextResponse } from 'next/server'
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
+import arcjet, { shield, detectBot } from "@arcjet/next";
 
-export function middleware(request) {
-  const url = request.nextUrl.clone()
-  const host = request.headers.get('host')
+const isProtectedRoute = createRouteMatcher([
+  "/recipe(.*)",
+  "/recipes(.*)",
+  "/pantry(.*)",
+  "/dashboard(.*)",
+]);
 
-  // 1. Check karo ki site production mein hai aur host 'www.' se shuru nahi ho raha
-  // Ya protocol 'https' nahi hai
+// Arcjet setup (Sirf tabhi jab key ho)
+const aj = arcjet({
+  key: process.env.ARCJET_KEY,
+  rules: [
+    shield({ mode: "LIVE" }),
+    detectBot({
+      mode: "LIVE",
+      allow: ["CATEGORY:SEARCH_ENGINE", "CATEGORY:PREVIEW"],
+    }),
+  ],
+});
+
+export default clerkMiddleware(async (auth, req) => {
+  const url = req.nextUrl.clone();
+  const host = req.headers.get('host');
+
+  // --- 1. SEO: HTTPS & WWW REDIRECT (SAAF LOGIC) ---
+  // Isse Netlify ke preview links crash nahi honge
   if (
     process.env.NODE_ENV === 'production' && 
-    (!host.startsWith('www.') || request.headers.get('x-forwarded-proto') !== 'https')
+    host === 'recipeoai.com' // Sirf asli domain ko redirect karo
   ) {
-    // Sabko zabardasti https://www.recipeoai.com par redirect kar do
-    return NextResponse.redirect(
-      `https://www.recipeoai.com${url.pathname}${url.search}`,
-      301
-    )
+    return NextResponse.redirect(`https://www.recipeoai.com${url.pathname}${url.search}`, 301);
   }
 
-  return NextResponse.next()
-}
+  // --- 2. SECURITY: ARCJET PROTECTION (SAFE MODE) ---
+  if (process.env.ARCJET_KEY) {
+    try {
+      const decision = await aj.protect(req);
+      if (decision.isDenied()) {
+        return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+      }
+    } catch (error) {
+      console.error("Arcjet Error:", error);
+    }
+  }
 
-// Ye config batata hai ki kin cheezon pe redirect nahi lagana (images, static files etc.)
+  // --- 3. AUTH: CLERK AUTHENTICATION ---
+  const { userId } = await auth();
+
+  if (!userId && isProtectedRoute(req)) {
+    const { redirectToSignIn } = await auth();
+    return redirectToSignIn();
+  }
+
+  return NextResponse.next();
+});
+
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
-}
+  matcher: [
+    // Next.js internals aur static files ko chhod kar sab pe chalega
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    "/(api|trpc)(.*)",
+  ],
+};
