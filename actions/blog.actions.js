@@ -4,7 +4,7 @@ const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN;
 
 /**
- * 1. Saare blogs ki list mangwane ke liye (Blog List Page)
+ * 1. Saare blogs ki list mangwane ke liye
  */
 export async function getBlogs() {
   try {
@@ -16,11 +16,7 @@ export async function getBlogs() {
       cache: "no-store", 
     });
     
-    if (!res.ok) {
-       const errorData = await res.json();
-       console.error("Strapi List Error:", errorData);
-       throw new Error("Failed to fetch blogs list");
-    }
+    if (!res.ok) return [];
     
     const data = await res.json();
     return data.data || []; 
@@ -31,21 +27,13 @@ export async function getBlogs() {
 }
 
 /**
- * 2. Ek single blog mangwane ke liye (Single Blog Page)
- * FIXED: 'populate=*' use kiya hai taaki 'Invalid key comments' wala error na aaye.
+ * 2. Ek single blog mangwane ke liye
  */
 export async function getBlogBySlug(slug) {
-  if (!slug || slug === "undefined") {
-    console.warn("getBlogBySlug: Slug is empty.");
-    return null;
-  }
+  if (!slug || slug === "undefined") return null;
 
   try {
-    /** 
-     * 🔥 THE FIX: 
-     * Tune populate[comments]=* likha tha, lekin Blog model me 'comments' field nahi hai.
-     * Isliye hum sirf 'populate=*' use karenge jo saare sahi relations (Banner etc.) le aayega.
-     */
+    // FIX: Using capital 'S' for Slug and populate everything
     const query = `filters[Slug][$eq]=${encodeURIComponent(slug)}&populate=*`;
     const url = `${STRAPI_URL}/api/blogs?${query}`;
     
@@ -57,21 +45,12 @@ export async function getBlogBySlug(slug) {
       cache: "no-store",
     });
 
-    if (!res.ok) {
-       const errorData = await res.json();
-       console.error("Strapi Single Fetch Error:", errorData);
-       return null;
-    }
+    if (!res.ok) return null;
 
     const data = await res.json();
-    const post = data.data?.[0];
+    const post = data.data?.[0]; // Strapi v5 returns object directly in data array
 
-    if (!post) {
-      console.log(`404: No article found for slug: ${slug}`);
-      return null;
-    }
-
-    return post;
+    return post || null;
   } catch (error) {
     console.error("Single blog fetch error:", error);
     return null;

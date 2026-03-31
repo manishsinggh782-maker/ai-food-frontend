@@ -1,13 +1,11 @@
 import { MetadataRoute } from 'next'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // ZAROORI: Tera main domain yahi hai
+  // 1. CONFIG: Domain aur Backend URLs
   const baseUrl = 'https://www.recipeoai.com'
-  
-  // Render wala Live Backend URL
   const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || 'https://ai-recipe-backend-l00p.onrender.com'
 
-  // 1. STATIC PAGES
+  // 2. STATIC PAGES (Jo hamesha sitemap mein rahengi)
   const staticPages: MetadataRoute.Sitemap = [
     '',
     '/about',
@@ -28,19 +26,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let dynamicPages: MetadataRoute.Sitemap = [];
 
   try {
-    // 2. FETCH RECIPES (Slugs for SEO)
-    const recipesRes = await fetch(`${strapiUrl}/api/recipes?fields[0]=slug&fields[1]=updatedAt`, {
-      next: { revalidate: 3600 } 
+    // 3. FETCH RECIPES (Using 'Slug' with capital S)
+    // Hum fields[0]=Slug mangwa rahe hain taaki Strapi data bhej sake
+    const recipesRes = await fetch(`${strapiUrl}/api/recipes?fields[0]=Slug&fields[1]=updatedAt`, {
+      next: { revalidate: 60 } // Har 1 minute mein check karega naye post ke liye
     });
     const recipesData = await recipesRes.json();
 
     const recipePages = (recipesData.data || [])
       .map((recipe: any) => {
         const attr = recipe.attributes || recipe;
-        const slug = attr.slug;
+        const slug = attr.Slug || attr.slug; // Case-sensitivity check
 
-        // Agar slug nahi hai toh null return karo, baad mein filter ho jayega
-        if (!slug || slug === "null") return null;
+        if (!slug) return null;
 
         return {
           url: `${baseUrl}/recipes/${slug}`,
@@ -49,21 +47,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           priority: 0.7,
         };
       })
-      .filter((p: any) => p !== null && p.url.indexOf('undefined') === -1); // 'null' aur 'undefined' filter out
+      .filter((p: any) => p !== null);
 
-    // 3. FETCH BLOGS (Slugs for SEO)
-    const blogsRes = await fetch(`${strapiUrl}/api/blogs?fields[0]=slug&fields[1]=updatedAt`, {
-      next: { revalidate: 3600 }
+    // 4. FETCH BLOGS (Using 'Slug' with capital S)
+    const blogsRes = await fetch(`${strapiUrl}/api/blogs?fields[0]=Slug&fields[1]=updatedAt`, {
+      next: { revalidate: 60 }
     });
     const blogsData = await blogsRes.json();
 
     const blogPages = (blogsData.data || [])
       .map((post: any) => {
         const attr = post.attributes || post;
-        const slug = attr.slug;
+        const slug = attr.Slug || attr.slug; // Case-sensitivity check
 
-        // Agar slug nahi hai toh null return karo
-        if (!slug || slug === "null") return null;
+        if (!slug) return null;
 
         return {
           url: `${baseUrl}/blog/${slug}`,
@@ -72,7 +69,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           priority: 0.6,
         };
       })
-      .filter((p: any) => p !== null && p.url.indexOf('undefined') === -1);
+      .filter((p: any) => p !== null);
 
     dynamicPages = [...recipePages, ...blogPages];
 
@@ -80,6 +77,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error("Sitemap Fetch Error:", error);
   }
 
-  // Final List return
+  // Final Merge: Static + Dynamic Links
   return [...staticPages, ...dynamicPages]
 }

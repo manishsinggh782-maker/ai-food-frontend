@@ -12,21 +12,27 @@ export const viewport = {
   initialScale: 1,
 };
 
-// --- 3. SEO METADATA ---
+// --- 3. SEO METADATA (Keeping 'www' as requested) ---
+const DOMAIN = "https://www.recipeoai.com";
+
 export const metadata = {
   title: "Manish Singh Official Blog | AI Cooking, Recipes & Tech Insights",
   description: "Explore advanced culinary stories, AI-driven recipe secrets, and professional cooking tips by Master AI Chef Manish Singh.",
   keywords: ["AI Recipes", "Manish Singh", "Cooking Blog", "AI Chef", "RecipeoAI", "Culinary Technology"],
+  alternates: {
+    canonical: `${DOMAIN}/blog`,
+  },
   openGraph: {
     title: "Manish Singh Official Blog | AI Cooking Insights",
     description: "Master the art of AI cooking with Manish Singh.",
-    url: "https://www.recipeoai.com/blog",
+    url: `${DOMAIN}/blog`,
     siteName: "RecipeoAI",
     images: [
       {
-        url: "https://www.recipeoai.com/og-image.jpg",
+        url: `${DOMAIN}/og-image.jpg`,
         width: 1200,
         height: 630,
+        alt: "Manish Singh Blog Banner"
       },
     ],
     locale: "en_US",
@@ -45,29 +51,42 @@ export default async function BlogPage() {
 
   // Strapi v4/v5 compatibility fix & sorting
   const sortedBlogs = blogs.length > 0 ? [...blogs].sort((a, b) => {
-    const dateA = new Date(a.attributes?.createdAt || a.createdAt);
-    const dateB = new Date(b.attributes?.createdAt || b.createdAt);
+    const dateA = new Date(a.attributes?.publishedAt || a.publishedAt || a.createdAt);
+    const dateB = new Date(b.attributes?.publishedAt || b.publishedAt || b.createdAt);
     return dateB - dateA;
   }) : [];
 
-  // GOOGLE SCHEMA (JSON-LD) - FIXED VERSION (Rating removed to fix Search Console error)
+  // GOOGLE SCHEMA (JSON-LD) - Including ItemList for Google Search visibility
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Blog",
     "name": "Manish Singh Official Blog",
-    "description": "AI-driven recipe secrets and culinary tech insights.",
+    "url": `${DOMAIN}/blog`,
+    "description": "AI-driven recipe secrets and culinary tech insights by Manish Singh.",
     "publisher": {
       "@type": "Organization",
       "name": "RecipeoAI",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.recipeoai.com/logo.png"
+        "url": `${DOMAIN}/logo.png`
       }
-    }
+    },
+    "itemListElement": sortedBlogs.map((post, index) => {
+      const data = post.attributes || post;
+      const bannerUrl = data.Banner?.url || data.Banner?.data?.attributes?.url || "";
+      const fullImg = bannerUrl.startsWith("http") ? bannerUrl : `${process.env.NEXT_PUBLIC_STRAPI_URL}${bannerUrl}`;
+      return {
+        "@type": "ListItem",
+        "position": index + 1,
+        "url": `${DOMAIN}/blog/${data.Slug || data.slug}`,
+        "name": data.Title,
+        "image": fullImg
+      };
+    })
   };
 
   return (
-    <div className="min-h-screen bg-stone-50/50 pt-28 pb-20 px-4 font-sans">
+    <div className="min-h-screen bg-stone-50/50 pt-28 pb-20 px-4 font-sans selection:bg-orange-100">
       <Script
         id="blog-schema"
         type="application/ld+json"
@@ -85,7 +104,6 @@ export default async function BlogPage() {
             COOKING <span className="text-orange-600 italic">STORIES.</span>
           </h1>
           <div className="flex items-center gap-2 text-orange-500 mb-4">
-             {/* UI Stars: Ye website par dikhenge, par Google ko disturb nahi karenge */}
              {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
              <span className="text-stone-400 text-xs font-bold ml-2">4.9/5 Rating by AI Enthusiasts</span>
           </div>
@@ -97,10 +115,12 @@ export default async function BlogPage() {
             {sortedBlogs.map((post) => {
               const data = post.attributes || post;
               const postSlug = data.Slug || data.slug;
-              const imageUrl = data.Banner?.url || data.Banner?.data?.attributes?.url;
               
-              const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || '';
-              const fullImageUrl = imageUrl ? (imageUrl.startsWith('http') ? imageUrl : `${strapiUrl}${imageUrl}`) : "/placeholder.jpg";
+              // FIX: Detailed Banner detection (v4, v5, and Cloudinary)
+              const bannerPath = data.Banner?.url || data.Banner?.data?.attributes?.url || "";
+              const fullImageUrl = bannerPath.startsWith('http') 
+                ? bannerPath 
+                : (bannerPath ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${bannerPath}` : "/placeholder.jpg");
 
               return (
                 <div key={post.id} className="group flex flex-col bg-white rounded-[3rem] overflow-hidden shadow-sm hover:-translate-y-3 transition-all duration-700 ring-1 ring-stone-100">
@@ -109,6 +129,7 @@ export default async function BlogPage() {
                       src={fullImageUrl} 
                       alt={data.Title || "Blog Post"}
                       className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-1000"
+                      loading="lazy"
                     />
                   </div>
 
@@ -116,7 +137,7 @@ export default async function BlogPage() {
                     <h2 className="text-2xl md:text-3xl font-black text-stone-900 mb-4 line-clamp-2">
                       {data.Title}
                     </h2>
-                    <p className="text-stone-500 line-clamp-3 mb-10 text-sm font-medium">
+                    <p className="text-stone-500 line-clamp-3 mb-10 text-sm font-medium leading-relaxed">
                       {data.Excerpt}
                     </p>
                     
@@ -128,7 +149,7 @@ export default async function BlogPage() {
 
                       <Link 
                         href={`/blog/${postSlug}`} 
-                        className="inline-flex items-center gap-2 px-6 py-3.5 bg-stone-900 text-white text-[10px] font-black rounded-2xl hover:bg-orange-600 transition-all"
+                        className="inline-flex items-center gap-2 px-6 py-3.5 bg-stone-900 text-white text-[10px] font-black rounded-2xl hover:bg-orange-600 transition-all shadow-md active:scale-95"
                       >
                         READ FULL ARTICLE 
                         <ArrowRight size={14} />
@@ -141,7 +162,7 @@ export default async function BlogPage() {
           </div>
         ) : (
           <div className="text-center py-32">
-            <h3 className="text-2xl font-black text-stone-300">The chef is writing new stories...</h3>
+            <h3 className="text-2xl font-black text-stone-300 italic">The chef is writing new stories...</h3>
           </div>
         )}
       </div>

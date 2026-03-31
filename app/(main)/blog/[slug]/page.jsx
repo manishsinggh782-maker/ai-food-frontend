@@ -2,32 +2,50 @@ import { getBlogBySlug } from "@/actions/blog.actions";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { notFound } from "next/navigation";
 import Script from "next/script";
-import { UserCheck, ArrowLeft, Share2, Calendar } from "lucide-react";
+import { UserCheck, ArrowLeft, Share2, Calendar, Clock } from "lucide-react";
 import Link from "next/link";
 import Comments from "@/components/Comments";
 
 /**
- * 1. DYNAMIC SEO METADATA
- * Next.js 15 Rule: Await params to get the slug for SEO crawling.
+ * 1. MASTER SEO METADATA
+ * Next.js 15: Google ko banner dikhane ke liye absolute URL zaruri hai.
  */
 export async function generateMetadata({ params }) {
   const { slug } = await params;
+  // Note: getBlogBySlug must use "filters[Slug]" (Capital S)
   const post = await getBlogBySlug(slug);
   
   if (!post) return { title: "Article Not Found | Manish Singh" };
 
-  const imageUrl = post.Banner?.url 
-    ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${post.Banner.url}` 
-    : "";
+  // FIX: Cloudinary URL check for SEO
+  const bannerPath = post.Banner?.url || "";
+  const imageUrl = bannerPath.startsWith("http") 
+    ? bannerPath 
+    : (bannerPath ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${bannerPath}` : "");
+
+  const siteUrl = "https://recipeoai.com"; // Apni asli domain check kar lena bhai
 
   return {
     title: `${post.MetaTitle || post.Title} | Manish Singh AI Chef`,
     description: post.MetaDescription || post.Excerpt,
+    alternates: {
+       canonical: `${siteUrl}/blog/${slug}`,
+    },
     openGraph: {
       title: post.Title,
       description: post.Excerpt,
-      images: imageUrl ? [{ url: imageUrl }] : [],
+      url: `${siteUrl}/blog/${slug}`,
+      siteName: "Manish Singh Official",
+      images: imageUrl ? [{ url: imageUrl, width: 1200, height: 630, alt: post.Title }] : [],
       type: "article",
+      publishedTime: post.publishedAt || post.createdAt,
+      authors: ["Manish Singh"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.Title,
+      description: post.Excerpt,
+      images: [imageUrl],
     },
   };
 }
@@ -36,24 +54,42 @@ export default async function SingleBlog({ params }) {
   // NEXT.JS 15 RULE: Always await params first
   const { slug } = await params;
   
-  // Data Fetching: Ensuring comments are populated from blog.actions.js
   const post = await getBlogBySlug(slug);
 
   if (!post) return notFound();
 
-  const imageUrl = post.Banner?.url 
-    ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${post.Banner.url}` 
-    : "https://images.unsplash.com/photo-1495195129352-aec325a55b65";
+  // FIX: Logic for Cloudinary vs Local Strapi Server
+  const bannerPath = post.Banner?.url || "";
+  const imageUrl = bannerPath.startsWith("http") 
+    ? bannerPath 
+    : (bannerPath ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${bannerPath}` : "https://images.unsplash.com/photo-1495195129352-aec325a55b65");
 
-  // 2. GOOGLE SCHEMA (JSON-LD) for Master-level SEO
+  // 2. GOOGLE SCHEMA (JSON-LD) - Direct instruction for Google Images
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://www.recipeoai.com/blog/${slug}`
+    },
     "headline": post.Title,
-    "image": imageUrl,
-    "datePublished": post.createdAt,
-    "author": { "@type": "Person", "name": "Manish Singh" },
-    "description": post.Excerpt,
+    "image": [imageUrl],
+    "datePublished": post.publishedAt || post.createdAt,
+    "dateModified": post.updatedAt || post.createdAt,
+    "author": {
+      "@type": "Person",
+      "name": "Manish Singh",
+      "url": "https://www.recipeoai.com/about"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Manish Singh AI Chef",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.recipeoai.com/logo.png" // Apne logo ka sahi path dal dena bhai
+      }
+    },
+    "description": post.Excerpt || post.MetaDescription,
   };
 
   return (
@@ -64,12 +100,12 @@ export default async function SingleBlog({ params }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} 
       />
 
-      <article className="min-h-screen bg-stone-50/50 pt-28 pb-20 px-4 font-sans">
+      <article className="min-h-screen bg-stone-50/50 pt-28 pb-20 px-4 font-sans selection:bg-orange-100">
         <div className="container mx-auto max-w-4xl">
 
           {/* Back Navigation */}
-          <Link href="/blog" className="inline-flex items-center gap-2 text-stone-500 hover:text-orange-600 transition-all mb-12 font-black text-xs uppercase tracking-[0.2em]">
-            <ArrowLeft size={16} /> Back to Insights
+          <Link href="/blog" className="inline-flex items-center gap-2 text-stone-500 hover:text-orange-600 transition-all mb-12 font-black text-xs uppercase tracking-[0.2em] group">
+            <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Insights
           </Link>
 
           {/* ADMIN BRANDING SECTION */}
@@ -77,7 +113,7 @@ export default async function SingleBlog({ params }) {
              <div className="w-20 h-20 rounded-[1.5rem] bg-stone-900 flex items-center justify-center text-white text-3xl font-black">MS</div>
              <div>
                 <h4 className="text-2xl font-black text-stone-900 leading-none mb-2">Manish Singh</h4>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                    <span className="px-3 py-1 bg-orange-600 text-white text-[9px] font-black uppercase rounded-full flex items-center gap-1">
                      <UserCheck size={10} /> Verified Admin
                    </span>
@@ -88,6 +124,10 @@ export default async function SingleBlog({ params }) {
 
           {/* ARTICLE HEADER */}
           <header className="mb-16">
+             <div className="flex items-center gap-4 mb-6 text-stone-400 font-bold text-[10px] uppercase tracking-widest">
+                <span className="flex items-center gap-1"><Calendar size={12}/> {new Date(post.createdAt).toLocaleDateString()}</span>
+                <span className="flex items-center gap-1"><Clock size={12}/> 5 Min Read</span>
+             </div>
              <h1 className="text-5xl md:text-8xl font-black text-stone-900 leading-[0.95] tracking-tighter mb-10">
                {post.Title}
              </h1>
@@ -96,16 +136,22 @@ export default async function SingleBlog({ params }) {
              </p>
           </header>
 
-          {/* PREMIUM BANNER IMAGE */}
-          <div className="relative aspect-[21/10] w-full mb-20 rounded-[3.5rem] overflow-hidden shadow-2xl ring-1 ring-stone-200">
-            <img src={imageUrl} className="object-cover w-full h-full" alt={post.Title} />
+          {/* PREMIUM BANNER IMAGE - Optimized for Google and Layout */}
+          <div className="relative aspect-[21/10] w-full mb-20 rounded-[3.5rem] overflow-hidden shadow-2xl ring-1 ring-stone-200 bg-stone-100">
+            <img 
+              src={imageUrl} 
+              className="object-cover w-full h-full transition-transform duration-700 hover:scale-105" 
+              alt={post.Title} 
+              fetchPriority="high"
+            />
           </div>
 
           {/* MAIN ARTICLE BODY */}
           <div className="max-w-3xl mx-auto bg-white p-10 md:p-20 rounded-[4rem] shadow-sm border border-stone-100 relative -mt-32 z-10">
              <div className="prose prose-stone lg:prose-2xl max-w-none prose-orange 
                prose-headings:text-stone-900 prose-headings:font-black 
-               prose-p:text-stone-700 prose-p:leading-[1.8] prose-img:rounded-[2.5rem]">
+               prose-p:text-stone-700 prose-p:leading-[1.8] 
+               prose-img:rounded-[2.5rem] prose-img:shadow-lg prose-strong:text-orange-700">
                
                {post.Content ? (
                  <BlocksRenderer content={post.Content} />
@@ -119,9 +165,9 @@ export default async function SingleBlog({ params }) {
              <div className="mt-24 pt-12 border-t border-stone-100 flex flex-col items-center gap-6">
                 <p className="text-stone-400 font-black text-[10px] uppercase tracking-[0.4em]">Share this Insight</p>
                 <div className="flex gap-4">
-                   <div className="w-12 h-12 rounded-2xl bg-stone-50 flex items-center justify-center text-stone-400 hover:bg-orange-600 hover:text-white transition-all cursor-pointer shadow-sm">
+                   <button className="w-12 h-12 rounded-2xl bg-stone-50 flex items-center justify-center text-stone-400 hover:bg-orange-600 hover:text-white transition-all cursor-pointer shadow-sm border-none">
                       <Share2 size={18} />
-                   </div>
+                   </button>
                 </div>
              </div>
           </div>
@@ -130,7 +176,7 @@ export default async function SingleBlog({ params }) {
           <div className="max-w-3xl mx-auto mt-20">
              <Comments 
                 blogId={post.id} 
-                initialComments={post.comments} // Passing populated comments from Strapi
+                initialComments={post.comments} // Make sure Strapi sends 'comments' in populate
              />
           </div>
 
