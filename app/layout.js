@@ -18,9 +18,8 @@ import {
 
 const inter = Inter({ subsets: ["latin"] });
 
-// --- 1. SEO METADATA ---
+// --- 1. SEO METADATA (FIXED) ---
 export const metadata = {
-  // ZAROORI: metadataBase se saare absolute URLs (images, canonical) sahi bante hain
   metadataBase: new URL("https://www.recipeoai.com"),
   
   title: "RecipeoAI - #1 AI Recipe Generator | What to cook with ingredients 2026",
@@ -39,8 +38,13 @@ export const metadata = {
     follow: true,
   },
   alternates: {
-    // Isse Google sirf https://www. wale link ko hi index karega
     canonical: "https://www.recipeoai.com",
+  },
+  // FIXED ICONS: Ab Google confusion chhod kar tera plate wala icon pakdega
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
   },
   openGraph: {
     title: "RecipeoAI - Your Personal AI Master Chef",
@@ -59,7 +63,7 @@ export default function RootLayout({ children }) {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "RecipeoAI",
-    "url": "https://www.recipeoai.com", // Add kiya URL
+    "url": "https://www.recipeoai.com",
     "operatingSystem": "Web",
     "applicationCategory": "LifestyleApplication",
     "aggregateRating": {
@@ -90,8 +94,7 @@ export default function RootLayout({ children }) {
     >
       <html lang="en" suppressHydrationWarning>
         <head>
-          <link rel="icon" href="/logo.jpg" sizes="any" />
-          {/* Schema Injection for Google Stars */}
+          {/* Yahan se logo.jpg wala link hata diya hai taaki Google confuse na ho */}
           <Script
             id="google-schema"
             type="application/ld+json"
