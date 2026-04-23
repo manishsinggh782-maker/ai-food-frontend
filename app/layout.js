@@ -18,7 +18,7 @@ import {
 
 const inter = Inter({ subsets: ["latin"] });
 
-// --- 1. SEO METADATA (FIXED) ---
+// --- 1. SEO METADATA (ADSENSE TAG ADDED HERE) ---
 export const metadata = {
   metadataBase: new URL("https://www.recipeoai.com"),
   
@@ -40,7 +40,11 @@ export const metadata = {
   alternates: {
     canonical: "https://www.recipeoai.com",
   },
-  // FIXED ICONS: Ab Google confusion chhod kar tera plate wala icon pakdega
+  // --- YE RAHA TERA ADSENSE CODE ---
+  other: {
+    'google-adsense-account': 'ca-pub-2070162129840743',
+  },
+  // --------------------------------
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
@@ -94,7 +98,6 @@ export default function RootLayout({ children }) {
     >
       <html lang="en" suppressHydrationWarning>
         <head>
-          {/* Yahan se logo.jpg wala link hata diya hai taaki Google confuse na ho */}
           <Script
             id="google-schema"
             type="application/ld+json"
