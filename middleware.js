@@ -9,7 +9,7 @@ const isProtectedRoute = createRouteMatcher([
   "/dashboard(.*)",
 ]);
 
-// Arcjet setup (Sirf tabhi jab key ho)
+// Arcjet setup - Optimized for size
 const aj = arcjet({
   key: process.env.ARCJET_KEY,
   rules: [
@@ -22,19 +22,7 @@ const aj = arcjet({
 });
 
 export default clerkMiddleware(async (auth, req) => {
-  const url = req.nextUrl.clone();
-  const host = req.headers.get('host');
-
-  // --- 1. SEO: HTTPS & WWW REDIRECT (SAAF LOGIC) ---
-  // Isse Netlify ke preview links crash nahi honge
-  if (
-    process.env.NODE_ENV === 'production' && 
-    host === 'recipeoai.com' // Sirf asli domain ko redirect karo
-  ) {
-    return NextResponse.redirect(`https://www.recipeoai.com${url.pathname}${url.search}`, 301);
-  }
-
-  // --- 2. SECURITY: ARCJET PROTECTION (SAFE MODE) ---
+  // 1. SECURITY: ARCJET PROTECTION (Skip if no key)
   if (process.env.ARCJET_KEY) {
     try {
       const decision = await aj.protect(req);
@@ -46,7 +34,7 @@ export default clerkMiddleware(async (auth, req) => {
     }
   }
 
-  // --- 3. AUTH: CLERK AUTHENTICATION ---
+  // 2. AUTH: CLERK AUTHENTICATION
   const { userId } = await auth();
 
   if (!userId && isProtectedRoute(req)) {
@@ -59,8 +47,14 @@ export default clerkMiddleware(async (auth, req) => {
 
 export const config = {
   matcher: [
-    // Next.js internals aur static files ko chhod kar sab pe chalega
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    /*
+     * Match all request paths except for:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico, ads.txt, robots.txt, sitemap.xml
+     * - image files (jpg, png, etc)
+     */
+    '/((?!_next/static|_next/image|favicon.ico|ads.txt|robots.txt|sitemap.xml|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
     "/(api|trpc)(.*)",
   ],
 };
