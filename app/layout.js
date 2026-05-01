@@ -18,14 +18,14 @@ import {
 
 const inter = Inter({ subsets: ["latin"] });
 
-// --- 1. SEO METADATA (FREE WORD ADDED & < 60 CHARS) ---
+// --- 1. SEO METADATA (FREE WORD INCLUDED & OPTIMIZED) ---
 export const metadata = {
   metadataBase: new URL("https://www.recipeoai.com"),
   
-  // Title: 52 characters (USA & Global Friendly)
+  // Title: 52 characters (Under 60 - Perfect for Google)
   title: "RecipeoAI: Free AI Recipe Generator from Ingredients 2026",
   
-  // Description: 148 characters (Optimized for Clicks)
+  // Description: Under 160 chars
   description: "Generate free gourmet recipes instantly with AI. Best tool for keto, vegan, and healthy meal planning using ingredients you already have in 2026.",
   
   keywords: "free ai recipe generator, recipe maker ai free, viral recipes 2026, smart cooking generator, what to cook with ingredients ai",
@@ -47,7 +47,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   
-  // --- 2. GOOGLE SCHEMA (COMBINED SOFTWARE + RECIPE) ---
+  // --- 2. GLOBAL SCHEMA (ONLY SOFTWARE & WEBSITE) ---
+  // Recipe schema yahan se hata diya hai taaki Google confuse na ho
   const googleSchema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -69,26 +70,13 @@ export default function RootLayout({ children }) {
         }
       },
       {
-        "@type": "Recipe",
-        "name": "RecipeoAI - Top Viral Recipes 2026",
-        "image": "https://www.recipeoai.com/logo.jpg",
-        "author": { "@type": "Person", "name": "Manish Singh" },
-        "datePublished": "2026-04-30",
-        "description": "Free AI-generated healthy recipes and viral food trends for 2026.",
-        "prepTime": "PT5M",
-        "cookTime": "PT15M",
-        "totalTime": "PT20M",
-        "recipeCategory": "Main Course",
-        "recipeCuisine": "International",
-        "nutrition": {
-          "@type": "NutritionInformation",
-          "calories": "250 calories",
-          "proteinContent": "20g"
-        },
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.9",
-          "ratingCount": "1250"
+        "@type": "WebSite",
+        "name": "RecipeoAI",
+        "url": "https://www.recipeoai.com",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://www.recipeoai.com/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
         }
       }
     ]
