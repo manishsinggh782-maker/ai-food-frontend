@@ -19,7 +19,7 @@ export const metadata = {
 };
 
 export default function DisclaimerPage() {
-  const lastUpdated = "March 22, 2026";
+  const lastUpdated = "March 03, 2026";
 
   return (
     <div className="min-h-screen bg-stone-50 text-stone-900 selection:bg-orange-100 pb-20 overflow-x-hidden">
