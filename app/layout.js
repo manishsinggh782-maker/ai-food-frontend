@@ -48,7 +48,6 @@ export const metadata = {
 export default function RootLayout({ children }) {
   
   // --- 2. GLOBAL SCHEMA (ONLY SOFTWARE & WEBSITE) ---
-  // Recipe schema yahan se hata diya hai taaki Google confuse na ho
   const googleSchema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -129,6 +128,7 @@ export default function RootLayout({ children }) {
                   <ul className="space-y-3 text-stone-500 text-sm font-semibold">
                     <li><Link href="/about" className="hover:text-orange-600">• About Us</Link></li>
                     <li><Link href="/privacy" className="hover:text-orange-600">• Privacy Policy</Link></li>
+                    <li><Link href="/disclaimer" className="hover:text-orange-600">• Disclaimer</Link></li>
                     <li><Link href="/contact" className="hover:text-orange-600">• Contact Us</Link></li>
                     <li><Link href="/terms" className="hover:text-orange-600">• Terms of Service</Link></li>
                   </ul>
