@@ -6,20 +6,8 @@ import { UserCheck, ArrowLeft, Share2, Calendar, Clock, RefreshCw } from "lucide
 import Link from "next/link";
 import Comments from "@/components/Comments";
 
-// --- 1. KEYWORDS PARSER (JUGAAD FOR RECIPE DATA) ---
-const parseKeywords = (keywords) => {
-  if (!keywords) return { yield: "2 Servings", prep: "PT5M", cook: "PT15M", ingredients: [] };
-  const kw = keywords.split(',').map(k => k.trim());
-  return {
-    yield: kw[0] || "2 Servings",
-    prep: "PT" + (kw[1]?.replace(/\D/g,'') || "5") + "M",
-    cook: "PT" + (kw[2]?.replace(/\D/g,'') || "15") + "M",
-    ingredients: kw.slice(3)
-  };
-};
-
 /**
- * 2. MASTER SEO METADATA (USA & CLICK OPTIMIZED)
+ * 1. MASTER SEO METADATA (Optimized for Rankings)
  */
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -31,9 +19,8 @@ export async function generateMetadata({ params }) {
   const siteUrl = "https://www.recipeoai.com";
 
   return {
-    // Title optimized < 60 chars
     title: `${post.MetaTitle || post.Title} | RecipeoAI 2026`,
-    description: (post.MetaDescription || post.Excerpt).substring(0, 155),
+    description: (post.description || post.MetaDescription || post.Excerpt).substring(0, 155),
     alternates: { canonical: `${siteUrl}/blog/${slug}` },
     openGraph: {
       title: post.Title,
@@ -44,7 +31,7 @@ export async function generateMetadata({ params }) {
       type: "article",
       publishedTime: post.publishedAt || post.createdAt,
       modifiedTime: post.updatedAt || post.createdAt,
-      authors: ["Manish Singh"],
+      authors: [post.author || "Manish Singh"],
     },
   };
 }
@@ -57,10 +44,7 @@ export default async function SingleBlog({ params }) {
   const bannerPath = post.Banner?.url || "";
   const imageUrl = bannerPath.startsWith("http") ? bannerPath : (bannerPath ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${bannerPath}` : "");
 
-  // KEYWORDS LOGIC FOR RECIPE SCHEMA
-  const recipeData = parseKeywords(post.Keywords);
-
-  // 3. COMBINED SCHEMA (BLOG + RECIPE) - GOOGLE KHUSH HO JAYEGA
+  // 2. COMBINED SCHEMA (BLOG + RECIPE) - GOOGLE KHUSH HO JAYEGA
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -70,20 +54,39 @@ export default async function SingleBlog({ params }) {
         "headline": post.Title,
         "image": [imageUrl],
         "datePublished": post.publishedAt || post.createdAt,
-        "dateModified": post.updatedAt || post.createdAt, // Last Update Fix
-        "author": { "@type": "Person", "name": "Manish Singh" },
-        "description": post.Excerpt || post.MetaDescription
+        "dateModified": post.updatedAt || post.createdAt,
+        "author": { "@type": "Person", "name": post.author || "Manish Singh" },
+        "description": post.description || post.Excerpt || post.MetaDescription
       },
       {
         "@type": "Recipe",
         "name": post.Title,
         "image": [imageUrl],
-        "recipeYield": recipeData.yield,
-        "prepTime": recipeData.prep,
-        "cookTime": recipeData.cook,
-        "recipeIngredient": recipeData.ingredients.length > 0 ? recipeData.ingredients : ["Check content for ingredients"],
-        "recipeInstructions": [{ "@type": "HowToStep", "text": "Follow the detailed steps mentioned in the article content." }],
-        "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "ratingCount": "1250" }
+        "recipeYield": post.recipeYield || "2 Servings",
+        "prepTime": post.prepTime || "PT10M",
+        "cookTime": post.cookTime || "PT20M",
+        "recipeCategory": post.recipeCategory || "Snack",
+        "recipeCuisine": post.recipeCuisine || "Global",
+        "description": post.description || post.Excerpt,
+        "author": { "@type": "Person", "name": post.author || "Manish Singh" },
+        "nutrition": {
+          "@type": "NutritionInformation",
+          "calories": post.nutrition || "250 calories"
+        },
+        "recipeIngredient": post.Keywords ? post.Keywords.split(',') : ["See instructions in content"],
+        "recipeInstructions": [
+          {
+            "@type": "HowToStep",
+            "name": "Step 1",
+            "text": "Follow the detailed cooking steps mentioned in the article content below.",
+            "url": `https://www.recipeoai.com/blog/${slug}#recipe-steps`
+          }
+        ],
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "ratingCount": "1250"
+        }
       }
     ]
   };
@@ -100,9 +103,11 @@ export default async function SingleBlog({ params }) {
           </Link>
 
           <div className="flex items-center gap-5 mb-16 p-8 bg-white rounded-[2.5rem] shadow-sm border border-stone-100">
-             <div className="w-20 h-20 rounded-[1.5rem] bg-stone-900 flex items-center justify-center text-white text-3xl font-black">MS</div>
+             <div className="w-20 h-20 rounded-[1.5rem] bg-stone-900 flex items-center justify-center text-white text-3xl font-black">
+                {post.author ? post.author.substring(0,2).toUpperCase() : "MS"}
+             </div>
              <div>
-                <h4 className="text-2xl font-black text-stone-900 leading-none mb-2">Manish Singh</h4>
+                <h4 className="text-2xl font-black text-stone-900 leading-none mb-2">{post.author || "Manish Singh"}</h4>
                 <div className="flex items-center gap-3">
                    <span className="px-3 py-1 bg-orange-600 text-white text-[9px] font-black uppercase rounded-full flex items-center gap-1">
                      <UserCheck size={10} /> Verified Admin
@@ -115,14 +120,13 @@ export default async function SingleBlog({ params }) {
           <header className="mb-16">
              <div className="flex flex-wrap items-center gap-4 mb-6 text-stone-400 font-bold text-[10px] uppercase tracking-widest">
                 <span className="flex items-center gap-1"><Calendar size={12}/> Published: {new Date(post.createdAt).toLocaleDateString()}</span>
-                {/* LAST UPDATED FIX IN UI */}
                 {post.updatedAt && post.updatedAt !== post.createdAt && (
                   <span className="flex items-center gap-1 text-orange-600"><RefreshCw size={12}/> Updated: {new Date(post.updatedAt).toLocaleDateString()}</span>
                 )}
                 <span className="flex items-center gap-1"><Clock size={12}/> 5 Min Read</span>
              </div>
              <h1 className="text-5xl md:text-8xl font-black text-stone-900 leading-[0.95] tracking-tighter mb-10">{post.Title}</h1>
-             <p className="text-xl md:text-3xl text-stone-500 leading-relaxed font-medium italic border-l-8 border-orange-500 pl-8 py-2">{post.Excerpt}</p>
+             <p className="text-xl md:text-3xl text-stone-500 leading-relaxed font-medium italic border-l-8 border-orange-500 pl-8 py-2">{post.description || post.Excerpt}</p>
           </header>
 
           <div className="relative aspect-[21/10] w-full mb-20 rounded-[3.5rem] overflow-hidden shadow-2xl ring-1 ring-stone-200 bg-stone-100">
@@ -130,7 +134,7 @@ export default async function SingleBlog({ params }) {
           </div>
 
           <div className="max-w-3xl mx-auto bg-white p-10 md:p-20 rounded-[4rem] shadow-sm border border-stone-100 relative -mt-32 z-10">
-             <div className="prose prose-stone lg:prose-2xl max-w-none prose-orange prose-headings:text-stone-900 prose-headings:font-black prose-p:text-stone-700 prose-p:leading-[1.8] prose-img:rounded-[2.5rem] prose-strong:text-orange-700">
+             <div id="recipe-steps" className="prose prose-stone lg:prose-2xl max-w-none prose-orange prose-headings:text-stone-900 prose-headings:font-black prose-p:text-stone-700 prose-p:leading-[1.8] prose-img:rounded-[2.5rem] prose-strong:text-orange-700">
                {post.Content ? <BlocksRenderer content={post.Content} /> : <p className="text-stone-400 italic font-bold">Preparing content...</p>}
              </div>
 
