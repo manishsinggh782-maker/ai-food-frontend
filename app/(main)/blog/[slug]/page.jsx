@@ -2,12 +2,18 @@ import { getBlogBySlug } from "@/actions/blog.actions";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { notFound } from "next/navigation";
 import Script from "next/script";
-import { UserCheck, ArrowLeft, Share2, Calendar, Clock, RefreshCw } from "lucide-react";
+import { UserCheck, ArrowLeft, Share2, Calendar, Clock, RefreshCw, Utensils, Flame, Users, ChefHat } from "lucide-react";
 import Link from "next/link";
 import Comments from "@/components/Comments";
 
+// --- HELPERS: ISO Time to Human Time (PT15M -> 15 MINS) ---
+const formatTime = (timeStr) => {
+  if (!timeStr) return "N/A";
+  return timeStr.replace('PT', '').replace('M', ' MINS').replace('H', ' HOUR ');
+};
+
 /**
- * 1. MASTER SEO METADATA (Optimized for Rankings)
+ * 1. MASTER SEO METADATA
  */
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -44,7 +50,6 @@ export default async function SingleBlog({ params }) {
   const bannerPath = post.Banner?.url || "";
   const imageUrl = bannerPath.startsWith("http") ? bannerPath : (bannerPath ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${bannerPath}` : "");
 
-  // 2. COMBINED SCHEMA (BLOG + RECIPE) - GOOGLE KHUSH HO JAYEGA
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -69,24 +74,10 @@ export default async function SingleBlog({ params }) {
         "recipeCuisine": post.recipeCuisine || "Global",
         "description": post.description || post.Excerpt,
         "author": { "@type": "Person", "name": post.author || "Manish Singh" },
-        "nutrition": {
-          "@type": "NutritionInformation",
-          "calories": post.nutrition || "250 calories"
-        },
-        "recipeIngredient": post.Keywords ? post.Keywords.split(',') : ["See instructions in content"],
-        "recipeInstructions": [
-          {
-            "@type": "HowToStep",
-            "name": "Step 1",
-            "text": "Follow the detailed cooking steps mentioned in the article content below.",
-            "url": `https://www.recipeoai.com/blog/${slug}#recipe-steps`
-          }
-        ],
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.9",
-          "ratingCount": "1250"
-        }
+        "nutrition": { "@type": "NutritionInformation", "calories": post.nutrition || "250 calories" },
+        "recipeIngredient": post.Keywords ? post.Keywords.split(',') : ["See instructions below"],
+        "recipeInstructions": [{ "@type": "HowToStep", "name": "Step 1", "text": "Follow detailed steps in content.", "url": `https://www.recipeoai.com/blog/${slug}#recipe-steps` }],
+        "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "ratingCount": "1250" }
       }
     ]
   };
@@ -95,59 +86,98 @@ export default async function SingleBlog({ params }) {
     <>
       <Script id="article-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <article className="min-h-screen bg-stone-50/50 pt-28 pb-20 px-4 font-sans selection:bg-orange-100">
-        <div className="container mx-auto max-w-4xl">
+      <article className="min-h-screen bg-stone-50 pt-28 pb-20 px-4 font-sans selection:bg-orange-100">
+        <div className="container mx-auto max-w-5xl">
 
-          <Link href="/blog" className="inline-flex items-center gap-2 text-stone-500 hover:text-orange-600 transition-all mb-12 font-black text-xs uppercase tracking-[0.2em] group">
-            <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Insights
+          {/* BACK LINK */}
+          <Link href="/blog" className="inline-flex items-center gap-2 text-stone-400 hover:text-orange-600 transition-all mb-12 font-black text-[10px] uppercase tracking-[0.3em] group">
+            <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> Explore Insights
           </Link>
 
-          <div className="flex items-center gap-5 mb-16 p-8 bg-white rounded-[2.5rem] shadow-sm border border-stone-100">
-             <div className="w-20 h-20 rounded-[1.5rem] bg-stone-900 flex items-center justify-center text-white text-3xl font-black">
-                {post.author ? post.author.substring(0,2).toUpperCase() : "MS"}
-             </div>
-             <div>
-                <h4 className="text-2xl font-black text-stone-900 leading-none mb-2">{post.author || "Manish Singh"}</h4>
-                <div className="flex items-center gap-3">
-                   <span className="px-3 py-1 bg-orange-600 text-white text-[9px] font-black uppercase rounded-full flex items-center gap-1">
-                     <UserCheck size={10} /> Verified Admin
-                   </span>
-                   <span className="text-xs font-bold text-stone-400 uppercase tracking-tighter italic font-serif">Master AI Chef</span>
-                </div>
-             </div>
-          </div>
-
+          {/* HEADER SECTION */}
           <header className="mb-16">
-             <div className="flex flex-wrap items-center gap-4 mb-6 text-stone-400 font-bold text-[10px] uppercase tracking-widest">
-                <span className="flex items-center gap-1"><Calendar size={12}/> Published: {new Date(post.createdAt).toLocaleDateString()}</span>
-                {post.updatedAt && post.updatedAt !== post.createdAt && (
-                  <span className="flex items-center gap-1 text-orange-600"><RefreshCw size={12}/> Updated: {new Date(post.updatedAt).toLocaleDateString()}</span>
-                )}
-                <span className="flex items-center gap-1"><Clock size={12}/> 5 Min Read</span>
+             <div className="flex flex-wrap items-center gap-3 mb-8">
+                {post.recipeCuisine && <span className="px-4 py-1.5 bg-stone-900 text-white text-[10px] font-black uppercase rounded-full tracking-widest">{post.recipeCuisine}</span>}
+                {post.recipeCategory && <span className="px-4 py-1.5 bg-orange-600 text-white text-[10px] font-black uppercase rounded-full tracking-widest">{post.recipeCategory}</span>}
              </div>
-             <h1 className="text-5xl md:text-8xl font-black text-stone-900 leading-[0.95] tracking-tighter mb-10">{post.Title}</h1>
-             <p className="text-xl md:text-3xl text-stone-500 leading-relaxed font-medium italic border-l-8 border-orange-500 pl-8 py-2">{post.description || post.Excerpt}</p>
+
+             <h1 className="text-6xl md:text-[7rem] font-black text-stone-900 leading-[0.85] tracking-tighter mb-12">
+                {post.Title}
+             </h1>
+
+             <div className="flex flex-wrap items-center gap-8 mb-12 border-y border-stone-200 py-8">
+                <div className="flex items-center gap-4">
+                   <div className="w-14 h-14 rounded-full bg-stone-200 flex items-center justify-center font-black text-stone-500 overflow-hidden">
+                      {post.author ? post.author.substring(0,2).toUpperCase() : "MS"}
+                   </div>
+                   <div>
+                      <p className="text-[10px] font-black text-stone-400 uppercase tracking-widest mb-1">Author</p>
+                      <p className="text-sm font-bold text-stone-900">{post.author || "Manish Singh"}</p>
+                   </div>
+                </div>
+                <div className="h-10 w-px bg-stone-200 hidden md:block"></div>
+                <div>
+                   <p className="text-[10px] font-black text-stone-400 uppercase tracking-widest mb-1 flex items-center gap-1"><Calendar size={10}/> Published</p>
+                   <p className="text-sm font-bold text-stone-900">{new Date(post.createdAt).toLocaleDateString()}</p>
+                </div>
+                {post.updatedAt && post.updatedAt !== post.createdAt && (
+                   <div>
+                      <p className="text-[10px] font-black text-orange-600 uppercase tracking-widest mb-1 flex items-center gap-1"><RefreshCw size={10}/> Updated</p>
+                      <p className="text-sm font-bold text-stone-900">{new Date(post.updatedAt).toLocaleDateString()}</p>
+                   </div>
+                )}
+             </div>
+
+             <p className="text-2xl md:text-4xl text-stone-500 leading-tight font-medium italic mb-16">{post.description || post.Excerpt}</p>
           </header>
 
-          <div className="relative aspect-[21/10] w-full mb-20 rounded-[3.5rem] overflow-hidden shadow-2xl ring-1 ring-stone-200 bg-stone-100">
-            <img src={imageUrl} className="object-cover w-full h-full" alt={post.Title} fetchPriority="high" />
-          </div>
-
-          <div className="max-w-3xl mx-auto bg-white p-10 md:p-20 rounded-[4rem] shadow-sm border border-stone-100 relative -mt-32 z-10">
-             <div id="recipe-steps" className="prose prose-stone lg:prose-2xl max-w-none prose-orange prose-headings:text-stone-900 prose-headings:font-black prose-p:text-stone-700 prose-p:leading-[1.8] prose-img:rounded-[2.5rem] prose-strong:text-orange-700">
-               {post.Content ? <BlocksRenderer content={post.Content} /> : <p className="text-stone-400 italic font-bold">Preparing content...</p>}
+          {/* BANNER + QUICK STATS */}
+          <div className="relative mb-20">
+             <div className="relative aspect-[21/9] w-full rounded-[4rem] overflow-hidden shadow-2xl bg-stone-100 ring-1 ring-stone-200">
+               <img src={imageUrl} className="object-cover w-full h-full" alt={post.Title} fetchPriority="high" />
              </div>
 
-             <div className="mt-24 pt-12 border-t border-stone-100 flex flex-col items-center gap-6">
-                <p className="text-stone-400 font-black text-[10px] uppercase tracking-[0.4em]">Share this Insight</p>
-                <div className="flex gap-4">
-                   <button className="w-12 h-12 rounded-2xl bg-stone-50 flex items-center justify-center text-stone-400 hover:bg-orange-600 hover:text-white transition-all cursor-pointer shadow-sm border-none"><Share2 size={18} /></button>
+             {/* FLOATING QUICK STATS BAR - INTERNATIONAL STYLE */}
+             <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-[90%] md:w-auto bg-white rounded-[2.5rem] shadow-2xl border border-stone-100 p-6 md:p-10 flex flex-wrap justify-center gap-8 md:gap-16 z-20">
+                <div className="text-center group">
+                   <div className="w-12 h-12 bg-stone-50 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:bg-orange-600 group-hover:text-white transition-all text-stone-400"><ChefHat size={20}/></div>
+                   <p className="text-[9px] font-black text-stone-400 uppercase tracking-widest mb-1">Prep</p>
+                   <p className="text-xs font-black text-stone-900">{formatTime(post.prepTime)}</p>
+                </div>
+                <div className="text-center group">
+                   <div className="w-12 h-12 bg-stone-50 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:bg-orange-600 group-hover:text-white transition-all text-stone-400"><Flame size={20}/></div>
+                   <p className="text-[9px] font-black text-stone-400 uppercase tracking-widest mb-1">Cook</p>
+                   <p className="text-xs font-black text-stone-900">{formatTime(post.cookTime)}</p>
+                </div>
+                <div className="text-center group">
+                   <div className="w-12 h-12 bg-stone-50 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:bg-orange-600 group-hover:text-white transition-all text-stone-400"><Users size={20}/></div>
+                   <p className="text-[9px] font-black text-stone-400 uppercase tracking-widest mb-1">Yield</p>
+                   <p className="text-xs font-black text-stone-900">{post.recipeYield || "2 SERVINGS"}</p>
+                </div>
+                <div className="text-center group">
+                   <div className="w-12 h-12 bg-stone-50 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:bg-orange-600 group-hover:text-white transition-all text-stone-400"><Utensils size={20}/></div>
+                   <p className="text-[9px] font-black text-stone-400 uppercase tracking-widest mb-1">Energy</p>
+                   <p className="text-xs font-black text-stone-900">{post.nutrition || "250 KCAL"}</p>
                 </div>
              </div>
           </div>
 
-          <div className="max-w-3xl mx-auto mt-20">
-             <Comments blogId={post.id} initialComments={post.comments} />
+          {/* MAIN CONTENT AREA */}
+          <div className="max-w-4xl mx-auto pt-20">
+             <div id="recipe-steps" className="prose prose-stone lg:prose-2xl max-w-none prose-orange prose-headings:text-stone-900 prose-headings:font-black prose-p:text-stone-700 prose-p:leading-[1.8] prose-img:rounded-[3rem] prose-strong:text-orange-700 bg-white p-12 md:p-24 rounded-[4rem] shadow-sm border border-stone-100">
+               {post.Content ? <BlocksRenderer content={post.Content} /> : <p className="text-stone-400 italic font-bold">Curating recipe details...</p>}
+               
+               <div className="mt-20 pt-12 border-t border-stone-100 flex flex-col items-center gap-6">
+                  <p className="text-stone-400 font-black text-[10px] uppercase tracking-[0.4em]">Inspire Others</p>
+                  <button className="flex items-center gap-3 px-10 py-5 bg-stone-900 text-white rounded-3xl font-black text-xs uppercase tracking-widest hover:bg-orange-600 transition-all shadow-xl active:scale-95">
+                     <Share2 size={16} /> Share This Recipe
+                  </button>
+               </div>
+             </div>
+
+             <div className="mt-24">
+                <Comments blogId={post.id} initialComments={post.comments} />
+             </div>
           </div>
 
         </div>
