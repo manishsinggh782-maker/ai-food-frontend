@@ -1,6 +1,6 @@
 import { getBlogs } from "@/actions/blog.actions";
 import Link from "next/link";
-import { Calendar, ArrowRight, UserCheck, Star } from "lucide-react";
+import { Calendar, ArrowRight, UserCheck, Star, RefreshCw } from "lucide-react";
 import Script from "next/script";
 
 // --- 1. DYNAMIC CONFIG ---
@@ -56,7 +56,7 @@ export default async function BlogPage() {
     return dateB - dateA;
   }) : [];
 
-  // GOOGLE SCHEMA (JSON-LD) - ItemList for Recipe Rich Results
+  // GOOGLE SCHEMA (JSON-LD)
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Blog",
@@ -117,6 +117,10 @@ export default async function BlogPage() {
                 ? bannerPath 
                 : (bannerPath ? `${process.env.NEXT_PUBLIC_STRAPI_URL}${bannerPath}` : "/placeholder.jpg");
 
+              // --- LOGIC: Check if updated ---
+              const isUpdated = post.updatedAt && 
+                               new Date(post.updatedAt).toLocaleDateString() !== new Date(post.createdAt).toLocaleDateString();
+
               return (
                 <div key={post.id} className="group flex flex-col bg-white rounded-[3rem] overflow-hidden shadow-sm hover:-translate-y-3 transition-all duration-700 ring-1 ring-stone-100">
                   <div className="aspect-[16/10] relative overflow-hidden bg-stone-200">
@@ -126,7 +130,6 @@ export default async function BlogPage() {
                       className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-1000"
                       loading="lazy"
                     />
-                    {/* Floating Badge for Category if exists */}
                     {post.recipeCategory && (
                        <span className="absolute top-6 left-6 px-4 py-1 bg-white/90 backdrop-blur-sm text-[9px] font-black uppercase rounded-full shadow-sm">
                           {post.recipeCategory}
@@ -143,10 +146,19 @@ export default async function BlogPage() {
                     </p>
                     
                     <div className="mt-auto flex items-center justify-between border-t border-stone-50 pt-8">
-                      <span className="flex items-center gap-2 text-stone-400 text-[10px] font-black uppercase">
-                        <Calendar size={12} className="text-orange-500" /> 
-                        {new Date(post.createdAt).toLocaleDateString("en-US", { day: 'numeric', month: 'short', year: 'numeric' })}
-                      </span>
+                      {/* DATE SECTION */}
+                      <div className="flex flex-col gap-1.5">
+                        <span className="flex items-center gap-2 text-stone-400 text-[9px] font-black uppercase tracking-tight">
+                          <Calendar size={12} className="text-stone-300" /> 
+                          {new Date(post.createdAt).toLocaleDateString("en-US", { day: 'numeric', month: 'short', year: 'numeric' })}
+                        </span>
+                        {isUpdated && (
+                          <span className="flex items-center gap-2 text-orange-600 text-[9px] font-black uppercase tracking-tight italic">
+                            <RefreshCw size={10} /> 
+                            Updated: {new Date(post.updatedAt).toLocaleDateString("en-US", { day: 'numeric', month: 'short', year: 'numeric' })}
+                          </span>
+                        )}
+                      </div>
 
                       <Link 
                         href={`/blog/${post.Slug || post.slug}`} 
