@@ -6,34 +6,31 @@ import Header from "@/components/Header";
 import { neobrutalism } from "@clerk/themes";
 import Image from "next/image";
 import Link from "next/link";
-import Script from "next/script"; // SEO Schema ke liye
+import Script from "next/script";
 import { 
   ShieldCheck, 
   Lock, 
   Send, 
   Shield, 
-  Share2,
   CheckCircle2
 } from "lucide-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// --- 1. SEO METADATA (FREE WORD INCLUDED & OPTIMIZED) ---
+// --- 1. SEO METADATA (Pinterest Verify Included) ---
 export const metadata = {
   metadataBase: new URL("https://www.recipeoai.com"),
-  
-  // Title: 52 characters (Under 60 - Perfect for Google)
   title: "RecipeoAI: Free AI Recipe Generator from Ingredients 2026",
-  
-  // Description: Under 160 chars
   description: "Generate free gourmet recipes instantly with AI. Best tool for keto, vegan, and healthy meal planning using ingredients you already have in 2026.",
-  
   keywords: "free ai recipe generator, recipe maker ai free, viral recipes 2026, smart cooking generator, what to cook with ingredients ai",
   authors: [{ name: "Manish Singh" }],
   viewport: "width=device-width, initial-scale=1",
   robots: { index: true, follow: true },
   alternates: { canonical: "https://www.recipeoai.com" },
-  other: { 'google-adsense-account': 'ca-pub-2070162129840743' },
+  other: { 
+    'google-adsense-account': 'ca-pub-2070162129840743',
+    'p:domain_verify': '4afe6422a1d2fadb2e51309ddd843cd6' // Pinterest Verification
+  },
   icons: { icon: '/favicon.ico', apple: '/favicon.ico' },
   openGraph: {
     title: "RecipeoAI - Free AI Master Chef 2026",
@@ -47,7 +44,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   
-  // --- 2. GLOBAL SCHEMA (ONLY SOFTWARE & WEBSITE) ---
+  // --- 2. GLOBAL SCHEMA ---
   const googleSchema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -91,6 +88,7 @@ export default function RootLayout({ children }) {
           <Script
             id="google-combined-schema"
             type="application/ld+json"
+            strategy="afterInteractive"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(googleSchema) }}
           />
         </head>
@@ -107,7 +105,7 @@ export default function RootLayout({ children }) {
                 {/* 1. BRAND SECTION */}
                 <div className="space-y-6">
                   <div className="flex items-center gap-3">
-                    <Image src="/logo.jpg" alt="Logo" width={45} height={45} className="rounded-xl shadow-sm" />
+                    <Image src="/logo.jpg" alt="RecipeoAI Logo" width={45} height={45} className="rounded-xl shadow-sm" />
                     <span className="text-2xl font-black tracking-tighter">Recipeo<span className="text-orange-600">AI</span></span>
                   </div>
                   <p className="text-stone-500 text-sm leading-relaxed max-w-xs font-medium">World-class AI culinary assistant helping you turn leftovers into gourmet meals daily.</p>
