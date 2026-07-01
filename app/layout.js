@@ -120,12 +120,13 @@ export default function RootLayout({ children }) {
                   </div>
                 </div>
 
-                {/* 2. RESOURCES */}
+                {/* 2. RESOURCES (UPDATED WITH COOKIE POLICY) */}
                 <div>
                   <h3 className="text-sm font-bold text-stone-900 mb-6 tracking-wide">Resources</h3>
                   <ul className="space-y-3 text-stone-500 text-sm font-semibold">
                     <li><Link href="/about" className="hover:text-orange-600">• About Us</Link></li>
                     <li><Link href="/privacy" className="hover:text-orange-600">• Privacy Policy</Link></li>
+                    <li><Link href="/cookie-policy" className="hover:text-orange-600">• Cookie Policy</Link></li>
                     <li><Link href="/disclaimer" className="hover:text-orange-600">• Disclaimer</Link></li>
                     <li><Link href="/contact" className="hover:text-orange-600">• Contact Us</Link></li>
                     <li><Link href="/terms" className="hover:text-orange-600">• Terms of Service</Link></li>
