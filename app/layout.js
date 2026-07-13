@@ -17,7 +17,7 @@ import {
 
 const inter = Inter({ subsets: ["latin"] });
 
-// --- 1. SEO METADATA (Pinterest Verify Included) ---
+// --- 1. SEO METADATA ---
 export const metadata = {
   metadataBase: new URL("https://www.recipeoai.com"),
   title: "RecipeoAI: Free AI Recipe Generator from Ingredients 2026",
@@ -29,7 +29,7 @@ export const metadata = {
   alternates: { canonical: "https://www.recipeoai.com" },
   other: { 
     'google-adsense-account': 'ca-pub-2070162129840743',
-    'p:domain_verify': '4afe6422a1d2fadb2e51309ddd843cd6' // Pinterest Verification
+    'p:domain_verify': '4afe6422a1d2fadb2e51309ddd843cd6' 
   },
   icons: { icon: '/favicon.ico', apple: '/favicon.ico' },
   openGraph: {
@@ -85,6 +85,28 @@ export default function RootLayout({ children }) {
     >
       <html lang="en" suppressHydrationWarning>
         <head>
+          {/* ADS CODE 1: Tag.min.js */}
+          <Script 
+            src="https://quge5.com/88/tag.min.js" 
+            data-zone="259273" 
+            strategy="afterInteractive" 
+            data-cfasync="false" 
+          />
+
+          {/* ADS CODE 2: Vignette Ads */}
+          <Script id="ad-vignette" strategy="afterInteractive">
+            {`(function(s){s.dataset.zone='11280488',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`}
+          </Script>
+
+          {/* ADS CODE 3: Additional Tag */}
+          <Script id="ad-tag-extra" strategy="afterInteractive">
+            {`(function(s){s.dataset.zone='11280493',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`}
+          </Script>
+
+          {/* ADS CODE 4: Direct Link / Script (OMG10) */}
+          <Script src="https://omg10.com/4/11280503" strategy="lazyOnload" />
+
+          {/* SEO SCHEMA */}
           <Script
             id="google-combined-schema"
             type="application/ld+json"
@@ -120,7 +142,7 @@ export default function RootLayout({ children }) {
                   </div>
                 </div>
 
-                {/* 2. RESOURCES (UPDATED WITH COOKIE POLICY) */}
+                {/* 2. RESOURCES */}
                 <div>
                   <h3 className="text-sm font-bold text-stone-900 mb-6 tracking-wide">Resources</h3>
                   <ul className="space-y-3 text-stone-500 text-sm font-semibold">
