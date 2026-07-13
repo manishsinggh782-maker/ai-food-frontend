@@ -85,7 +85,7 @@ export default function RootLayout({ children }) {
     >
       <html lang="en" suppressHydrationWarning>
         <head>
-          {/* ADS CODE 1: Tag.min.js */}
+          {/* ADS CODE 1: Safe Banner Tag */}
           <Script 
             src="https://quge5.com/88/tag.min.js" 
             data-zone="259273" 
@@ -93,18 +93,10 @@ export default function RootLayout({ children }) {
             data-cfasync="false" 
           />
 
-          {/* ADS CODE 2: Vignette Ads */}
-          <Script id="ad-vignette" strategy="afterInteractive">
-            {`(function(s){s.dataset.zone='11280488',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`}
-          </Script>
-
-          {/* ADS CODE 3: Additional Tag */}
+          {/* ADS CODE 2: Additional Safe Tag */}
           <Script id="ad-tag-extra" strategy="afterInteractive">
             {`(function(s){s.dataset.zone='11280493',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`}
           </Script>
-
-          {/* ADS CODE 4: Direct Link / Script (OMG10) */}
-          <Script src="https://omg10.com/4/11280503" strategy="lazyOnload" />
 
           {/* SEO SCHEMA */}
           <Script
