@@ -84,9 +84,29 @@ export default function RootLayout({ children }) {
           <Header />
           
           <main className="min-h-screen">
+            {/* NEW ADSTERRA 160x600 - TOP SIDE (Optional: Isse Desktop par sidebar me laga sakte ho) */}
+            <div className="flex justify-center my-6">
+               <div id="ad-skyscraper-1">
+                 <Script id="adsterra-sky-1" strategy="lazyOnload">
+                   {`
+                     atOptions = {
+                       'key' : 'e0957aa3205ec50bf8a8c93a4c418636',
+                       'format' : 'iframe',
+                       'height' : 600,
+                       'width' : 160,
+                       'params' : {}
+                     };
+                     const script = document.createElement('script');
+                     script.src = 'https://www.highperformanceformat.com/e0957aa3205ec50bf8a8c93a4c418636/invoke.js';
+                     document.getElementById('ad-skyscraper-1').appendChild(script);
+                   `}
+                 </Script>
+               </div>
+            </div>
+
             {children}
             
-            {/* ADSTERRA BANNER 1 (After Content) */}
+            {/* ADSTERRA BANNER 1 (300x250 - Existing) */}
             <div className="flex justify-center my-10">
                <div id="ad-container-1">
                  <Script id="adsterra-1" strategy="lazyOnload">
@@ -105,6 +125,26 @@ export default function RootLayout({ children }) {
                  </Script>
                </div>
             </div>
+
+            {/* NEW ADSTERRA 160x600 - MIDDLE */}
+            <div className="flex justify-center my-10">
+               <div id="ad-skyscraper-2">
+                 <Script id="adsterra-sky-2" strategy="lazyOnload">
+                   {`
+                     atOptions = {
+                       'key' : 'e0957aa3205ec50bf8a8c93a4c418636',
+                       'format' : 'iframe',
+                       'height' : 600,
+                       'width' : 160,
+                       'params' : {}
+                     };
+                     const script = document.createElement('script');
+                     script.src = 'https://www.highperformanceformat.com/e0957aa3205ec50bf8a8c93a4c418636/invoke.js';
+                     document.getElementById('ad-skyscraper-2').appendChild(script);
+                   `}
+                 </Script>
+               </div>
+            </div>
           </main>
 
           <Toaster richColors />
@@ -113,7 +153,7 @@ export default function RootLayout({ children }) {
           <footer className="bg-white border-t border-stone-200 pt-20 pb-12 px-4 mt-20">
             <div className="max-w-7xl mx-auto">
               
-              {/* ADSTERRA BANNER 2 (Inside Footer for more Earning) */}
+              {/* ADSTERRA BANNER 2 (300x250 - Existing) */}
               <div className="flex justify-center mb-12">
                  <div id="ad-container-2">
                    <Script id="adsterra-2" strategy="lazyOnload">
@@ -128,6 +168,26 @@ export default function RootLayout({ children }) {
                        const script = document.createElement('script');
                        script.src = 'https://www.highperformanceformat.com/1304f7fe5dfffefce94569a5b502b60d/invoke.js';
                        document.getElementById('ad-container-2').appendChild(script);
+                     `}
+                   </Script>
+                 </div>
+              </div>
+
+              {/* NEW ADSTERRA 160x600 - FOOTER TOP */}
+              <div className="flex justify-center mb-12">
+                 <div id="ad-skyscraper-3">
+                   <Script id="adsterra-sky-3" strategy="lazyOnload">
+                     {`
+                       atOptions = {
+                         'key' : 'e0957aa3205ec50bf8a8c93a4c418636',
+                         'format' : 'iframe',
+                         'height' : 600,
+                         'width' : 160,
+                         'params' : {}
+                       };
+                       const script = document.createElement('script');
+                       script.src = 'https://www.highperformanceformat.com/e0957aa3205ec50bf8a8c93a4c418636/invoke.js';
+                       document.getElementById('ad-skyscraper-3').appendChild(script);
                      `}
                    </Script>
                  </div>
