@@ -10,7 +10,7 @@ import Script from "next/script";
 import {
   ShieldCheck,
   Lock,
-  CheckCircle2
+  CheckCircle2,
 } from "lucide-react";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -52,10 +52,14 @@ export const metadata = {
 
   openGraph: {
     title: "RecipeoAI - Free AI Master Chef 2026",
+
     description:
       "Cook like a pro with the world's best free AI recipe maker.",
+
     url: "https://www.recipeoai.com",
+
     siteName: "RecipeoAI",
+
     images: [
       {
         url: "/logo.jpg",
@@ -63,6 +67,7 @@ export const metadata = {
         height: 630,
       },
     ],
+
     type: "website",
   },
 };
@@ -70,12 +75,17 @@ export const metadata = {
 export default function RootLayout({ children }) {
   const googleSchema = {
     "@context": "https://schema.org",
+
     "@graph": [
       {
         "@type": "SoftwareApplication",
+
         name: "RecipeoAI",
+
         url: "https://www.recipeoai.com",
+
         operatingSystem: "Web",
+
         applicationCategory: "LifestyleApplication",
 
         aggregateRating: {
@@ -99,8 +109,19 @@ export default function RootLayout({ children }) {
       appearance={{ baseTheme: neobrutalism }}
     >
       <html lang="en" suppressHydrationWarning>
+
         <head>
-          {/* Google Schema */}
+
+          {/* GOOGLE ADSENSE */}
+          <Script
+            id="google-adsense"
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8919274069653582"
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+
+          {/* GOOGLE STRUCTURED DATA */}
           <Script
             id="google-combined-schema"
             type="application/ld+json"
@@ -109,11 +130,13 @@ export default function RootLayout({ children }) {
               __html: JSON.stringify(googleSchema),
             }}
           />
+
         </head>
 
         <body
           className={`${inter.className} bg-stone-50 text-stone-900`}
         >
+
           <Header />
 
           <main className="min-h-screen">
@@ -124,13 +147,16 @@ export default function RootLayout({ children }) {
 
           {/* PROFESSIONAL FOOTER */}
           <footer className="bg-white border-t border-stone-200 pt-20 pb-12 px-4 mt-20">
+
             <div className="max-w-7xl mx-auto">
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
 
                 {/* BRAND SECTION */}
                 <div className="space-y-6">
+
                   <div className="flex items-center gap-3">
+
                     <Image
                       src="/logo.jpg"
                       alt="RecipeoAI Logo"
@@ -141,23 +167,29 @@ export default function RootLayout({ children }) {
 
                     <span className="text-2xl font-black tracking-tighter">
                       Recipeo
-                      <span className="text-orange-600">AI</span>
+                      <span className="text-orange-600">
+                        AI
+                      </span>
                     </span>
+
                   </div>
 
                   <p className="text-stone-500 text-sm leading-relaxed max-w-xs font-medium">
                     World-class AI culinary assistant helping you turn
                     leftovers into gourmet meals daily.
                   </p>
+
                 </div>
 
                 {/* RESOURCES */}
                 <div>
+
                   <h3 className="text-sm font-bold text-stone-900 mb-6 tracking-wide">
                     Resources
                   </h3>
 
                   <ul className="space-y-3 text-stone-500 text-sm font-semibold">
+
                     <li>
                       <Link
                         href="/about"
@@ -193,21 +225,28 @@ export default function RootLayout({ children }) {
                         • Terms of Service
                       </Link>
                     </li>
+
                   </ul>
+
                 </div>
 
                 {/* SECURITY */}
                 <div className="space-y-8">
+
                   <h3 className="text-sm font-bold text-stone-900 mb-6 tracking-wide">
                     Security
                   </h3>
 
                   <div className="flex gap-4 items-start">
+
                     <div className="p-2.5 bg-green-50 rounded-xl text-green-600">
+
                       <Lock className="w-5 h-5" />
+
                     </div>
 
                     <div>
+
                       <p className="text-sm font-bold">
                         Local Sync
                       </p>
@@ -215,47 +254,66 @@ export default function RootLayout({ children }) {
                       <p className="text-xs text-stone-400 font-medium">
                         100% secure recipes
                       </p>
+
                     </div>
+
                   </div>
+
                 </div>
 
                 {/* COMPLIANCE */}
                 <div>
+
                   <h3 className="text-sm font-bold text-stone-900 mb-6 tracking-wide">
                     Compliance
                   </h3>
 
                   <div className="p-6 border border-stone-100 rounded-[2rem] bg-stone-50/50 flex flex-col items-center text-center shadow-sm">
+
                     <ShieldCheck className="w-6 h-6 text-green-500 mb-4" />
 
                     <p className="text-sm font-bold text-stone-900">
                       GDPR Compliant
                     </p>
+
                   </div>
+
                 </div>
+
               </div>
 
               {/* BOTTOM STRIP */}
               <div className="pt-10 border-t border-stone-100 flex flex-col md:flex-row justify-between items-center gap-6">
 
                 <div className="flex items-center gap-2 text-stone-400 font-bold text-[10px] uppercase tracking-[0.2em]">
+
                   <CheckCircle2 className="w-4 h-4 text-green-500" />
+
                   All Systems Operational
+
                 </div>
 
                 <p className="text-[11px] text-stone-400 font-bold uppercase tracking-[0.2em]">
+
                   © 2026 RecipeoAI • Developed by{" "}
+
                   <Link
                     href="https://manishsingh.com"
                     className="text-orange-600"
                   >
                     Manish Singh
                   </Link>
+
                 </p>
+
               </div>
+
             </div>
+
           </footer>
+
         </body>
+
       </html>
     </ClerkProvider>
   );
