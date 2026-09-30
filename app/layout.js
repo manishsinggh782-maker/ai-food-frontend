@@ -1,4 +1,4 @@
-```tsx
+```jsx
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -110,9 +110,7 @@ export default function RootLayout({ children }) {
       appearance={{ baseTheme: neobrutalism }}
     >
       <html lang="en" suppressHydrationWarning>
-
         <head>
-
           {/* GOOGLE ADSENSE */}
           <Script
             id="google-adsense"
@@ -131,13 +129,9 @@ export default function RootLayout({ children }) {
               __html: JSON.stringify(googleSchema),
             }}
           />
-
         </head>
 
-        <body
-          className={`${inter.className} bg-stone-50 text-stone-900`}
-        >
-
+        <body className={`${inter.className} bg-stone-50 text-stone-900`}>
           <Header />
 
           <main className="min-h-screen">
@@ -148,16 +142,13 @@ export default function RootLayout({ children }) {
 
           {/* PROFESSIONAL FOOTER */}
           <footer className="bg-white border-t border-stone-200 pt-20 pb-12 px-4 mt-20">
-
             <div className="max-w-7xl mx-auto">
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
 
                 {/* BRAND SECTION */}
                 <div className="space-y-6">
-
                   <div className="flex items-center gap-3">
-
                     <Image
                       src="/logo.jpg"
                       alt="RecipeoAI Logo"
@@ -172,25 +163,23 @@ export default function RootLayout({ children }) {
                         AI
                       </span>
                     </span>
-
                   </div>
 
                   <p className="text-stone-500 text-sm leading-relaxed max-w-xs font-medium">
                     World-class AI culinary assistant helping you turn
                     leftovers into gourmet meals daily.
                   </p>
-
                 </div>
 
                 {/* RESOURCES */}
                 <div>
-
                   <h3 className="text-sm font-bold text-stone-900 mb-6 tracking-wide">
                     Resources
                   </h3>
 
                   <ul className="space-y-3 text-stone-500 text-sm font-semibold">
 
+                    {/* ABOUT */}
                     <li>
                       <Link
                         href="/about"
@@ -200,6 +189,7 @@ export default function RootLayout({ children }) {
                       </Link>
                     </li>
 
+                    {/* PRIVACY */}
                     <li>
                       <Link
                         href="/privacy"
@@ -209,7 +199,7 @@ export default function RootLayout({ children }) {
                       </Link>
                     </li>
 
-                    {/* DISCLAIMER LINK */}
+                    {/* DISCLAIMER */}
                     <li>
                       <Link
                         href="/disclaimer"
@@ -219,6 +209,7 @@ export default function RootLayout({ children }) {
                       </Link>
                     </li>
 
+                    {/* CONTACT */}
                     <li>
                       <Link
                         href="/contact"
@@ -228,6 +219,7 @@ export default function RootLayout({ children }) {
                       </Link>
                     </li>
 
+                    {/* TERMS */}
                     <li>
                       <Link
                         href="/terms"
@@ -238,12 +230,10 @@ export default function RootLayout({ children }) {
                     </li>
 
                   </ul>
-
                 </div>
 
                 {/* SECURITY */}
                 <div className="space-y-8">
-
                   <h3 className="text-sm font-bold text-stone-900 mb-6 tracking-wide">
                     Security
                   </h3>
@@ -251,13 +241,10 @@ export default function RootLayout({ children }) {
                   <div className="flex gap-4 items-start">
 
                     <div className="p-2.5 bg-green-50 rounded-xl text-green-600">
-
                       <Lock className="w-5 h-5" />
-
                     </div>
 
                     <div>
-
                       <p className="text-sm font-bold">
                         Local Sync
                       </p>
@@ -265,16 +252,13 @@ export default function RootLayout({ children }) {
                       <p className="text-xs text-stone-400 font-medium">
                         100% secure recipes
                       </p>
-
                     </div>
 
                   </div>
-
                 </div>
 
                 {/* COMPLIANCE */}
                 <div>
-
                   <h3 className="text-sm font-bold text-stone-900 mb-6 tracking-wide">
                     Compliance
                   </h3>
@@ -288,7 +272,6 @@ export default function RootLayout({ children }) {
                     </p>
 
                   </div>
-
                 </div>
 
               </div>
@@ -320,11 +303,8 @@ export default function RootLayout({ children }) {
               </div>
 
             </div>
-
           </footer>
-
         </body>
-
       </html>
     </ClerkProvider>
   );
