@@ -1,3 +1,4 @@
+```tsx
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -208,6 +209,16 @@ export default function RootLayout({ children }) {
                       </Link>
                     </li>
 
+                    {/* DISCLAIMER LINK */}
+                    <li>
+                      <Link
+                        href="/disclaimer"
+                        className="hover:text-orange-600"
+                      >
+                        • Disclaimer
+                      </Link>
+                    </li>
+
                     <li>
                       <Link
                         href="/contact"
@@ -318,3 +329,4 @@ export default function RootLayout({ children }) {
     </ClerkProvider>
   );
 }
+```
