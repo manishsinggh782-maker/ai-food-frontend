@@ -131,7 +131,11 @@ export default function RootLayout({ children }) {
           />
         </head>
 
-        <body className={`${inter.className} bg-stone-50 text-stone-900`}>
+        <body
+          className={
+            inter.className + " bg-stone-50 text-stone-900"
+          }
+        >
           <Header />
 
           <main className="min-h-screen">
@@ -148,7 +152,9 @@ export default function RootLayout({ children }) {
 
                 {/* BRAND SECTION */}
                 <div className="space-y-6">
+
                   <div className="flex items-center gap-3">
+
                     <Image
                       src="/logo.jpg"
                       alt="RecipeoAI Logo"
@@ -163,16 +169,19 @@ export default function RootLayout({ children }) {
                         AI
                       </span>
                     </span>
+
                   </div>
 
                   <p className="text-stone-500 text-sm leading-relaxed max-w-xs font-medium">
                     World-class AI culinary assistant helping you turn
                     leftovers into gourmet meals daily.
                   </p>
+
                 </div>
 
                 {/* RESOURCES */}
                 <div>
+
                   <h3 className="text-sm font-bold text-stone-900 mb-6 tracking-wide">
                     Resources
                   </h3>
@@ -230,10 +239,12 @@ export default function RootLayout({ children }) {
                     </li>
 
                   </ul>
+
                 </div>
 
                 {/* SECURITY */}
                 <div className="space-y-8">
+
                   <h3 className="text-sm font-bold text-stone-900 mb-6 tracking-wide">
                     Security
                   </h3>
@@ -245,6 +256,7 @@ export default function RootLayout({ children }) {
                     </div>
 
                     <div>
+
                       <p className="text-sm font-bold">
                         Local Sync
                       </p>
@@ -252,13 +264,16 @@ export default function RootLayout({ children }) {
                       <p className="text-xs text-stone-400 font-medium">
                         100% secure recipes
                       </p>
+
                     </div>
 
                   </div>
+
                 </div>
 
                 {/* COMPLIANCE */}
                 <div>
+
                   <h3 className="text-sm font-bold text-stone-900 mb-6 tracking-wide">
                     Compliance
                   </h3>
@@ -272,6 +287,7 @@ export default function RootLayout({ children }) {
                     </p>
 
                   </div>
+
                 </div>
 
               </div>
