@@ -23,15 +23,22 @@ const aj = arcjet({
 
 export default clerkMiddleware(async (auth, req) => {
   const url = req.nextUrl.clone();
-  const host = req.headers.get('host');
+  const host = req.headers.get("host");
 
-  // --- 1. SEO: HTTPS & WWW REDIRECT (SAAF LOGIC) ---
-  // Isse Netlify ke preview links crash nahi honge
+  // --- 0. CRON: Vercel cron ko Arcjet/Clerk se bypass (route me CRON_SECRET check hai) ---
+  if (req.nextUrl.pathname.startsWith("/api/cron/")) {
+    return NextResponse.next();
+  }
+
+  // --- 1. SEO: HTTPS & WWW REDIRECT ---
   if (
-    process.env.NODE_ENV === 'production' && 
-    host === 'recipeoai.com' // Sirf asli domain ko redirect karo
+    process.env.NODE_ENV === "production" &&
+    host === "recipeoai.com" // Sirf asli domain ko redirect karo
   ) {
-    return NextResponse.redirect(`https://www.recipeoai.com${url.pathname}${url.search}`, 301);
+    return NextResponse.redirect(
+      `https://www.recipeoai.com${url.pathname}${url.search}`,
+      301
+    );
   }
 
   // --- 2. SECURITY: ARCJET PROTECTION (SAFE MODE) ---
