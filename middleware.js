@@ -1,6 +1,5 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import arcjet, { shield, detectBot } from "@arcjet/next";
 
 const isProtectedRoute = createRouteMatcher([
   "/recipe(.*)",
@@ -9,64 +8,52 @@ const isProtectedRoute = createRouteMatcher([
   "/dashboard(.*)",
 ]);
 
-// Arcjet setup (Sirf tabhi jab key ho)
-const aj = arcjet({
-  key: process.env.ARCJET_KEY,
-  rules: [
-    shield({ mode: "LIVE" }),
-    detectBot({
-      mode: "LIVE",
-      allow: ["CATEGORY:SEARCH_ENGINE", "CATEGORY:PREVIEW"],
-    }),
-  ],
-});
-
 export default clerkMiddleware(async (auth, req) => {
-  const url = req.nextUrl.clone();
+  const { userId, redirectToSignIn } = await auth();
+
+  const url = req.nextUrl;
   const host = req.headers.get("host");
 
-  // --- 0. CRON: Vercel cron ko Arcjet/Clerk se bypass (route me CRON_SECRET check hai) ---
-  if (req.nextUrl.pathname.startsWith("/api/cron/")) {
+  // --------------------------------------------------
+  // 1. CRON ROUTES
+  // Vercel cron routes ko authentication se bypass karo.
+  // Route ke andar CRON_SECRET se security check karna.
+  // --------------------------------------------------
+  if (url.pathname.startsWith("/api/cron/")) {
     return NextResponse.next();
   }
 
-  // --- 1. SEO: HTTPS & WWW REDIRECT ---
+  // --------------------------------------------------
+  // 2. HTTPS + WWW REDIRECT
+  // recipeoai.com -> www.recipeoai.com
+  // --------------------------------------------------
   if (
     process.env.NODE_ENV === "production" &&
-    host === "recipeoai.com" // Sirf asli domain ko redirect karo
+    host === "recipeoai.com"
   ) {
     return NextResponse.redirect(
-      `https://www.recipeoai.com${url.pathname}${url.search}`,
+      new URL(
+        `https://www.recipeoai.com${url.pathname}${url.search}`
+      ),
       301
     );
   }
 
-  // --- 2. SECURITY: ARCJET PROTECTION (SAFE MODE) ---
-  if (process.env.ARCJET_KEY) {
-    try {
-      const decision = await aj.protect(req);
-      if (decision.isDenied()) {
-        return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-      }
-    } catch (error) {
-      console.error("Arcjet Error:", error);
-    }
-  }
-
-  // --- 3. AUTH: CLERK AUTHENTICATION ---
-  const { userId } = await auth();
-
+  // --------------------------------------------------
+  // 3. PROTECTED ROUTES
+  // --------------------------------------------------
   if (!userId && isProtectedRoute(req)) {
-    const { redirectToSignIn } = await auth();
     return redirectToSignIn();
   }
 
+  // --------------------------------------------------
+  // 4. PUBLIC ROUTES
+  // --------------------------------------------------
   return NextResponse.next();
 });
 
 export const config = {
   matcher: [
-    // Next.js internals aur static files ko chhod kar sab pe chalega
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
     "/(api|trpc)(.*)",
   ],

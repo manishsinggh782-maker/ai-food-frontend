@@ -1,6 +1,10 @@
 {
   "crons": [
+<<<<<<< HEAD
     { "path": "/api/cron/daily-blog", "schedule": "30 4 * * *" },
     { "path": "/api/cron/daily-blog", "schedule": "30 5 * * *" }
+=======
+    { "path": "/api/cron/daily-blog", "schedule": "30 4 * * *" }
+>>>>>>> cron-update
   ]
 }
