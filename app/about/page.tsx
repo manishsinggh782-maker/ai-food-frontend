@@ -1,208 +1,348 @@
+
 import React from "react";
-import { 
-  Sparkles, 
-  Cpu, 
-  Globe, 
-  Users, 
-  Trophy, 
-  ShieldCheck, 
-  Code, 
-  Zap, 
+import Link from "next/link";
+import {
+  Sparkles,
+  Globe,
+  ShieldCheck,
+  Code,
   ChevronRight,
   Target,
-  Rocket,
   Camera,
   BookOpen,
   PenTool,
   Fingerprint,
-  Server
+  ChefHat,
+  Mail,
+  AlertTriangle,
 } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
 
 export const metadata = {
-  title: "About Us | RecipeoAI - Pioneers in Global Culinary Intelligence",
-  description: "Founded by Manish Singh, RecipeoAI leverages Next.js, Strapi, and Advanced AI to revolutionize home cooking and eliminate global food waste.",
+  title: "About Us | RecipeoAI",
+  description:
+    "Meet Manish Singh, the founder of RecipeoAI. Explore original food and cooking articles, practical kitchen tips, and recipe ideas to make everyday home cooking easier.",
 };
 
-export default function AboutPage() {
-  const lastUpdated = "May 03, 2026";
+const lastUpdated = "October 09, 2026";
+const CONTACT_EMAIL = "privacy@recipeoai.com";
 
+const features = [
+  {
+    title: "AI Recipe Generator",
+    desc: "Enter the ingredients you have and discover recipe ideas for your next meal.",
+    icon: ChefHat,
+  },
+  {
+    title: "Pantry Scan",
+    desc: "Upload a photo of your pantry or fridge to get AI-powered suggestions about visible food items.",
+    icon: Camera,
+  },
+  {
+    title: "Digital Cookbook",
+    desc: "Save the recipes you like and return to them whenever you need inspiration.",
+    icon: BookOpen,
+  },
+  {
+    title: "Food & Cooking Articles",
+    desc: "Explore original articles written by Manish Singh, including practical cooking tips, food guides, and everyday kitchen advice.",
+    icon: PenTool,
+  },
+];
+
+export default function AboutPage() {
   return (
     <div className="min-h-screen bg-stone-50 text-stone-900 selection:bg-orange-100 pb-20 overflow-x-hidden">
-      
-      {/* --- PREMIUM BACKGROUND ACCENTS --- */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-orange-100/30 blur-[150px] rounded-full -z-10" />
-      <div className="absolute top-[20%] -left-20 w-[400px] h-[400px] bg-blue-100/20 blur-[120px] rounded-full -z-10" />
+      {/* Background accents */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-100/40 blur-[140px] rounded-full -z-10" />
 
-      {/* --- BREADCRUMB --- */}
-      <nav className="pt-32 px-4 max-w-7xl mx-auto flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400">
-        <Link href="/" className="hover:text-orange-600 transition-colors">Home</Link>
+      {/* Breadcrumb */}
+      <nav
+        aria-label="Breadcrumb"
+        className="pt-28 px-4 max-w-6xl mx-auto flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-stone-400"
+      >
+        <Link href="/" className="hover:text-orange-600 transition-colors">
+          Home
+        </Link>
         <ChevronRight className="w-3 h-3" />
-        <span className="text-stone-900">Our Identity</span>
+        <span className="text-stone-900">About Us</span>
       </nav>
 
-      {/* --- HERO SECTION: GLOBAL VISION --- */}
-      <section className="pt-10 pb-24 px-4">
+      {/* Hero */}
+      <header className="pt-10 pb-20 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white shadow-sm border border-stone-200 rounded-full text-[11px] font-black mb-8 uppercase tracking-[0.3em] text-orange-600">
-            <Sparkles className="w-3.5 h-3.5" /> A Manish Singh Innovation
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white shadow-sm border border-stone-200 rounded-full text-[11px] font-black mb-8 uppercase tracking-widest text-orange-600">
+            <Sparkles className="w-3.5 h-3.5" />
+            About RecipeoAI
           </div>
-          <h1 className="text-5xl md:text-[8rem] font-black mb-10 tracking-tighter leading-[0.85]">
-            Innovating <br /><span className="text-orange-600">Every Kitchen.</span>
+
+          <h1 className="text-4xl md:text-7xl font-black mb-8 tracking-tighter leading-[0.95]">
+            Cook more with <br />
+            <span className="text-orange-600">
+              what you already have.
+            </span>
           </h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-end border-t border-stone-200 pt-12">
-            <p className="text-xl md:text-2xl text-stone-500 font-medium leading-tight">
-              Developed by <span className="text-stone-900 font-bold">Manish Singh</span>, RecipeoAI is a sophisticated AI ecosystem built to tackle food waste and culinary fatigue on a global scale.
+
+          <div className="border-t border-stone-200 pt-8 max-w-3xl">
+            <p className="text-lg md:text-xl text-stone-600 font-medium leading-relaxed">
+              RecipeoAI is a recipe and cooking platform created by{" "}
+              <strong className="text-stone-900">Manish Singh</strong>.
+              Our goal is to help home cooks discover useful cooking
+              information, find inspiration for everyday meals, and make
+              better use of the ingredients they already have.
             </p>
-            <div className="flex flex-col md:items-end">
-               <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Core Mission</span>
-               <span className="text-lg font-black text-stone-900 italic text-right">Zero Waste. Infinite Flavor.</span>
-            </div>
           </div>
         </div>
-      </section>
+      </header>
 
-      {/* --- TECHNOLOGY STACK (Next.js + Strapi) --- */}
-      <section className="px-4 mb-32">
-        <div className="max-w-7xl mx-auto bg-stone-900 rounded-[3rem] md:rounded-[5rem] p-8 md:p-20 relative overflow-hidden text-stone-50 shadow-2xl">
-          <div className="absolute top-0 right-0 p-20 opacity-5">
-            <Server className="w-64 h-64" />
-          </div>
-          <div className="relative z-10">
-            <div className="flex items-center gap-3 text-orange-400 mb-8 font-bold uppercase tracking-[0.3em] text-xs">
-              <Code className="w-5 h-5" /> Engineering Architecture
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <div>
-                <h2 className="text-4xl md:text-6xl font-black mb-8 tracking-tighter">
-                  Next.js + <span className="text-orange-500">Strapi CMS</span>
+      <main className="px-4">
+        <div className="max-w-6xl mx-auto space-y-16">
+          {/* Story */}
+          <section className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 bg-white p-8 md:p-12 rounded-3xl border border-stone-200 shadow-sm">
+              <div className="flex items-center gap-3 mb-6 text-orange-600">
+                <Target className="w-6 h-6" />
+                <h2 className="text-2xl md:text-3xl font-black tracking-tight text-stone-900">
+                  Why we built RecipeoAI
                 </h2>
-                <p className="text-stone-400 text-lg md:text-xl leading-relaxed font-light">
-                  RecipeoAI is engineered for high performance using **Next.js 15+** for a seamless frontend experience and **Strapi CMS** as our scalable backend. Hosted on elite **Render** infrastructure, we ensure low-latency AI generation for users in every timezone.
+              </div>
+
+              <div className="space-y-4 text-stone-600 leading-relaxed text-base md:text-lg">
+                <p>
+                  Deciding what to cook can be difficult when you have only
+                  a few ingredients available. Many people also look for
+                  practical answers to everyday questions about food,
+                  cooking methods, and kitchen preparation.
+                </p>
+
+                <p>
+                  RecipeoAI brings cooking articles, helpful food
+                  information, and recipe ideas together in one place.
+                  Our aim is to make cooking easier to understand and help
+                  readers make informed decisions in their own kitchens.
                 </p>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                 <div className="p-6 bg-stone-800 rounded-3xl border border-stone-700">
-                    <Zap className="w-8 h-8 text-orange-500 mb-4" />
-                    <h4 className="font-bold text-sm uppercase mb-2">Edge Speed</h4>
-                    <p className="text-xs text-stone-500">Instant recipe rendering worldwide.</p>
-                 </div>
-                 <div className="p-6 bg-stone-800 rounded-3xl border border-stone-700">
-                    <ShieldCheck className="w-8 h-8 text-green-500 mb-4" />
-                    <h4 className="font-bold text-sm uppercase mb-2">Secure API</h4>
-                    <p className="text-xs text-stone-500">Protected backend nodes.</p>
-                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* --- GLOBAL SUSTAINABILITY MISSION --- */}
-      <section className="px-4 mb-32">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
-           <div className="lg:col-span-2 bg-orange-600 p-12 md:p-20 rounded-[4rem] text-white">
-              <Target className="w-12 h-12 mb-8 text-orange-200" />
-              <h2 className="text-4xl md:text-6xl font-black mb-8 tracking-tighter">Planet First, <br />Zero Waste.</h2>
-              <p className="text-xl md:text-2xl font-medium opacity-90 leading-relaxed">
-                Manish Singh's primary goal is to minimize global household food waste. By providing a smart AI assistant to every home, RecipeoAI turns everyday leftovers into gourmet meals, making sustainable living accessible to everyone.
+            <div className="bg-white p-8 md:p-10 rounded-3xl border border-stone-200 shadow-sm flex flex-col justify-center">
+              <Globe className="w-10 h-10 text-orange-600 mb-6" />
+
+              <h3 className="text-2xl font-black mb-3">
+                Made for home cooks
+              </h3>
+
+              <p className="text-stone-600 leading-relaxed">
+                RecipeoAI shares cooking information and recipe
+                inspiration for people who want to learn, explore, and
+                enjoy cooking at home.
               </p>
-           </div>
-           <div className="bg-white p-12 rounded-[4rem] border border-stone-200 flex flex-col justify-center">
-              <Globe className="w-12 h-12 text-blue-600 mb-8" />
-              <h3 className="text-3xl font-black mb-4">Worldwide</h3>
-              <p className="text-stone-500 font-medium">Empowering home chefs across 140+ countries with localized AI intelligence.</p>
-           </div>
-        </div>
-      </section>
+            </div>
+          </section>
 
-      {/* --- KEY FEATURES --- */}
-      <section className="px-4 mb-32">
-        <h2 className="text-center text-4xl md:text-6xl font-black mb-16 tracking-tighter">Core Technologies.</h2>
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-           {[
-             { title: "AI Pantry Scan", desc: "Our vision-based AI identifies ingredients from a simple photo.", icon: Camera },
-             { title: "Global Cuisines", desc: "Experience the world's diverse food cultures in your own kitchen.", icon: Globe },
-             { title: "Digital Cookbook", desc: "Save, manage, and curate your personal AI-generated library.", icon: BookOpen },
-             { title: "Smart Discovery", desc: "Instantly find recipes tailored to your dietary requirements.", icon: Zap },
-           ].map((f, i) => (
-             <div key={i} className="bg-white p-10 rounded-[3rem] border border-stone-100 hover:shadow-xl transition-all group">
-                <div className="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-600 mb-6 group-hover:scale-110 transition-transform">
-                  <f.icon className="w-6 h-6" />
+          {/* Features */}
+          <section>
+            <h2 className="text-center text-3xl md:text-5xl font-black mb-12 tracking-tighter">
+              What you can do here
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {features.map((f) => (
+                <div
+                  key={f.title}
+                  className="bg-white p-8 rounded-3xl border border-stone-200 hover:shadow-lg transition-shadow"
+                >
+                  <div className="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-600 mb-5">
+                    <f.icon className="w-6 h-6" />
+                  </div>
+
+                  <h3 className="text-lg font-bold mb-2">{f.title}</h3>
+
+                  <p className="text-stone-600 text-sm leading-relaxed">
+                    {f.desc}
+                  </p>
                 </div>
-                <h4 className="text-xl font-bold mb-3">{f.title}</h4>
-                <p className="text-stone-500 text-sm leading-relaxed">{f.desc}</p>
-             </div>
-           ))}
-        </div>
-      </section>
+              ))}
+            </div>
+          </section>
 
-      {/* --- HUMAN-VERIFIED CONTENT --- */}
-      <section className="px-4 mb-32">
-        <div className="max-w-7xl mx-auto bg-stone-100 rounded-[4rem] p-12 md:p-20 flex flex-col lg:flex-row items-center gap-16 text-center lg:text-left">
-          <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg shrink-0">
-             <PenTool className="w-10 h-10 text-orange-600" />
-          </div>
-          <div>
-            <h2 className="text-4xl font-black mb-6 tracking-tighter">Human Integrity & Verified Content</h2>
-            <p className="text-xl text-stone-600 leading-relaxed">
-              Every article and culinary guide on this platform is personally reviewed and verified by **Manish Singh**. Unlike generic AI platforms, we ensure that our insights come from a place of human expertise and rigorous validation to maintain the highest trust.
+          {/* Article authorship and editorial approach */}
+          <section className="bg-stone-100 rounded-3xl p-8 md:p-14 flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
+            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow shrink-0">
+              <PenTool className="w-7 h-7 text-orange-600" />
+            </div>
+
+            <div className="space-y-4">
+              <h2 className="text-2xl md:text-3xl font-black tracking-tight">
+                How our articles and recipes are created
+              </h2>
+
+              <p className="text-stone-600 leading-relaxed text-base md:text-lg">
+                The food and cooking articles published on RecipeoAI are
+                written by Manish Singh. They are created to share useful
+                information, practical cooking guidance, and ideas that
+                readers can apply in their everyday lives.
+              </p>
+
+              <p className="text-stone-600 leading-relaxed text-base md:text-lg">
+                RecipeoAI also offers an AI-powered recipe generator that
+                suggests recipes based on available ingredients. This
+                recipe-generation feature is separate from our blog
+                articles. We aim to make the information on our website
+                clear, useful, and relevant to home cooks.
+              </p>
+
+              <p className="text-stone-600 leading-relaxed text-base md:text-lg">
+                We welcome reader feedback and corrections. If you notice
+                an error or believe an article could be improved, please
+                contact us so we can review your feedback.
+              </p>
+
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 font-bold text-orange-600 hover:text-orange-700 transition-colors"
+              >
+                Contact us
+                <ChevronRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </section>
+
+          {/* Safety notice */}
+          <section className="bg-orange-50 border border-orange-200 rounded-3xl p-6 md:p-8 flex gap-4 items-start">
+            <AlertTriangle className="w-6 h-6 text-orange-600 shrink-0 mt-1" />
+
+            <div>
+              <h2 className="font-black text-lg mb-1">
+                Please cook safely
+              </h2>
+
+              <p className="text-stone-700 leading-relaxed">
+                Recipe suggestions and cooking articles are intended for
+                general informational purposes. Always check ingredient
+                labels for allergens, follow appropriate food-safety
+                practices, and cook food thoroughly. For individual
+                dietary or medical concerns, consult a qualified
+                healthcare professional.
+              </p>
+            </div>
+          </section>
+
+          {/* Technology & Security */}
+          <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="bg-white p-8 md:p-10 rounded-3xl border border-stone-200 shadow-sm">
+              <Code className="w-9 h-9 text-orange-600 mb-5" />
+
+              <h3 className="text-2xl font-black mb-3">
+                Technology
+              </h3>
+
+              <p className="text-stone-600 leading-relaxed">
+                RecipeoAI is built with Next.js for the website and
+                Strapi as the content management system. Recipe
+                suggestions and pantry photo recognition are powered
+                by Google's Gemini AI. Food images may be sourced from
+                Unsplash.
+              </p>
+            </div>
+
+            <div className="bg-white p-8 md:p-10 rounded-3xl border border-stone-200 shadow-sm">
+              <Fingerprint className="w-9 h-9 text-blue-600 mb-5" />
+
+              <h3 className="text-2xl font-black mb-3">
+                Your account and security
+              </h3>
+
+              <p className="text-stone-600 leading-relaxed mb-4">
+                Sign-in is handled by Clerk. We use security measures
+                to help protect the website and reduce abusive
+                activity. Please review our Privacy Policy to learn
+                more about how information is handled.
+              </p>
+
+              <Link
+                href="/privacy"
+                className="inline-flex items-center gap-2 text-sm font-bold text-orange-600 hover:underline"
+              >
+                <ShieldCheck className="w-4 h-4" />
+                Read our Privacy Policy
+              </Link>
+            </div>
+          </section>
+
+          {/* Founder */}
+          <section className="bg-white p-8 md:p-12 rounded-3xl border border-stone-200 shadow-sm text-center">
+            <div
+              className="w-20 h-20 rounded-full bg-orange-600 text-white flex items-center justify-center text-2xl font-black mx-auto mb-4 shadow"
+              aria-hidden="true"
+            >
+              MS
+            </div>
+
+            <h2 className="font-black text-2xl">Manish Singh</h2>
+
+            <p className="text-orange-600 font-bold text-xs uppercase tracking-widest mb-4">
+              Founder & Developer
             </p>
-          </div>
-        </div>
-      </section>
 
-      {/* --- ADVANCED SECURITY: CLERK & BODYGUARD AI --- */}
-      <section className="px-4 mb-32">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-           <div className="bg-white p-12 rounded-[4rem] border border-stone-200 flex flex-col items-start shadow-sm">
-              <Fingerprint className="w-12 h-12 text-blue-500 mb-8" />
-              <h3 className="text-3xl font-black mb-4">Enterprise-Grade Identity</h3>
-              <p className="text-stone-500 mb-6 font-medium leading-relaxed">
-                We integrate **Clerk** to provide world-class, encrypted authentication. Your personal profile and pantry data are protected by the industry's most robust security standards.
-              </p>
-              <span className="px-4 py-2 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase tracking-widest">Secured by Clerk</span>
-           </div>
-           <div className="bg-stone-900 p-12 rounded-[4rem] text-stone-50 flex flex-col items-start">
-              <ShieldCheck className="w-12 h-12 text-green-500 mb-8" />
-              <h3 className="text-3xl font-black mb-4 tracking-tight text-white">Bodyguard AI Defense</h3>
-              <p className="text-stone-400 mb-6 font-medium leading-relaxed">
-                RecipeoAI features a custom **"Bodyguard AI"** monitoring system that actively safeguards our ecosystem against cyber threats, ensuring 24/7 protection for our global community.
-              </p>
-              <div className="flex gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-[10px] font-bold text-green-500 uppercase tracking-widest">Active Protection Protocol</span>
-              </div>
-           </div>
-        </div>
-      </section>
+            <p className="text-stone-600 leading-relaxed max-w-2xl mx-auto">
+              Manish Singh founded and developed RecipeoAI to make
+              everyday cooking information and recipe discovery more
+              accessible. He works on the website and writes its food
+              and cooking articles to help readers find useful
+              information for their kitchens.
+            </p>
+          </section>
 
-      {/* --- THE FINAL STATEMENT --- */}
-      <div className="max-w-4xl mx-auto text-center px-4">
-        <p className="text-stone-400 font-bold uppercase tracking-[0.4em] text-[10px] mb-8">Redefining Modern Culinary Arts</p>
-        <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-10">
-          "Technology is most meaningful when it simplifies our most essential human experiences."
-        </h2>
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-20 h-20 rounded-full bg-stone-200 border-2 border-white shadow-xl overflow-hidden">
-             <Image src="/logo.jpg" alt="Manish Singh" width={80} height={80} />
-          </div>
-          <div>
-            <h4 className="font-black text-xl">Manish Singh</h4>
-            <p className="text-orange-600 font-bold text-xs uppercase tracking-widest">Founder & Lead Architect</p>
-          </div>
-        </div>
-      </div>
+          {/* Contact */}
+          <section className="text-center">
+            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center mx-auto mb-5 shadow-sm border border-stone-200">
+              <Mail className="w-6 h-6 text-orange-600" />
+            </div>
 
-      {/* --- FOOTER TIMESTAMP --- */}
-      <div className="mt-24 text-center">
-        <div className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.5em] mb-4 italic text-center">
-          International Compliance Update: {lastUpdated}
-        </div>
-        <div className="h-1 w-20 bg-orange-600 mx-auto rounded-full" />
-      </div>
+            <h2 className="text-2xl md:text-3xl font-black mb-3 tracking-tight">
+              Get in touch
+            </h2>
 
+            <p className="text-stone-600 mb-6">
+              Have a question, suggestion, or correction? We would
+              love to hear from you.
+            </p>
+
+            <div className="flex flex-wrap justify-center gap-3 text-sm font-bold">
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="px-6 py-3 bg-stone-900 text-white rounded-xl hover:bg-orange-600 transition-colors"
+              >
+                {CONTACT_EMAIL}
+              </a>
+
+              <Link
+                href="/contact"
+                className="px-6 py-3 bg-white border border-stone-300 rounded-xl hover:border-orange-600 hover:text-orange-600 transition-colors"
+              >
+                Contact page
+              </Link>
+
+              <Link
+                href="/privacy"
+                className="px-6 py-3 bg-white border border-stone-300 rounded-xl hover:border-orange-600 hover:text-orange-600 transition-colors"
+              >
+                Privacy Policy
+              </Link>
+
+              <Link
+                href="/terms"
+                className="px-6 py-3 bg-white border border-stone-300 rounded-xl hover:border-orange-600 hover:text-orange-600 transition-colors"
+              >
+                Terms of Service
+              </Link>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <footer className="mt-16 text-center text-xs text-stone-400 px-4">
+        Last updated: {lastUpdated}
+      </footer>
     </div>
   );
 }

@@ -1,191 +1,404 @@
+
 import React from "react";
-import {
-AlertTriangle,
-ShieldAlert,
-HeartPulse,
-Info,
-Scale,
-ExternalLink,
-ChevronRight,
-Gavel,
-Zap,
-Globe
-} from "lucide-react";
 import Link from "next/link";
+import type { ReactNode } from "react";
+import type { LucideIcon } from "lucide-react";
+import {
+  AlertTriangle,
+  ShieldAlert,
+  HeartPulse,
+  Scale,
+  ExternalLink,
+  ChevronRight,
+  Mail,
+  Cookie,
+  BookOpen,
+} from "lucide-react";
 
 export const metadata = {
-title: "Legal Disclaimer | RecipeoAI - High-Level AI Safety & Compliance",
-description: "Official legal documentation for RecipeoAI. Important notices regarding AI recipe accuracy, nutritional safety, and international liability standards.",
+  title: "Disclaimer | RecipeoAI",
+  description:
+    "Read the RecipeoAI disclaimer covering recipe suggestions, food safety, allergies, nutrition information, cooking articles, advertising, external links, and limitations of liability.",
 };
 
+const lastUpdated = "October 10, 2026";
+const CONTACT_EMAIL = "privacy@recipeoai.com";
+
+type CardProps = {
+  icon: LucideIcon;
+  title: string;
+  tone?: "orange" | "red" | "blue" | "stone";
+  children: ReactNode;
+};
+
+function Card({
+  icon: Icon,
+  title,
+  tone = "orange",
+  children,
+}: CardProps) {
+  const tones = {
+    orange: "bg-orange-50 text-orange-600",
+    red: "bg-red-50 text-red-500",
+    blue: "bg-blue-50 text-blue-600",
+    stone: "bg-stone-100 text-stone-700",
+  };
+
+  return (
+    <section className="bg-white p-6 md:p-10 rounded-3xl border border-stone-200 shadow-sm">
+      <div className="flex items-center gap-4 mb-6">
+        <div
+          className={`w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center ${tones[tone]}`}
+        >
+          <Icon className="w-6 h-6" />
+        </div>
+
+        <h2 className="text-xl md:text-2xl font-black tracking-tight">
+          {title}
+        </h2>
+      </div>
+
+      <div className="space-y-4 text-base text-stone-600 leading-relaxed">
+        {children}
+      </div>
+    </section>
+  );
+}
+
 export default function DisclaimerPage() {
-const lastUpdated = "March 03, 2026";
+  return (
+    <div className="min-h-screen bg-stone-50 text-stone-900 selection:bg-orange-100 pb-20 overflow-x-hidden">
+      <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-orange-50/60 to-transparent -z-10" />
 
-return (
-<div className="min-h-screen bg-stone-50 text-stone-900 selection:bg-orange-100 pb-20 overflow-x-hidden">
+      {/* Breadcrumb */}
+      <nav
+        aria-label="Breadcrumb"
+        className="pt-28 px-4 max-w-5xl mx-auto flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-stone-400"
+      >
+        <Link href="/" className="hover:text-orange-600 transition-colors">
+          Home
+        </Link>
 
-  {/* --- PREMIUM DECORATIVE BACKGROUND ELEMENTS --- */}
-  <div className="absolute top-0 left-0 w-full h-[600px] bg-gradient-to-b from-orange-50/50 to-transparent -z-10" />
-  <div className="absolute top-20 -right-20 w-96 h-96 bg-orange-200/20 blur-[120px] rounded-full -z-10" />
-  <div className="absolute top-[40%] -left-20 w-80 h-80 bg-blue-100/30 blur-[100px] rounded-full -z-10" />
+        <ChevronRight className="w-3 h-3" />
 
-  {/* --- BREADCRUMB (International Standard) --- */}
-  <nav className="pt-32 px-4 max-w-7xl mx-auto flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400">
-    <Link href="/" className="hover:text-orange-600 transition-colors">Home</Link>
-    <ChevronRight className="w-3 h-3" />
-    <span className="text-stone-900">Legal Disclaimer</span>
-  </nav>
+        <span className="text-stone-900">Disclaimer</span>
+      </nav>
 
-  {/* --- HERO SECTION --- */}
-  <section className="pt-10 pb-20 px-4">
-    <div className="max-w-5xl mx-auto">
-      <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white shadow-sm border border-stone-200 rounded-full text-[11px] font-black mb-8 uppercase tracking-widest text-orange-600">
-        <ShieldAlert className="w-3.5 h-3.5" /> Global Safety Protocol v2.0
-      </div>
-      <h1 className="text-6xl md:text-8xl font-black mb-8 tracking-tighter leading-[0.9]">
-        Trust & <span className="text-orange-600">Transparency.</span>
-      </h1>
-      <div className="flex flex-col md:flex-row md:items-center gap-6 justify-between border-t border-stone-200 pt-8">
-        <p className="text-xl text-stone-500 font-medium max-w-2xl leading-relaxed">
-          Our commitment to user safety and AI accountability. Please read these terms carefully before utilizing our culinary intelligence services.
-        </p>
-        <div className="flex flex-col">
-           <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Last Revised</span>
-           <span className="text-lg font-black text-stone-900">{lastUpdated}</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* --- MAIN CONTENT GRID --- */}
-  <section className="px-4">
-    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
-      
-      {/* LEFT SIDE: PRIMARY DISCLAIMERS */}
-      <div className="lg:col-span-8 space-y-8">
-        
-        {/* 1. AI Content Disclaimer */}
-        <div className="group bg-white p-8 md:p-12 rounded-[3rem] border border-stone-200 shadow-sm hover:shadow-xl transition-all duration-500 relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
-            <Zap className="w-32 h-32 text-orange-600" />
+      {/* Hero */}
+      <header className="pt-10 pb-14 px-4">
+        <div className="max-w-5xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white shadow-sm border border-stone-200 rounded-full text-[11px] font-black mb-6 uppercase tracking-widest text-orange-600">
+            <ShieldAlert className="w-3.5 h-3.5" />
+            Important notice
           </div>
-          <div className="flex items-center gap-4 mb-8">
-            <div className="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-600">
-              <AlertTriangle className="w-7 h-7" />
-            </div>
-            <h2 className="text-3xl md:text-4xl font-black tracking-tight">AI Accuracy Notice</h2>
-          </div>
-          <div className="space-y-6 text-lg text-stone-600 leading-relaxed font-medium">
-            <p>
-              RecipeoAI uses state-of-the-art Large Language Models (LLMs) to generate culinary content. However, AI can "hallucinate" or generate technically incorrect data. 
+
+          <h1 className="text-4xl md:text-7xl font-black mb-6 tracking-tighter leading-[0.95]">
+            Disclaimer
+          </h1>
+
+          <div className="flex flex-col md:flex-row md:items-end gap-6 justify-between border-t border-stone-200 pt-6">
+            <p className="text-lg text-stone-500 font-medium max-w-2xl leading-relaxed">
+              Please read this disclaimer before using RecipeoAI. It
+              explains the intended use and limitations of our recipe
+              suggestions, cooking articles, and other website features.
             </p>
-            <div className="p-8 bg-stone-900 rounded-[2rem] text-stone-50 border border-stone-800 shadow-inner">
-              <p className="font-bold text-orange-400 mb-2 uppercase text-xs tracking-widest">User Responsibility Protocol:</p>
-              "The user acknowledges that all recipes are experimental. You must independently verify cooking times, cross-contamination risks, and ingredient safety."
+
+            <div className="flex flex-col shrink-0">
+              <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">
+                Last Updated
+              </span>
+              <span className="text-lg font-black text-stone-900">
+                {lastUpdated}
+              </span>
             </div>
           </div>
         </div>
+      </header>
 
-        {/* 2. Health & Medical */}
-        <div className="bg-white p-8 md:p-12 rounded-[3rem] border border-stone-200 shadow-sm hover:shadow-xl transition-all duration-500">
-          <div className="flex items-center gap-4 mb-8">
-            <div className="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center text-red-500">
-              <HeartPulse className="w-7 h-7" />
-            </div>
-            <h2 className="text-3xl md:text-4xl font-black tracking-tight text-stone-900">Health & Allergies</h2>
-          </div>
-          <div className="space-y-6 text-lg text-stone-600 leading-relaxed font-medium">
+      <main className="px-4">
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* 1. Recipe suggestions */}
+          <Card icon={AlertTriangle} title="1. Recipe Suggestions and AI">
             <p>
-              RecipeoAI is NOT a licensed medical professional, dietitian, or nutritionist. Nutritional estimates (calories, macros, vitamins) are calculated via algorithms and should be treated as <span className="text-stone-900 font-bold underline decoration-red-300 italic">rough estimates only.</span>
+              RecipeoAI provides a recipe generator that uses artificial
+              intelligence to suggest recipes based on ingredients and
+              other information supplied by users. These suggestions are
+              intended to provide cooking inspiration and general
+              information.
             </p>
+
+            <p>
+              AI-generated suggestions can contain mistakes, including
+              inaccurate ingredient quantities, preparation steps,
+              cooking times, temperatures, or food-safety information.
+              A suggested recipe may also need adjustments to suit your
+              ingredients, equipment, or preferences.
+            </p>
+
+            <div className="p-5 bg-orange-50 border border-orange-200 rounded-2xl text-stone-800">
+              <p className="font-black text-xs uppercase tracking-widest text-orange-600 mb-2">
+                Before you cook
+              </p>
+
+              <p>
+                Check the ingredients, preparation instructions, cooking
+                temperatures, and food-safety guidance before following
+                a recipe. Use reliable food-safety information whenever
+                you are unsure.
+              </p>
+            </div>
+          </Card>
+
+          {/* 2. Health, allergies and nutrition */}
+          <Card
+            icon={HeartPulse}
+            title="2. Health, Allergies and Nutrition"
+            tone="red"
+          >
+            <p>
+              RecipeoAI is not a medical provider, dietitian, or
+              nutritionist. The information on this website is provided
+              for general informational purposes and is not a substitute
+              for personalised medical, dietary, or nutritional advice.
+            </p>
+
+            <p>
+              Any nutrition information, including calories, protein,
+              carbohydrates, fat, or other nutrient estimates, may be
+              approximate or incomplete. Actual nutritional values can
+              vary according to ingredients, brands, portion sizes, and
+              preparation methods.
+            </p>
+
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="p-6 bg-stone-50 rounded-2xl border border-stone-100">
-                <h4 className="font-bold text-stone-900 mb-2 text-sm">Allergy Alert</h4>
-                <p className="text-sm">AI may suggest ingredients that conflict with your specific allergies. Always read labels.</p>
+              <div className="p-5 bg-stone-50 rounded-2xl border border-stone-100">
+                <h3 className="font-bold text-stone-900 mb-2 text-sm">
+                  Food allergies
+                </h3>
+
+                <p className="text-sm">
+                  Always check ingredient lists and food labels for
+                  allergens and possible cross-contact. Do not rely
+                  solely on an AI-generated recipe to determine whether
+                  a dish is safe for you.
+                </p>
               </div>
-              <div className="p-6 bg-stone-50 rounded-2xl border border-stone-100">
-                <h4 className="font-bold text-stone-900 mb-2 text-sm">Dietary Claims</h4>
-                <p className="text-sm">"Keto", "Vegan", or "Gluten-Free" tags are AI-generated. Verify before consumption.</p>
+
+              <div className="p-5 bg-stone-50 rounded-2xl border border-stone-100">
+                <h3 className="font-bold text-stone-900 mb-2 text-sm">
+                  Dietary labels
+                </h3>
+
+                <p className="text-sm">
+                  Labels such as vegan, vegetarian, keto, or gluten-free
+                  may be inaccurate if ingredients or substitutions are
+                  misunderstood. Verify the ingredients and relevant
+                  product labels yourself.
+                </p>
               </div>
             </div>
-          </div>
-        </div>
 
-      </div>
+            <p>
+              If you have a medical condition, food allergy, special
+              dietary requirement, or other health concern, consult an
+              appropriately qualified healthcare professional when
+              necessary.
+            </p>
+          </Card>
 
-      {/* RIGHT SIDE: LEGAL SIDEBAR */}
-      <div className="lg:col-span-4 space-y-8">
-        
-        {/* Liability Card */}
-        <div className="bg-stone-900 p-10 rounded-[3rem] text-stone-50 shadow-2xl relative overflow-hidden h-full">
-          <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-orange-600/20 blur-[80px] rounded-full" />
-          <Scale className="w-12 h-12 text-orange-500 mb-8" />
-          <h3 className="text-2xl font-black mb-6 tracking-tight">Limitation of Liability</h3>
-          <p className="text-stone-400 text-sm leading-relaxed mb-8 font-medium">
-            Under no legal theory shall RecipeoAI, Manish Singh, or its developers be liable for direct, indirect, incidental, or consequential damages resulting from food-borne illness, kitchen accidents, or health complications arising from the use of our AI suggestions.
-          </p>
-          <div className="pt-6 border-t border-stone-800">
-            <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-orange-600">Jurisdiction</p>
-            <p className="text-sm font-bold text-stone-200 mt-1">International Standard / Global Terms</p>
-          </div>
-        </div>
-
-        {/* AdSense Compliance Section */}
-        <div className="bg-white p-8 rounded-[3rem] border border-stone-200 shadow-sm">
-          <div className="flex items-center gap-3 mb-6">
-            <ExternalLink className="w-5 h-5 text-blue-500" />
-            <h3 className="text-lg font-black tracking-tight">External Relations</h3>
-          </div>
-          <p className="text-xs text-stone-500 leading-relaxed mb-4 font-bold">
-            As per Google AdSense policies, we declare that:
-          </p>
-          <ul className="space-y-3">
-            {['Third-party advertisements', 'Affiliate partnerships', 'Cookies for personalization'].map((item, index) => (
-              <li key={index} className="flex items-center gap-2 text-xs font-bold text-stone-700">
-                <div className="w-1.5 h-1.5 bg-green-500 rounded-full" /> {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    {/* --- PROFESSIONAL INQUIRY SECTION --- */}
-    <div className="max-w-4xl mx-auto mt-20 p-12 bg-white rounded-[4rem] border border-stone-200 shadow-sm text-center">
-        <div className="w-20 h-20 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-8">
-          <Gavel className="w-10 h-10 text-orange-600" />
-        </div>
-        <h2 className="text-4xl font-black mb-4 tracking-tighter">Legal Inquiries</h2>
-        <p className="text-stone-500 font-medium mb-10 max-w-md mx-auto">For formal documentation, DMCA notices, or compliance questions, please contact our legal desk.</p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a 
-            href="mailto:legal@recipeoai.com" 
-            className="w-full sm:w-auto bg-stone-900 text-white px-12 py-5 rounded-2xl font-black hover:bg-stone-800 transition-all active:scale-95 shadow-xl shadow-stone-200"
+          {/* 3. Pantry Scan and articles */}
+          <Card
+            icon={BookOpen}
+            title="3. Pantry Scan and Cooking Articles"
+            tone="blue"
           >
-            legal@recipeoai.com
-          </a>
-          <Link 
-            href="/contact" 
-            className="w-full sm:w-auto border-2 border-stone-100 px-12 py-5 rounded-2xl font-black hover:bg-stone-50 transition-all"
+            <p>
+              Pantry Scan uses image-recognition technology to suggest
+              which food items may be visible in a submitted photo.
+              It may misidentify items, overlook ingredients, or
+              produce incomplete results. Always check the actual
+              items in your kitchen.
+            </p>
+
+            <p>
+              Food and cooking articles on RecipeoAI are written by
+              Manish Singh. They are intended to share cooking
+              information, practical guidance, and ideas that readers
+              can use in their everyday kitchens.
+            </p>
+
+            <p>
+              Cooking methods, ingredient availability, equipment,
+              and individual circumstances can differ. Readers should
+              use their judgement and verify important food-safety
+              information where appropriate. If you notice an error
+              in an article, please contact us so it can be reviewed.
+            </p>
+          </Card>
+
+          {/* 4. Advertising and cookies */}
+          <Card
+            icon={Cookie}
+            title="4. Advertising and Cookies"
+            tone="stone"
           >
-            Support Desk
-          </Link>
+            <p>
+              RecipeoAI may display advertisements, including
+              advertisements served by Google AdSense when enabled.
+              Third-party advertising providers may use cookies or
+              similar technologies in accordance with their policies
+              and applicable settings.
+            </p>
+
+            <p>
+              The presence of an advertisement does not mean that
+              RecipeoAI endorses or independently verifies the
+              advertised product, service, or claim. Visitors should
+              review relevant information before making purchasing
+              decisions.
+            </p>
+
+            <p>
+              For details about cookies, advertising, and available
+              privacy choices, please read our{" "}
+              <Link
+                href="/privacy"
+                className="text-orange-600 underline font-semibold hover:text-orange-700"
+              >
+                Privacy Policy
+              </Link>{" "}
+              and{" "}
+              <Link
+                href="/cookie-policy"
+                className="text-orange-600 underline font-semibold hover:text-orange-700"
+              >
+                Cookie Policy
+              </Link>
+              .
+            </p>
+          </Card>
+
+          {/* 5. External links */}
+          <Card
+            icon={ExternalLink}
+            title="5. External Links and Third-Party Services"
+            tone="blue"
+          >
+            <p>
+              Our website may link to external websites, services,
+              or resources. We may also use third-party services
+              for website functionality, image resources, account
+              management, or other features.
+            </p>
+
+            <p>
+              External websites and services operate independently
+              and may have their own terms, privacy practices, and
+              content. We do not control every aspect of those
+              services. Check their relevant policies before using
+              them or sharing information with them.
+            </p>
+          </Card>
+
+          {/* 6. Website availability and liability */}
+          <Card
+            icon={Scale}
+            title="6. Website Use and Limitation of Liability"
+            tone="stone"
+          >
+            <p>
+              RecipeoAI is provided for general informational and
+              cooking-related purposes. Although we aim to keep the
+              website useful and reliable, we do not guarantee that
+              all content will always be complete, accurate,
+              uninterrupted, or suitable for every individual
+              purpose.
+            </p>
+
+            <p>
+              To the extent permitted by applicable law, RecipeoAI
+              and its owner, Manish Singh, disclaim liability for
+              losses or damages arising from reliance on website
+              content or the use of its features. This includes
+              reliance on recipe suggestions, nutrition estimates,
+              and general cooking information.
+            </p>
+
+            <p>
+              Nothing in this disclaimer excludes or limits any
+              rights, warranties, or liabilities that cannot legally
+              be excluded or limited under applicable law.
+            </p>
+          </Card>
+
+          {/* 7. Changes */}
+          <Card
+            icon={AlertTriangle}
+            title="7. Changes to This Disclaimer"
+            tone="orange"
+          >
+            <p>
+              We may update this disclaimer to reflect changes to
+              RecipeoAI, its features, or applicable requirements.
+              When changes are made, the revised version will be
+              published on this page with an updated date.
+            </p>
+            <p>
+              We encourage visitors to review this page periodically.
+            </p>
+          </Card>
+
+          {/* Contact */}
+          <section className="text-center pt-6">
+            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center mx-auto mb-5 shadow-sm border border-stone-200">
+              <Mail className="w-6 h-6 text-orange-600" />
+            </div>
+
+            <h2 className="text-2xl md:text-3xl font-black mb-3 tracking-tight">
+              Questions or corrections?
+            </h2>
+
+            <p className="text-stone-600 mb-6 max-w-md mx-auto">
+              Have feedback about a recipe, cooking article, or
+              website feature? Contact us and explain the issue.
+            </p>
+
+            <div className="flex flex-wrap justify-center gap-3 text-sm font-bold">
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="px-6 py-3 bg-stone-900 text-white rounded-xl hover:bg-orange-600 transition-colors"
+              >
+                {CONTACT_EMAIL}
+              </a>
+
+              <Link
+                href="/contact"
+                className="px-6 py-3 bg-white border border-stone-300 rounded-xl hover:border-orange-600 hover:text-orange-600 transition-colors"
+              >
+                Contact page
+              </Link>
+
+              <Link
+                href="/terms"
+                className="px-6 py-3 bg-white border border-stone-300 rounded-xl hover:border-orange-600 hover:text-orange-600 transition-colors"
+              >
+                Terms of Service
+              </Link>
+
+              <Link
+                href="/privacy"
+                className="px-6 py-3 bg-white border border-stone-300 rounded-xl hover:border-orange-600 hover:text-orange-600 transition-colors"
+              >
+                Privacy Policy
+              </Link>
+            </div>
+          </section>
         </div>
-    </div>
-  </section>
+      </main>
 
-  {/* --- INTERNATIONAL COMPLIANCE STRIP --- */}
-  <div className="mt-20 pt-10 border-t border-stone-200 flex flex-col items-center gap-6">
-    <div className="flex items-center gap-8 opacity-40 grayscale hover:grayscale-0 transition-all cursor-default">
-       <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest"><Globe className="w-4 h-4" /> Global GDPR Compliance</div>
-       <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest"><Info className="w-4 h-4" /> AI Ethics Certified</div>
+      <footer className="mt-16 text-center text-xs text-stone-400 px-4">
+        © {new Date().getFullYear()} RecipeoAI. All rights reserved.
+      </footer>
     </div>
-    <div className="text-[10px] uppercase tracking-[0.5em] font-black text-stone-300 italic">
-      © 2026 RecipeoAI • Engineered for the Future
-    </div>
-  </div>
-
-</div>
-
-);
+  );
 }

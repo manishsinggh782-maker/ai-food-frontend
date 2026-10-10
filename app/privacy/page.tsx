@@ -1,213 +1,412 @@
 import React from "react";
-import { 
-  ShieldCheck, 
-  Lock, 
-  Eye, 
-  Cookie, 
-  Globe, 
-  UserCheck, 
-  Server, 
-  FileText, 
-  ChevronRight, 
+import Link from "next/link";
+import {
+  ShieldCheck,
+  Eye,
+  Cookie,
+  Globe,
+  UserCheck,
+  Server,
+  FileText,
+  ChevronRight,
   Mail,
+  Lock,
+  ShieldAlert,
+  RefreshCcw,
   Zap,
   Info,
-  ShieldAlert, // New icon for children's privacy
-  RefreshCcw // New icon for updates
 } from "lucide-react";
-import Link from "next/link";
 
 export const metadata = {
-  title: "Privacy Policy | RecipeoAI - Your Data Protection Rights",
-  description: "Official Privacy Policy for RecipeoAI. Learn about our AI data handling, Google AdSense third-party cookie compliance, GDPR, and CCPA standards.",
+  title: "Privacy Policy | RecipeoAI",
+  description:
+    "Read how RecipeoAI collects, uses and protects your data, including cookies, Google AdSense advertising, AI processing, and your privacy rights under GDPR, CCPA and India's DPDP Act.",
 };
 
-export default function PrivacyPage() {
-  const lastUpdated = "July 01, 2026"; // Current date updated
+const lastUpdated = "October 08, 2026";
+const SITE_URL = "https://www.recipeoai.com";
+const CONTACT_EMAIL = "privacy@recipeoai.com";
 
+function Section({ id, icon: Icon, title, children }) {
+  return (
+    <section
+      id={id}
+      className="bg-white p-6 md:p-10 rounded-3xl border border-stone-200 shadow-sm scroll-mt-24"
+    >
+      <div className="flex items-center gap-4 mb-6">
+        <div className="w-11 h-11 shrink-0 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center">
+          <Icon className="w-5 h-5" />
+        </div>
+        <h2 className="text-xl md:text-2xl font-black tracking-tight">{title}</h2>
+      </div>
+      <div className="space-y-4 text-base text-stone-600 leading-relaxed">
+        {children}
+      </div>
+    </section>
+  );
+}
+
+function List({ items }) {
+  return (
+    <ul className="list-disc pl-6 space-y-2">
+      {items.map((item, i) => (
+        <li key={i}>{item}</li>
+      ))}
+    </ul>
+  );
+}
+
+function ExtLink({ href, children }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-orange-600 underline font-semibold hover:text-orange-700"
+    >
+      {children}
+    </a>
+  );
+}
+
+export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-stone-50 text-stone-900 selection:bg-orange-100 pb-20 overflow-x-hidden">
-      
-      {/* --- BACKGROUND ACCENTS --- */}
-      <div className="absolute top-0 right-0 w-full h-[600px] bg-gradient-to-b from-orange-50/50 to-transparent -z-10" />
+      {/* Background accent */}
+      <div className="absolute top-0 right-0 w-full h-[500px] bg-gradient-to-b from-orange-50/60 to-transparent -z-10" />
 
-      {/* --- BREADCRUMB --- */}
-      <nav className="pt-32 px-4 max-w-7xl mx-auto flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400">
-        <Link href="/" className="hover:text-orange-600 transition-colors">Home</Link>
+      {/* Breadcrumb */}
+      <nav
+        aria-label="Breadcrumb"
+        className="pt-28 px-4 max-w-5xl mx-auto flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-stone-400"
+      >
+        <Link href="/" className="hover:text-orange-600 transition-colors">
+          Home
+        </Link>
         <ChevronRight className="w-3 h-3" />
-        <span className="text-stone-900">Privacy Protocol</span>
+        <span className="text-stone-900">Privacy Policy</span>
       </nav>
 
-      {/* --- HERO SECTION --- */}
-      <section className="pt-10 pb-20 px-4">
+      {/* Hero */}
+      <header className="pt-10 pb-14 px-4">
         <div className="max-w-5xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white shadow-sm border border-stone-200 rounded-full text-[11px] font-black mb-8 uppercase tracking-widest text-orange-600">
-            <ShieldCheck className="w-3.5 h-3.5" /> AdSense Compliant v5.0
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white shadow-sm border border-stone-200 rounded-full text-[11px] font-black mb-6 uppercase tracking-widest text-orange-600">
+            <ShieldCheck className="w-3.5 h-3.5" /> Your privacy matters
           </div>
-          <h1 className="text-5xl md:text-8xl font-black mb-8 tracking-tighter leading-[0.9]">
-            Privacy & <br /><span className="text-orange-600">Integrity.</span>
+          <h1 className="text-4xl md:text-7xl font-black mb-6 tracking-tighter leading-[0.95]">
+            Privacy <span className="text-orange-600">Policy</span>
           </h1>
-          <div className="flex flex-col md:flex-row md:items-center gap-6 justify-between border-t border-stone-200 pt-8">
-            <p className="text-lg md:text-xl text-stone-500 font-medium max-w-2xl leading-relaxed">
-              We take your privacy seriously. This document outlines how **Manish Singh** and the RecipeoAI team protect your global digital identity.
+          <div className="flex flex-col md:flex-row md:items-end gap-6 justify-between border-t border-stone-200 pt-6">
+            <p className="text-lg text-stone-500 font-medium max-w-2xl leading-relaxed">
+              This policy explains what information RecipeoAI collects, how we use it,
+              who we share it with, and the choices you have. RecipeoAI is operated by{" "}
+              <strong className="text-stone-800">Manish Singh</strong>.
             </p>
             <div className="flex flex-col">
-               <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Last Updated</span>
-               <span className="text-lg font-black text-stone-900">{lastUpdated}</span>
+              <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">
+                Last Updated
+              </span>
+              <span className="text-lg font-black text-stone-900">{lastUpdated}</span>
             </div>
           </div>
         </div>
-      </section>
+      </header>
 
-      {/* --- MAIN CONTENT --- */}
-      <section className="px-4">
-        <div className="max-w-4xl mx-auto space-y-10">
-          
-          {/* 1. Commitment */}
-          <div className="bg-white p-8 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] border border-stone-200 shadow-sm">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 bg-stone-900 rounded-2xl flex items-center justify-center text-white">
-                <FileText className="w-6 h-6" />
-              </div>
-              <h2 className="text-2xl md:text-3xl font-black tracking-tight">1. Our Commitment</h2>
-            </div>
-            <p className="text-base md:text-lg text-stone-600 leading-relaxed font-medium">
-              At RecipeoAI, we maintain the highest standards of digital trust. We do not sell or trade your personal information. This policy describes how we collect data across our Next.js ecosystem to enhance your culinary experience.
+      <main className="px-4">
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* 1 */}
+          <Section id="introduction" icon={FileText} title="1. Introduction">
+            <p>
+              Welcome to RecipeoAI ({SITE_URL}). RecipeoAI is an AI-powered recipe
+              platform that helps you generate recipes from ingredients, scan your
+              pantry, save recipes and read food and cooking articles. By using our
+              website you agree to the practices described in this Privacy Policy. If
+              you do not agree, please do not use the website.
             </p>
-          </div>
-
-          {/* 2. Collection */}
-          <div className="bg-white p-8 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] border border-stone-200 shadow-sm">
-            <div className="flex items-center gap-4 mb-8 text-orange-600">
-              <Eye className="w-12 h-12" />
-              <h2 className="text-2xl md:text-3xl font-black tracking-tight text-stone-900">2. Information We Collect</h2>
-            </div>
-            <div className="space-y-6">
-               <div className="p-6 md:p-8 bg-stone-50 rounded-3xl border border-stone-100">
-                  <h4 className="text-xs font-black uppercase tracking-widest mb-4">A. AI Vision Data</h4>
-                  <p className="text-sm text-stone-500 leading-relaxed">
-                    Our "Pantry Scan" identifies food items only. **Face recognition is strictly prohibited.** Non-food biometric data is instantly discarded.
-                  </p>
-               </div>
-               <div className="p-6 md:p-8 bg-stone-50 rounded-3xl border border-stone-100">
-                  <h4 className="text-xs font-black uppercase tracking-widest mb-4">B. Account Security</h4>
-                  <p className="text-sm text-stone-500 leading-relaxed">
-                    Authentication is handled by **Clerk**. We do not store your passwords on our primary servers, ensuring enterprise-grade protection.
-                  </p>
-               </div>
-            </div>
-          </div>
-
-          {/* 3. ADSENSE & COOKIES (OPTIMIZED FOR APPROVAL) */}
-          <div className="bg-orange-600 p-8 md:p-12 rounded-[2.5rem] md:rounded-[4rem] text-white shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-12 opacity-10">
-               <Cookie className="w-32 h-32" />
-            </div>
-            <div className="relative z-10">
-              <div className="flex items-center gap-4 mb-8">
-                <Zap className="w-10 h-10 text-orange-200" />
-                <h2 className="text-2xl md:text-3xl font-black tracking-tight leading-none">3. Google AdSense & Cookies</h2>
-              </div>
-              <div className="space-y-6 text-base md:text-lg font-medium opacity-95 leading-relaxed">
-                <p>
-                  RecipeoAI uses cookies to personalize content and ads. We partner with **Google AdSense** and other third-party vendors to serve ads based on your prior visits.
-                </p>
-                <div className="p-6 md:p-8 bg-white/10 rounded-[2rem] border border-white/20 text-xs md:text-sm italic space-y-4">
-                  <p>
-                    • Google, as a third-party vendor, uses cookies to serve ads on RecipeoAI.
-                  </p>
-                  <p>
-                    • Google's use of advertising cookies enables it and its partners to serve ads to our users based on their visit to our sites and/or other sites on the Internet.
-                  </p>
-                  <p>
-                    • Users may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" className="underline font-bold">Google Ad Settings</a>. Alternatively, you can opt out of a third-party vendor's use of cookies for personalized advertising by visiting <a href="https://www.aboutads.info" target="_blank" className="underline font-bold">www.aboutads.info</a>.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* 4. Children's Privacy (IMPORTANT FOR ADSENSE) */}
-          <div className="bg-white p-8 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] border border-stone-200 shadow-sm">
-            <div className="flex items-center gap-4 mb-8 text-red-600">
-              <div className="w-12 h-12 bg-red-50 rounded-2xl flex items-center justify-center">
-                <ShieldAlert className="w-6 h-6" />
-              </div>
-              <h2 className="text-2xl md:text-3xl font-black tracking-tight text-stone-900">4. Children's Privacy</h2>
-            </div>
-            <p className="text-base md:text-lg text-stone-600 leading-relaxed font-medium">
-              RecipeoAI does not knowingly collect any personally identifiable information from children under the age of 13. If you think that your child provided this kind of information on our website, we strongly encourage you to contact us immediately and we will do our best to promptly remove such information from our records.
+            <p>
+              We do not sell your personal information. We collect only what we need to
+              run the service, keep it secure, and show advertising that helps keep the
+              site free.
             </p>
-          </div>
+          </Section>
 
-          {/* 5. GDPR & Global Rights */}
-          <div className="bg-stone-900 p-8 md:p-12 rounded-[2.5rem] md:rounded-[4rem] text-stone-50 shadow-2xl">
-            <div className="flex items-center gap-4 mb-10">
-              <Globe className="w-10 h-10 text-orange-500" />
-              <h2 className="text-3xl md:text-4xl font-black tracking-tight">5. Global Privacy Rights</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-               <div className="space-y-4">
-                  <h4 className="text-orange-500 font-black text-xs uppercase tracking-[0.2em]">GDPR (Europe)</h4>
-                  <ul className="text-xs md:text-sm space-y-2 text-stone-400 font-medium">
-                     <li className="flex gap-2"><span>•</span> Right to Access & Rectification</li>
-                     <li className="flex gap-2"><span>•</span> Right to be Forgotten</li>
-                     <li className="flex gap-2"><span>•</span> Right to Data Portability</li>
-                  </ul>
-               </div>
-               <div className="space-y-4">
-                  <h4 className="text-orange-500 font-black text-xs uppercase tracking-[0.2em]">CCPA (California)</h4>
-                  <ul className="text-xs md:text-sm space-y-2 text-stone-400 font-medium">
-                     <li className="flex gap-2"><span>•</span> Right to Know / Delete</li>
-                     <li className="flex gap-2"><span>•</span> Right to Opt-Out of Sale</li>
-                     <li className="flex gap-2"><span>•</span> Non-Discrimination Rights</li>
-                  </ul>
-               </div>
-            </div>
-          </div>
-
-          {/* 6. Policy Changes */}
-          <div className="bg-white p-8 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] border border-stone-200 shadow-sm">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 bg-stone-100 rounded-2xl flex items-center justify-center text-stone-600">
-                <RefreshCcw className="w-6 h-6" />
-              </div>
-              <h2 className="text-2xl md:text-3xl font-black tracking-tight">6. Changes to This Policy</h2>
-            </div>
-            <p className="text-base md:text-lg text-stone-600 leading-relaxed font-medium">
-              We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. You are advised to review this Privacy Policy periodically for any changes.
+          {/* 2 */}
+          <Section id="information-we-collect" icon={Eye} title="2. Information We Collect">
+            <h3 className="font-black text-stone-900">a) Information you provide</h3>
+            <List
+              items={[
+                "Account details such as your name, email address and profile picture when you sign up or sign in (handled by our authentication provider, Clerk).",
+                "Ingredients, dietary preferences and prompts you type to generate recipes.",
+                "Photos you choose to upload to the Pantry Scan feature.",
+                "Recipes you save, and messages you send us by email.",
+              ]}
+            />
+            <h3 className="font-black text-stone-900">b) Information collected automatically</h3>
+            <List
+              items={[
+                "IP address, browser type, device type, operating system, language and referring page.",
+                "Pages viewed, time spent, clicks and approximate location derived from IP address.",
+                "Cookie and similar-technology identifiers (see Section 5).",
+                "Security signals used to detect bots, abuse and automated attacks (provided by Arcjet).",
+              ]}
+            />
+            <h3 className="font-black text-stone-900">c) Pantry Scan photos</h3>
+            <p>
+              Pantry Scan is designed only to identify food items. Please do not upload
+              photos of people, children, documents or anything personal. We do not use
+              Pantry Scan for face recognition and we do not intentionally collect
+              biometric data.
             </p>
-          </div>
+            <h3 className="font-black text-stone-900">d) Passwords</h3>
+            <p>
+              Sign-in is handled by Clerk. We do not store your password on our own
+              servers.
+            </p>
+          </Section>
 
-          {/* 7. Contact Section */}
-          <div className="pt-10 md:pt-20 text-center px-4">
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-sm border border-stone-100">
-              <Mail className="w-6 h-6 md:w-8 md:h-8 text-orange-600" />
+          {/* 3 */}
+          <Section id="how-we-use" icon={Info} title="3. How We Use Your Information">
+            <List
+              items={[
+                "To provide and improve recipe generation, pantry scanning, saved recipes and blog content.",
+                "To create and manage your account and keep it secure.",
+                "To understand how the site is used and fix errors or slow pages.",
+                "To prevent fraud, spam, scraping and other abuse.",
+                "To show advertising and measure its performance.",
+                "To respond to your emails and comply with legal obligations.",
+              ]}
+            />
+            <p>
+              Where the GDPR applies, our legal bases are: performance of a contract
+              (running your account and the service), legitimate interests (security,
+              analytics and improving the site), consent (advertising and non-essential
+              cookies) and legal obligation.
+            </p>
+          </Section>
+
+          {/* 4 */}
+          <Section id="third-parties" icon={Server} title="4. AI Processing and Third-Party Services">
+            <p>
+              We use trusted service providers to operate RecipeoAI. They process data
+              only as needed to provide their service:
+            </p>
+            <List
+              items={[
+                "Google (Gemini API): your ingredient text, prompts and Pantry Scan images are sent to Google's AI service to generate recipes and identify food items.",
+                "Unsplash: used to fetch food images for recipes and articles.",
+                "Clerk: authentication and account management.",
+                "Arcjet: bot detection and security protection.",
+                "Vercel: website hosting and delivery.",
+                "Google AdSense: advertising (see Section 5).",
+              ]}
+            />
+            <p>
+              AI-generated recipes are suggestions only. Please check ingredients for
+              allergies and follow safe food-handling practices.
+            </p>
+            <p>
+              We may also disclose information if required by law, to protect our rights
+              and users, or in connection with a business transfer. We do not sell
+              personal information.
+            </p>
+          </Section>
+
+          {/* 5 */}
+          <Section id="cookies-advertising" icon={Cookie} title="5. Cookies and Google AdSense Advertising">
+            <p>
+              Cookies are small files stored on your device. We use them for the
+              following purposes:
+            </p>
+            <List
+              items={[
+                "Essential cookies: sign-in, security and basic site functions.",
+                "Analytics and preference cookies: understand usage and remember your settings.",
+                "Advertising cookies: show and measure ads, including personalized ads where permitted.",
+              ]}
+            />
+            <div className="p-5 md:p-6 bg-orange-50 border border-orange-100 rounded-2xl space-y-3 text-stone-700">
+              <div className="flex items-center gap-2 font-black text-stone-900">
+                <Zap className="w-4 h-4 text-orange-600" /> Advertising partners
+              </div>
+              <p>
+                We use Google AdSense to display ads. Google, as a third-party vendor,
+                uses cookies to serve ads on RecipeoAI. Google's use of advertising
+                cookies enables it and its partners to serve ads to you based on your
+                visit to our site and/or other sites on the Internet.
+              </p>
+              <p>
+                Other third-party vendors and ad networks may also use cookies, web
+                beacons or similar technologies to serve and measure ads.
+              </p>
             </div>
-            <h2 className="text-3xl md:text-4xl font-black mb-4 tracking-tighter">Data Privacy Officer</h2>
-            <p className="text-stone-500 font-medium mb-10 max-w-sm mx-auto italic text-center text-sm md:text-base">For any queries regarding your data, contact us at:</p>
-            <a 
-              href="mailto:privacy@recipeoai.com" 
-              className="inline-block bg-stone-900 text-white px-8 md:px-12 py-4 md:py-5 rounded-2xl font-black hover:bg-orange-600 transition-all active:scale-95 shadow-xl shadow-stone-200 text-sm md:text-base"
-            >
-              privacy@recipeoai.com
-            </a>
-          </div>
+            <h3 className="font-black text-stone-900">Your advertising choices</h3>
+            <List
+              items={[
+                <>
+                  You can opt out of personalized advertising in{" "}
+                  <ExtLink href="https://adssettings.google.com">Google Ads Settings</ExtLink>.
+                </>,
+                <>
+                  You can opt out of some third-party vendors' use of cookies for
+                  personalized advertising at{" "}
+                  <ExtLink href="https://www.aboutads.info">www.aboutads.info</ExtLink>{" "}
+                  (US),{" "}
+                  <ExtLink href="https://www.youronlinechoices.com">youronlinechoices.com</ExtLink>{" "}
+                  (EU/UK) or{" "}
+                  <ExtLink href="https://optout.networkadvertising.org">the NAI opt-out page</ExtLink>.
+                </>,
+                <>
+                  Learn how Google uses information from sites that use its services at{" "}
+                  <ExtLink href="https://policies.google.com/technologies/partner-sites">
+                    policies.google.com/technologies/partner-sites
+                  </ExtLink>.
+                </>,
+                "You can block or delete cookies in your browser settings. Some features may stop working if you block essential cookies.",
+              ]}
+            />
+            <p>
+              Visitors in the European Economic Area, the United Kingdom and Switzerland
+              will be asked for consent before personalized advertising cookies are
+              used, and can change their choice at any time.
+            </p>
+          </Section>
 
-        </div>
-      </section>
+          {/* 6 */}
+          <Section id="retention-security" icon={Lock} title="6. Data Retention and Security">
+            <p>
+              We keep personal information only as long as needed to provide the service,
+              meet legal obligations, resolve disputes and enforce our agreements. You can
+              ask us to delete your account and associated data at any time.
+            </p>
+            <p>
+              We use HTTPS encryption, access controls and security monitoring to protect
+              your information. No method of transmission or storage is 100% secure, so we
+              cannot guarantee absolute security.
+            </p>
+          </Section>
 
-      {/* --- BRAND FOOTER --- */}
-      <div className="mt-20 pt-10 border-t border-stone-200 flex flex-col items-center gap-6 px-4">
-        <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6 opacity-30 grayscale italic text-center">
-           <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest">Global Privacy Framework</span>
-           <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest">AdSense Policy Compliance</span>
-        </div>
-        <div className="text-[8px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.5em] font-black text-stone-300 italic text-center">
-          RecipeoAI Privacy Enforcement Unit • Ed. 2026
-        </div>
-      </div>
+          {/* 7 */}
+          <Section id="your-rights" icon={Globe} title="7. Your Privacy Rights">
+            <p>Depending on where you live, you may have the following rights:</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-5 bg-stone-50 rounded-2xl border border-stone-100">
+                <h4 className="font-black text-xs uppercase tracking-widest text-orange-600 mb-3">
+                  GDPR / UK GDPR
+                </h4>
+                <ul className="text-sm space-y-1.5 list-disc pl-4">
+                  <li>Access and rectification</li>
+                  <li>Erasure ("right to be forgotten")</li>
+                  <li>Restriction and objection</li>
+                  <li>Data portability</li>
+                  <li>Withdraw consent</li>
+                  <li>Complain to a supervisory authority</li>
+                </ul>
+              </div>
+              <div className="p-5 bg-stone-50 rounded-2xl border border-stone-100">
+                <h4 className="font-black text-xs uppercase tracking-widest text-orange-600 mb-3">
+                  CCPA / CPRA (California)
+                </h4>
+                <ul className="text-sm space-y-1.5 list-disc pl-4">
+                  <li>Right to know and access</li>
+                  <li>Right to delete and correct</li>
+                  <li>Right to opt out of sale or sharing</li>
+                  <li>Non-discrimination</li>
+                </ul>
+              </div>
+              <div className="p-5 bg-stone-50 rounded-2xl border border-stone-100">
+                <h4 className="font-black text-xs uppercase tracking-widest text-orange-600 mb-3">
+                  India (DPDP Act, 2023)
+                </h4>
+                <ul className="text-sm space-y-1.5 list-disc pl-4">
+                  <li>Access to your data</li>
+                  <li>Correction and erasure</li>
+                  <li>Grievance redressal</li>
+                  <li>Withdraw consent</li>
+                </ul>
+              </div>
+            </div>
+            <p>
+              To exercise any right, email us at{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`} className="text-orange-600 underline font-semibold">
+                {CONTACT_EMAIL}
+              </a>
+              . We may need to verify your identity and will respond within 30 days
+              where possible.
+            </p>
+          </Section>
 
+          {/* 8 */}
+          <Section id="international" icon={UserCheck} title="8. International Data Transfers">
+            <p>
+              RecipeoAI uses service providers located in different countries, including
+              the United States. Your information may therefore be processed outside your
+              country of residence. Where required, we rely on appropriate safeguards
+              such as standard contractual clauses used by our providers.
+            </p>
+          </Section>
+
+          {/* 9 */}
+          <Section id="children" icon={ShieldAlert} title="9. Children's Privacy">
+            <p>
+              RecipeoAI is not directed to children under 13, and we do not knowingly
+              collect personal information from them. If you believe a child has given us
+              personal information, please contact us and we will delete it promptly.
+            </p>
+          </Section>
+
+          {/* 10 */}
+          <Section id="external-links" icon={Globe} title="10. Links to Other Websites">
+            <p>
+              Our site may link to third-party websites. We are not responsible for their
+              content or privacy practices, so please read their policies.
+            </p>
+          </Section>
+
+          {/* 11 */}
+          <Section id="changes" icon={RefreshCcw} title="11. Changes to This Policy">
+            <p>
+              We may update this policy from time to time. Changes are posted on this
+              page with a new "Last Updated" date. Please review it periodically.
+              Continued use of the site after changes means you accept the updated
+              policy.
+            </p>
+          </Section>
+
+          {/* 12 Contact */}
+          <Section id="contact" icon={Mail} title="12. Contact Us">
+            <p>
+              Questions about this policy or your data? Contact the site operator, Manish
+              Singh:
+            </p>
+            <List
+              items={[
+                <>
+                  Email:{" "}
+                  <a href={`mailto:${CONTACT_EMAIL}`} className="text-orange-600 underline font-semibold">
+                    {CONTACT_EMAIL}
+                  </a>
+                </>,
+                <>Website: {SITE_URL}</>,
+              ]}
+            />
+            <div className="flex flex-wrap gap-3 pt-2 text-sm font-bold">
+              <Link href="/about" className="px-4 py-2 bg-stone-900 text-white rounded-xl hover:bg-orange-600 transition-colors">
+                About
+              </Link>
+              <Link href="/contact" className="px-4 py-2 bg-stone-900 text-white rounded-xl hover:bg-orange-600 transition-colors">
+                Contact
+              </Link>
+              <Link href="/terms" className="px-4 py-2 bg-stone-900 text-white rounded-xl hover:bg-orange-600 transition-colors">
+                Terms of Service
+              </Link>
+            </div>
+          </Section>
+        </div>
+      </main>
+
+      <footer className="mt-16 pt-8 border-t border-stone-200 text-center text-xs text-stone-400 px-4">
+        © {new Date().getFullYear()} RecipeoAI. All rights reserved.
+      </footer>
     </div>
   );
 }

@@ -1,174 +1,481 @@
-import React from "react";
-import { 
-  Scale, 
-  BookOpen, 
-  AlertCircle, 
-  Zap, 
-  ShieldCheck, 
-  Mail, 
-  Gavel, 
-  ChevronRight, 
-  Globe, 
-  DollarSign,
-  Eye
-} from "lucide-react";
-import Link from "next/link";
 
-export const metadata = {
-  title: "Terms of Service | RecipeoAI - Global User Agreement",
-  description: "Official legal terms and conditions for RecipeoAI. Learn about our AI usage, advertising disclosures, and global service standards.",
+import type { Metadata } from "next";
+import Link from "next/link";
+import {
+  Scale,
+  BookOpen,
+  AlertCircle,
+  ShieldCheck,
+  Mail,
+  Gavel,
+  ChevronRight,
+  Globe,
+  CreditCard,
+  Eye,
+  UserCheck,
+  Ban,
+  Copyright,
+  RefreshCcw,
+  Landmark,
+  type LucideIcon,
+} from "lucide-react";
+import type { ReactNode } from "react";
+
+export const metadata: Metadata = {
+  title: "Terms of Service | RecipeoAI",
+  description:
+    "Read the RecipeoAI Terms of Service covering website use, AI-generated recipes, food safety, advertising, intellectual property, and liability.",
+};
+
+const lastUpdated = "October 10, 2026";
+const CONTACT_EMAIL = "privacy@recipeoai.com";
+const SITE_URL = "https://www.recipeoai.com";
+
+// Set to true only if paid subscriptions and Stripe payments
+// are actually available on RecipeoAI.
+const HAS_PAYMENTS = false;
+
+type TermsSection = {
+  id: string;
+  icon: LucideIcon;
+  title: string;
+  body: ReactNode;
+  highlight?: boolean;
 };
 
 export default function TermsPage() {
-  const lastUpdated = "May 03, 2026";
+  const sections: TermsSection[] = [
+    {
+      id: "acceptance",
+      icon: Globe,
+      title: "Acceptance of Terms",
+      body: (
+        <p>
+          By accessing or using RecipeoAI ({SITE_URL}), operated by{" "}
+          <strong className="text-stone-900">Manish Singh</strong> ("we", "us",
+          or "our"), you agree to these Terms of Service and our{" "}
+          <Link
+            href="/privacy"
+            className="font-semibold text-orange-600 underline"
+          >
+            Privacy Policy
+          </Link>
+          . If you do not agree to these terms, please do not use the Service.
+        </p>
+      ),
+    },
+    {
+      id: "eligibility",
+      icon: UserCheck,
+      title: "Eligibility and Accounts",
+      body: (
+        <>
+          <p>
+            You must be at least 13 years old to use RecipeoAI. If you are
+            under the age of majority where you live, you should use the
+            Service with permission and guidance from a parent or legal
+            guardian.
+          </p>
+          <p>
+            If an account is required for a feature, you are responsible for
+            providing accurate information, keeping your sign-in details
+            secure, and activity carried out through your account. Please
+            contact us if you suspect unauthorised access.
+          </p>
+        </>
+      ),
+    },
+    {
+      id: "ai-output",
+      icon: BookOpen,
+      title: "AI-Generated Content and Food Safety",
+      body: (
+        <>
+          <p>
+            RecipeoAI may use artificial intelligence to generate recipes,
+            ingredient-based suggestions, and other cooking-related results.
+            AI-generated content can contain errors, omissions, or unsuitable
+            suggestions. We do not guarantee that every result is accurate,
+            complete, or appropriate for your needs.
+          </p>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="rounded-2xl border border-red-100 bg-red-50 p-5">
+              <h3 className="mb-2 flex items-center gap-2 text-sm font-bold text-red-900">
+                <AlertCircle className="h-4 w-4" />
+                Food safety
+              </h3>
+              <p className="text-sm text-red-800">
+                Check ingredient freshness, cooking temperatures, preparation
+                methods, and storage guidance. Do not rely solely on an
+                AI-generated recipe to determine whether food is safe to eat.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-blue-100 bg-blue-50 p-5">
+              <h3 className="mb-2 flex items-center gap-2 text-sm font-bold text-blue-900">
+                <BookOpen className="h-4 w-4" />
+                Health and nutrition
+              </h3>
+              <p className="text-sm text-blue-800">
+                RecipeoAI does not replace professional medical, dietary, or
+                nutritional advice. If you have allergies, a medical condition,
+                or special dietary requirements, consult a qualified
+                professional and verify ingredients before eating.
+              </p>
+            </div>
+          </div>
+
+          <p>
+            For more information, please read our{" "}
+            <Link
+              href="/disclaimer"
+              className="font-semibold text-orange-600 underline"
+            >
+              Disclaimer
+            </Link>
+            .
+          </p>
+        </>
+      ),
+    },
+    {
+      id: "acceptable-use",
+      icon: Ban,
+      title: "Acceptable Use",
+      body: (
+        <>
+          <p>You agree not to:</p>
+          <ul className="list-disc space-y-2 pl-6">
+            <li>
+              Use the Service for unlawful, fraudulent, abusive, or harmful
+              activities.
+            </li>
+            <li>
+              Scrape, copy, or collect website content or data through
+              automated tools in a way that violates applicable law or our
+              rights.
+            </li>
+            <li>
+              Interfere with the website, overload its systems, attack its
+              security, or attempt to bypass security measures.
+            </li>
+            <li>
+              Submit content or images that you do not have the legal right to
+              use, or that violate another person's rights.
+            </li>
+            <li>
+              Republish our original articles or other protected content as
+              your own, without permission where permission is required.
+            </li>
+          </ul>
+        </>
+      ),
+    },
+    {
+      id: "advertising",
+      icon: Eye,
+      title: "Advertising and Third-Party Services",
+      highlight: true,
+      body: (
+        <>
+          <p>
+            RecipeoAI may display advertisements, including ads provided by
+            Google AdSense or other advertising partners, where enabled.
+            Third-party advertising providers may use cookies or similar
+            technologies as described in our Privacy Policy and subject to
+            applicable consent requirements.
+          </p>
+          <p>
+            Advertisements and links to third-party services are provided by
+            those third parties. Their appearance on RecipeoAI does not
+            necessarily mean that we endorse their products or services.
+            Transactions with third parties are your responsibility.
+          </p>
+          <p>
+            Learn more about cookies and advertising choices in our{" "}
+            <Link
+              href="/privacy#cookies-advertising"
+              className="font-semibold underline"
+            >
+              Privacy Policy
+            </Link>
+            .
+          </p>
+        </>
+      ),
+    },
+    ...(HAS_PAYMENTS
+      ? [
+          {
+            id: "payments",
+            icon: CreditCard,
+            title: "Paid Plans and Payments",
+            body: (
+              <>
+                <p>
+                  If a paid plan is offered, the applicable price, billing
+                  period, and included features will be displayed before
+                  purchase. Payments are processed by Stripe or the payment
+                  provider identified at checkout. We do not intentionally
+                  store your full payment card details on our own systems.
+                </p>
+                <p>
+                  Subscription renewal, cancellation, and refund terms will be
+                  presented with the applicable plan or at checkout. Please
+                  review those terms before purchasing. Nothing in these Terms
+                  removes any rights you have under applicable law.
+                </p>
+                <p>
+                  If you have a payment question, contact us using the details
+                  at the bottom of this page.
+                </p>
+              </>
+            ),
+          } satisfies TermsSection,
+        ]
+      : []),
+    {
+      id: "ip",
+      icon: Copyright,
+      title: "Intellectual Property and Submitted Content",
+      body: (
+        <>
+          <p>
+            Unless otherwise stated, the RecipeoAI name, logo, website design,
+            code, and original articles are owned by or licensed to us and may
+            be protected by copyright and other applicable laws. You may access
+            the website and use its content for personal purposes, subject to
+            these Terms and applicable law.
+          </p>
+          <p>
+            You retain the rights you have in content you submit, such as
+            ingredient lists or pantry photos. You give us permission to
+            process that content as reasonably necessary to provide the
+            feature you request, including sending it to a relevant service
+            provider when needed to generate a result.
+          </p>
+          <p>
+            Please do not submit content that you are not authorised to share.
+            The handling of submitted content is also explained in our{" "}
+            <Link
+              href="/privacy"
+              className="font-semibold text-orange-600 underline"
+            >
+              Privacy Policy
+            </Link>
+            .
+          </p>
+          <p>
+            If you believe material on RecipeoAI infringes your copyright,
+            email{" "}
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="font-semibold text-orange-600 underline"
+            >
+              {CONTACT_EMAIL}
+            </a>{" "}
+            with the relevant page URL and details of the copyrighted work so
+            that we can review your report.
+          </p>
+        </>
+      ),
+    },
+    {
+      id: "termination",
+      icon: ShieldCheck,
+      title: "Suspension and Termination",
+      body: (
+        <p>
+          We may restrict or suspend access to the Service when reasonably
+          necessary to address misuse, security risks, legal obligations, or
+          violations of these Terms. You may stop using RecipeoAI at any time.
+          If you have an account and want to request its deletion, contact us.
+          Any applicable data-retention requirements are described in our
+          Privacy Policy.
+        </p>
+      ),
+    },
+    {
+      id: "liability",
+      icon: Scale,
+      title: "Disclaimer and Limitation of Liability",
+      body: (
+        <>
+          <p>
+            The Service and its content are provided on an "as is" and "as
+            available" basis, to the extent permitted by applicable law. We do
+            not guarantee uninterrupted availability or that all content,
+            including AI-generated recipes, will be error-free or suitable for
+            every user.
+          </p>
+          <p>
+            To the extent permitted by applicable law, RecipeoAI and its
+            operator are not responsible for indirect or consequential losses
+            arising from use of the Service. You are responsible for checking
+            ingredients, allergens, cooking instructions, and food-safety
+            requirements before preparing or consuming a recipe.
+          </p>
+          <p>
+            Nothing in these Terms excludes or limits any right, remedy, or
+            liability that cannot lawfully be excluded or limited.
+          </p>
+        </>
+      ),
+    },
+    {
+      id: "law",
+      icon: Landmark,
+      title: "Governing Law",
+      body: (
+        <p>
+          These Terms are intended to be interpreted in accordance with the
+          laws of India, subject to any mandatory consumer-protection laws and
+          other legal rights that apply to you. Any dispute will be handled by
+          a court with appropriate jurisdiction under applicable law.
+        </p>
+      ),
+    },
+    {
+      id: "changes",
+      icon: RefreshCcw,
+      title: "Changes to These Terms",
+      body: (
+        <p>
+          We may update these Terms when our Service, practices, or legal
+          requirements change. We will post the revised version on this page
+          and update the "Last Updated" date. Please review this page from time
+          to time to stay informed about the applicable terms.
+        </p>
+      ),
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-900 selection:bg-orange-100 pb-20 overflow-x-hidden">
-      
-      {/* --- BACKGROUND DECOR --- */}
-      <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-stone-200/30 to-transparent -z-10" />
+    <div className="min-h-screen overflow-x-hidden bg-stone-50 pb-20 text-stone-900 selection:bg-orange-100">
+      <div className="absolute left-0 top-0 -z-10 h-[450px] w-full bg-gradient-to-b from-stone-200/40 to-transparent" />
 
-      {/* --- BREADCRUMB --- */}
-      <nav className="pt-32 px-4 max-w-7xl mx-auto flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400">
-        <Link href="/" className="hover:text-orange-600 transition-colors">Home</Link>
-        <ChevronRight className="w-3 h-3" />
+      <nav
+        aria-label="Breadcrumb"
+        className="mx-auto flex max-w-5xl items-center gap-2 px-4 pt-28 text-xs font-bold uppercase tracking-widest text-stone-400"
+      >
+        <Link href="/" className="transition-colors hover:text-orange-600">
+          Home
+        </Link>
+        <ChevronRight className="h-3 w-3" aria-hidden="true" />
         <span className="text-stone-900">Terms of Service</span>
       </nav>
 
-      {/* --- HERO SECTION --- */}
-      <section className="pt-10 pb-16 px-4">
-        <div className="max-w-5xl mx-auto text-left md:text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-stone-900 text-stone-50 rounded-full text-[10px] font-black mb-8 uppercase tracking-[0.3em]">
-            <Gavel className="w-3.5 h-3.5 text-orange-500" /> International Governance
+      <header className="px-4 pb-14 pt-10">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-stone-900 px-4 py-1.5 text-[11px] font-black uppercase tracking-widest text-stone-50">
+            <Gavel
+              className="h-3.5 w-3.5 text-orange-500"
+              aria-hidden="true"
+            />
+            User Agreement
           </div>
-          <h1 className="text-6xl md:text-8xl font-black mb-8 tracking-tighter leading-[0.9]">
-            Terms of <span className="text-orange-600">Service.</span>
+
+          <h1 className="mb-6 text-4xl font-black leading-[0.95] tracking-tighter md:text-7xl">
+            Terms of <span className="text-orange-600">Service</span>
           </h1>
-          <p className="text-xl text-stone-500 font-medium max-w-3xl mx-auto leading-relaxed">
-            This Global User Agreement governs your access to RecipeoAI. By using our platform, you agree to these international standards of conduct and safety.
-          </p>
-          <div className="mt-10 inline-flex items-center gap-3 px-6 py-3 bg-white border border-stone-200 rounded-2xl shadow-sm">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            <span className="text-xs font-bold text-stone-400 uppercase tracking-widest italic">Version 4.0.2 — Released: {lastUpdated}</span>
+
+          <div className="flex flex-col justify-between gap-6 border-t border-stone-200 pt-6 md:flex-row md:items-end">
+            <p className="max-w-2xl text-lg font-medium leading-relaxed text-stone-500">
+              These terms explain the rules for using RecipeoAI. Please read
+              them carefully.
+            </p>
+
+            <div className="flex flex-col">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-stone-400">
+                Last Updated
+              </span>
+              <span className="text-lg font-black text-stone-900">
+                {lastUpdated}
+              </span>
+            </div>
           </div>
         </div>
-      </section>
+      </header>
 
-      {/* --- MAIN CONTENT --- */}
-      <section className="px-4">
-        <div className="max-w-4xl mx-auto space-y-8">
-          
-          {/* 1. Global Acceptance */}
-          <div className="group bg-white p-8 md:p-12 rounded-[3rem] border border-stone-200 shadow-sm hover:shadow-md transition-all">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 bg-stone-50 rounded-2xl flex items-center justify-center text-stone-900">
-                <Globe className="w-6 h-6" />
-              </div>
-              <h2 className="text-3xl font-black tracking-tight">1. Global Acceptance</h2>
-            </div>
-            <p className="text-lg text-stone-600 leading-relaxed font-medium">
-              By accessing RecipeoAI ("the Service"), operated by **Manish Singh**, you legally agree to be bound by these Terms. This agreement applies to all visitors, users, and others who access the Service worldwide. If you disagree with any part of the terms, you do not have permission to access the Service.
-            </p>
-          </div>
+      <main className="px-4">
+        <div className="mx-auto max-w-4xl space-y-8">
+          {sections.map((section, index) => {
+            const Icon = section.icon;
 
-          {/* 2. AI & Data Disclaimer */}
-          <div className="bg-white p-8 md:p-12 rounded-[3rem] border border-stone-200 shadow-sm">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-600">
-                <Zap className="w-6 h-6" />
-              </div>
-              <h2 className="text-3xl font-black tracking-tight">2. AI-Generated Output</h2>
-            </div>
-            <div className="space-y-6">
-              <p className="text-lg text-stone-600 leading-relaxed font-medium">
-                Our recipes are generated using advanced Artificial Intelligence. While highly optimized, the output is provided "as is" without warranty.
-              </p>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="p-6 bg-red-50 rounded-3xl border border-red-100">
-                  <h4 className="font-bold text-red-900 text-sm mb-2 flex items-center gap-2"><AlertCircle className="w-4 h-4"/> Safety First</h4>
-                  <p className="text-xs text-red-700 font-medium leading-relaxed">Always verify cooking temperatures and ingredient expiration. AI suggestions should never override food safety standards.</p>
+            return (
+              <section
+                key={section.id}
+                id={section.id}
+                className={`scroll-mt-24 rounded-3xl border p-6 shadow-sm md:p-10 ${
+                  section.highlight
+                    ? "border-orange-200 bg-orange-50"
+                    : "border-stone-200 bg-white"
+                }`}
+              >
+                <div className="mb-6 flex items-center gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-stone-100 bg-white text-orange-600">
+                    <Icon className="h-6 w-6" aria-hidden="true" />
+                  </div>
+
+                  <h2 className="text-xl font-black tracking-tight md:text-2xl">
+                    {index + 1}. {section.title}
+                  </h2>
                 </div>
-                <div className="p-6 bg-blue-50 rounded-3xl border border-blue-100">
-                  <h4 className="font-bold text-blue-900 text-sm mb-2 flex items-center gap-2"><BookOpen className="w-4 h-4"/> Not Professional Advice</h4>
-                  <p className="text-xs text-blue-700 font-medium leading-relaxed">RecipeoAI does not provide medical or nutritional certifications. Consult a dietitian for health-specific diets.</p>
+
+                <div className="space-y-4 text-base leading-relaxed text-stone-600">
+                  {section.body}
                 </div>
-              </div>
-            </div>
-          </div>
+              </section>
+            );
+          })}
 
-          {/* 3. ADVERTISING DISCLOSURE (CRITICAL FOR ADSENSE) */}
-          <div className="bg-orange-600 p-8 md:p-12 rounded-[3rem] text-white shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-12 opacity-10">
-              <DollarSign className="w-32 h-32" />
+          <section className="pt-8 text-center">
+            <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-stone-200 bg-white shadow-sm">
+              <Mail
+                className="h-6 w-6 text-orange-600"
+                aria-hidden="true"
+              />
             </div>
-            <div className="relative z-10">
-              <div className="flex items-center gap-4 mb-6">
-                <Eye className="w-10 h-10 text-orange-200" />
-                <h2 className="text-3xl font-black tracking-tight">3. Advertising Disclosure</h2>
-              </div>
-              <p className="text-xl font-medium opacity-90 leading-relaxed">
-                To keep our AI services free for the global community, RecipeoAI monetizes through **Google AdSense** and third-party advertising networks. We use cookies to personalize content and ads, analyze our traffic, and provide social media features. By using our platform, you acknowledge and agree to the presence of these advertisements.
-              </p>
-            </div>
-          </div>
 
-          {/* 4. Billing & Stripe */}
-          <div className="bg-stone-900 p-8 md:p-12 rounded-[3rem] text-stone-50 shadow-2xl">
-            <div className="flex items-center gap-4 mb-8">
-              <ShieldCheck className="w-10 h-10 text-orange-500" />
-              <h2 className="text-3xl font-black tracking-tight">4. Payments & Billing</h2>
-            </div>
-            <p className="text-stone-400 text-lg leading-relaxed mb-8">
-              Premium features (Head Chef Subscriptions) are processed through **Stripe**. We do not store your credit card information. All billing cycles are handled with enterprise-grade encryption.
+            <h2 className="mb-3 text-2xl font-black tracking-tight md:text-3xl">
+              Questions about these Terms?
+            </h2>
+
+            <p className="mx-auto mb-6 max-w-md text-stone-600">
+              Contact us if you have any questions about these Terms of
+              Service.
             </p>
-            <div className="flex items-center gap-4 pt-6 border-t border-stone-800">
-               <span className="text-[10px] font-black uppercase tracking-widest text-orange-600">Secure Protocol</span>
-               <div className="h-px grow bg-stone-800" />
-               <span className="text-[10px] font-black uppercase tracking-widest text-stone-500">256-Bit SSL</span>
+
+            <div className="flex flex-wrap justify-center gap-3 text-sm font-bold">
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="rounded-xl bg-stone-900 px-6 py-3 text-white transition-colors hover:bg-orange-600"
+              >
+                {CONTACT_EMAIL}
+              </a>
+
+              <Link
+                href="/contact"
+                className="rounded-xl border border-stone-300 bg-white px-6 py-3 transition-colors hover:border-orange-600 hover:text-orange-600"
+              >
+                Contact page
+              </Link>
+
+              <Link
+                href="/privacy"
+                className="rounded-xl border border-stone-300 bg-white px-6 py-3 transition-colors hover:border-orange-600 hover:text-orange-600"
+              >
+                Privacy Policy
+              </Link>
             </div>
-          </div>
-
-          {/* 5. Limitation of Liability */}
-          <div className="bg-white p-8 md:p-12 rounded-[3rem] border border-stone-200 shadow-sm">
-            <div className="flex items-center gap-4 mb-8">
-              <Scale className="w-10 h-10 text-stone-400" />
-              <h2 className="text-3xl font-black tracking-tight">5. Limitation of Liability</h2>
-            </div>
-            <p className="text-lg text-stone-600 leading-relaxed font-medium">
-              In no event shall **Manish Singh** or RecipeoAI be liable for any indirect, consequential, or incidental damages, including but not limited to health issues, kitchen accidents, or loss of data, arising out of your use or inability to use the Service. Use of AI recipes is entirely at your own risk.
-            </p>
-          </div>
-
-          {/* 6. Contact & Legal Inquiry */}
-          <div className="pt-20 text-center">
-            <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-sm border border-stone-100">
-              <Mail className="w-8 h-8 text-orange-600" />
-            </div>
-            <h2 className="text-4xl font-black mb-4 tracking-tighter">Legal Inquiries</h2>
-            <p className="text-stone-500 font-medium mb-10 max-w-sm mx-auto italic">If you have any questions about these Global Terms, please contact our legal desk.</p>
-            <a 
-              href="mailto:legal@recipeoai.com" 
-              className="inline-block bg-stone-900 text-white px-12 py-5 rounded-2xl font-black hover:bg-stone-800 transition-all active:scale-95 shadow-xl shadow-stone-200"
-            >
-              legal@recipeoai.com
-            </a>
-          </div>
-
+          </section>
         </div>
-      </section>
+      </main>
 
-      {/* --- COMPLIANCE FOOTER --- */}
-      <div className="mt-20 pt-10 border-t border-stone-200 flex flex-col items-center">
-        <div className="flex items-center gap-6 opacity-30 grayscale mb-6">
-           <span className="text-[10px] font-black uppercase tracking-widest">GDPR COMPLIANT</span>
-           <span className="text-[10px] font-black uppercase tracking-widest">CCPA READY</span>
-           <span className="text-[10px] font-black uppercase tracking-widest">DMCA PROTECTED</span>
-        </div>
-        <div className="text-[10px] uppercase tracking-[0.5em] font-black text-stone-300 italic">
-          RecipeoAI Governance Framework • Global Standards 2026
-        </div>
-      </div>
-
+      <footer className="mt-16 px-4 text-center text-xs text-stone-400">
+        © {new Date().getFullYear()} RecipeoAI. All rights reserved.
+      </footer>
     </div>
   );
 }
