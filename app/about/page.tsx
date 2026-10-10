@@ -1,32 +1,3 @@
-<<<<<<< HEAD
-import React from "react";
-import Link from "next/link";
-import {
-  Sparkles,
-  Globe,
-  ShieldCheck,
-  Code,
-  ChevronRight,
-  Target,
-  Camera,
-  BookOpen,
-  PenTool,
-  Fingerprint,
-  ChefHat,
-  Mail,
-  AlertTriangle,
-} from "lucide-react";
-
-export const metadata = {
-  title: "About Us | RecipeoAI",
-  description:
-    "RecipeoAI is an AI-powered recipe platform created by Manish Singh to help home cooks turn the ingredients they already have into meals and reduce food waste.",
-};
-
-const lastUpdated = "October 08, 2026";
-const CONTACT_EMAIL = "privacy@recipeoai.com"; // change to a general contact email if you have one
-=======
-
 import React from "react";
 import Link from "next/link";
 import {
@@ -53,43 +24,26 @@ export const metadata = {
 
 const lastUpdated = "October 09, 2026";
 const CONTACT_EMAIL = "privacy@recipeoai.com";
->>>>>>> cron-update
 
 const features = [
   {
     title: "AI Recipe Generator",
-<<<<<<< HEAD
-    desc: "Type the ingredients you have and get a recipe idea with steps, in seconds.",
-=======
     desc: "Enter the ingredients you have and discover recipe ideas for your next meal.",
->>>>>>> cron-update
     icon: ChefHat,
   },
   {
     title: "Pantry Scan",
-<<<<<<< HEAD
-    desc: "Upload a photo of your pantry or fridge and the AI suggests which food items it can see.",
-=======
     desc: "Upload a photo of your pantry or fridge to get AI-powered suggestions about visible food items.",
->>>>>>> cron-update
     icon: Camera,
   },
   {
     title: "Digital Cookbook",
-<<<<<<< HEAD
-    desc: "Save the recipes you like and come back to them any time after signing in.",
-=======
     desc: "Save the recipes you like and return to them whenever you need inspiration.",
->>>>>>> cron-update
     icon: BookOpen,
   },
   {
     title: "Food & Cooking Articles",
-<<<<<<< HEAD
-    desc: "Read guides, tips and recipe ideas on our blog about everyday home cooking.",
-=======
     desc: "Explore original articles written by Manish Singh, including practical cooking tips, food guides, and everyday kitchen advice.",
->>>>>>> cron-update
     icon: PenTool,
   },
 ];
@@ -116,25 +70,6 @@ export default function AboutPage() {
       <header className="pt-10 pb-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white shadow-sm border border-stone-200 rounded-full text-[11px] font-black mb-8 uppercase tracking-widest text-orange-600">
-<<<<<<< HEAD
-            <Sparkles className="w-3.5 h-3.5" /> About RecipeoAI
-          </div>
-          <h1 className="text-4xl md:text-7xl font-black mb-8 tracking-tighter leading-[0.95]">
-            Cook more with <br />
-            <span className="text-orange-600">what you already have.</span>
-          </h1>
-          <div className="border-t border-stone-200 pt-8 max-w-3xl">
-            <p className="text-lg md:text-xl text-stone-600 font-medium leading-relaxed">
-              RecipeoAI is an AI-powered recipe website created by{" "}
-              <strong className="text-stone-900">Manish Singh</strong>. It helps home
-              cooks turn leftover and everyday ingredients into real meals, so less food
-              gets wasted and dinner gets easier to plan.
-            </p>
-          </div>
-        </div>
-      </header>
-
-=======
             <Sparkles className="w-3.5 h-3.5" />
             About RecipeoAI
           </div>
@@ -158,7 +93,6 @@ export default function AboutPage() {
         </div>
       </header>
 
->>>>>>> cron-update
       <main className="px-4">
         <div className="max-w-6xl mx-auto space-y-16">
           {/* Story */}
@@ -170,27 +104,6 @@ export default function AboutPage() {
                   Why we built RecipeoAI
                 </h2>
               </div>
-<<<<<<< HEAD
-              <div className="space-y-4 text-stone-600 leading-relaxed text-base md:text-lg">
-                <p>
-                  Many of us open the fridge, see a few random ingredients and have no
-                  idea what to cook, so we order food or let ingredients go to waste.
-                  RecipeoAI was built to solve that everyday problem.
-                </p>
-                <p>
-                  You tell the site what you have, and it suggests a recipe you can
-                  actually make. Our goal is simple: make home cooking easier, less
-                  wasteful and more fun for everyone.
-                </p>
-              </div>
-            </div>
-            <div className="bg-white p-8 md:p-10 rounded-3xl border border-stone-200 shadow-sm flex flex-col justify-center">
-              <Globe className="w-10 h-10 text-orange-600 mb-6" />
-              <h3 className="text-2xl font-black mb-3">Made for home cooks</h3>
-              <p className="text-stone-600 leading-relaxed">
-                RecipeoAI is written in English and is free to browse for anyone who
-                loves cooking at home.
-=======
 
               <div className="space-y-4 text-stone-600 leading-relaxed text-base md:text-lg">
                 <p>
@@ -220,7 +133,6 @@ export default function AboutPage() {
                 RecipeoAI shares cooking information and recipe
                 inspiration for people who want to learn, explore, and
                 enjoy cooking at home.
->>>>>>> cron-update
               </p>
             </div>
           </section>
@@ -230,52 +142,6 @@ export default function AboutPage() {
             <h2 className="text-center text-3xl md:text-5xl font-black mb-12 tracking-tighter">
               What you can do here
             </h2>
-<<<<<<< HEAD
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {features.map((f) => (
-                <div
-                  key={f.title}
-                  className="bg-white p-8 rounded-3xl border border-stone-200 hover:shadow-lg transition-shadow"
-                >
-                  <div className="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-600 mb-5">
-                    <f.icon className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-lg font-bold mb-2">{f.title}</h3>
-                  <p className="text-stone-600 text-sm leading-relaxed">{f.desc}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* How content is made */}
-          <section className="bg-stone-100 rounded-3xl p-8 md:p-14 flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
-            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow shrink-0">
-              <PenTool className="w-7 h-7 text-orange-600" />
-            </div>
-            <div className="space-y-4">
-              <h2 className="text-2xl md:text-3xl font-black tracking-tight">
-                How our recipes and articles are created
-              </h2>
-              <p className="text-stone-600 leading-relaxed text-base md:text-lg">
-                We are open about using AI. Recipes on RecipeoAI are generated with
-                Google's Gemini AI model, and our blog articles are written with AI
-                assistance and then checked and edited by us for accuracy, clarity and
-                usefulness. If you spot a mistake in any recipe or article, please tell
-                us and we will correct it.
-              </p>
-            </div>
-          </section>
-
-          {/* Safety notice */}
-          <section className="bg-orange-50 border border-orange-200 rounded-3xl p-6 md:p-8 flex gap-4 items-start">
-            <AlertTriangle className="w-6 h-6 text-orange-600 shrink-0 mt-1" />
-            <div>
-              <h2 className="font-black text-lg mb-1">Please cook safely</h2>
-              <p className="text-stone-700 leading-relaxed">
-                AI-generated recipes are suggestions, not professional dietary or
-                medical advice. Always check ingredients for allergies, cook food
-                thoroughly and use your own judgement in the kitchen.
-=======
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {features.map((f) => (
@@ -355,7 +221,6 @@ export default function AboutPage() {
                 practices, and cook food thoroughly. For individual
                 dietary or medical concerns, consult a qualified
                 healthcare professional.
->>>>>>> cron-update
               </p>
             </div>
           </section>
@@ -364,22 +229,6 @@ export default function AboutPage() {
           <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="bg-white p-8 md:p-10 rounded-3xl border border-stone-200 shadow-sm">
               <Code className="w-9 h-9 text-orange-600 mb-5" />
-<<<<<<< HEAD
-              <h3 className="text-2xl font-black mb-3">Technology</h3>
-              <p className="text-stone-600 leading-relaxed">
-                RecipeoAI is built with Next.js for the website and Strapi as the
-                content management system. Recipe ideas and pantry photo recognition
-                are powered by Google's Gemini AI, and food images come from Unsplash.
-              </p>
-            </div>
-            <div className="bg-white p-8 md:p-10 rounded-3xl border border-stone-200 shadow-sm">
-              <Fingerprint className="w-9 h-9 text-blue-600 mb-5" />
-              <h3 className="text-2xl font-black mb-3">Your account and security</h3>
-              <p className="text-stone-600 leading-relaxed mb-4">
-                Sign-in is handled by Clerk, so we never store your password. We use
-                Arcjet to block bots and abuse so the site stays safe and fast.
-              </p>
-=======
 
               <h3 className="text-2xl font-black mb-3">
                 Technology
@@ -408,17 +257,12 @@ export default function AboutPage() {
                 more about how information is handled.
               </p>
 
->>>>>>> cron-update
               <Link
                 href="/privacy"
                 className="inline-flex items-center gap-2 text-sm font-bold text-orange-600 hover:underline"
               >
-<<<<<<< HEAD
-                <ShieldCheck className="w-4 h-4" /> Read our Privacy Policy
-=======
                 <ShieldCheck className="w-4 h-4" />
                 Read our Privacy Policy
->>>>>>> cron-update
               </Link>
             </div>
           </section>
@@ -431,16 +275,6 @@ export default function AboutPage() {
             >
               MS
             </div>
-<<<<<<< HEAD
-            <h2 className="font-black text-2xl">Manish Singh</h2>
-            <p className="text-orange-600 font-bold text-xs uppercase tracking-widest mb-4">
-              Founder & Developer
-            </p>
-            <p className="text-stone-600 leading-relaxed max-w-2xl mx-auto">
-              Manish designed, built and runs RecipeoAI. He believes technology is most
-              useful when it makes everyday things, like deciding what to cook,
-              simpler.
-=======
 
             <h2 className="font-black text-2xl">Manish Singh</h2>
 
@@ -454,7 +288,6 @@ export default function AboutPage() {
               accessible. He works on the website and writes its food
               and cooking articles to help readers find useful
               information for their kitchens.
->>>>>>> cron-update
             </p>
           </section>
 
@@ -463,14 +296,6 @@ export default function AboutPage() {
             <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center mx-auto mb-5 shadow-sm border border-stone-200">
               <Mail className="w-6 h-6 text-orange-600" />
             </div>
-<<<<<<< HEAD
-            <h2 className="text-2xl md:text-3xl font-black mb-3 tracking-tight">
-              Get in touch
-            </h2>
-            <p className="text-stone-600 mb-6">
-              Questions, feedback or a correction? We would love to hear from you.
-            </p>
-=======
 
             <h2 className="text-2xl md:text-3xl font-black mb-3 tracking-tight">
               Get in touch
@@ -481,7 +306,6 @@ export default function AboutPage() {
               love to hear from you.
             </p>
 
->>>>>>> cron-update
             <div className="flex flex-wrap justify-center gap-3 text-sm font-bold">
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
@@ -489,30 +313,21 @@ export default function AboutPage() {
               >
                 {CONTACT_EMAIL}
               </a>
-<<<<<<< HEAD
-=======
 
->>>>>>> cron-update
               <Link
                 href="/contact"
                 className="px-6 py-3 bg-white border border-stone-300 rounded-xl hover:border-orange-600 hover:text-orange-600 transition-colors"
               >
                 Contact page
               </Link>
-<<<<<<< HEAD
-=======
 
->>>>>>> cron-update
               <Link
                 href="/privacy"
                 className="px-6 py-3 bg-white border border-stone-300 rounded-xl hover:border-orange-600 hover:text-orange-600 transition-colors"
               >
                 Privacy Policy
               </Link>
-<<<<<<< HEAD
-=======
 
->>>>>>> cron-update
               <Link
                 href="/terms"
                 className="px-6 py-3 bg-white border border-stone-300 rounded-xl hover:border-orange-600 hover:text-orange-600 transition-colors"
