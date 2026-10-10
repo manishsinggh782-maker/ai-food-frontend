@@ -1,13 +1,7 @@
-<<<<<<< HEAD
-import React from "react";
-import Link from "next/link";
-=======
-
 import React from "react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
->>>>>>> cron-update
 import {
   Cookie,
   ShieldCheck,
@@ -23,38 +17,6 @@ import {
 export const metadata = {
   title: "Cookie Policy | RecipeoAI",
   description:
-<<<<<<< HEAD
-    "How RecipeoAI uses cookies and similar technologies, including essential, analytics and Google AdSense advertising cookies, and how you can manage or opt out.",
-};
-
-const lastUpdated = "October 08, 2026";
-const CONTACT_EMAIL = "privacy@recipeoai.com"; // change to your real contact email
-
-const cookieTable = [
-  {
-    category: "Essential",
-    purpose: "Sign-in, session management, security and bot protection.",
-    setBy: "RecipeoAI, Clerk, Arcjet",
-    duration: "Session to about 1 year",
-  },
-  {
-    category: "Preferences",
-    purpose: "Remember your settings so the site works the way you expect.",
-    setBy: "RecipeoAI",
-    duration: "Up to 1 year",
-  },
-  {
-    category: "Analytics",
-    purpose: "Understand which pages are used and how fast they load, so we can improve the site.",
-    setBy: "RecipeoAI and analytics providers",
-    duration: "Up to 2 years",
-  },
-  {
-    category: "Advertising",
-    purpose: "Show and measure ads, limit how often you see an ad, and (with consent where required) personalise ads.",
-    setBy: "Google AdSense and its partners",
-    duration: "Up to 13 months",
-=======
     "Read the RecipeoAI Cookie Policy to understand cookies, Google AdSense advertising, similar technologies, and the ways you can manage your cookie preferences.",
 };
 
@@ -96,22 +58,10 @@ const cookieTable: CookieCategory[] = [
       "Support ad delivery, frequency controls, measurement, and personalised advertising where permitted and applicable.",
     provider: "Google AdSense and relevant advertising partners",
     duration: "Depends on the cookie and provider",
->>>>>>> cron-update
   },
 ];
 
 const browserLinks = [
-<<<<<<< HEAD
-  { name: "Chrome", href: "https://support.google.com/chrome/answer/95647" },
-  { name: "Safari", href: "https://support.apple.com/guide/safari/manage-cookies-sfri11471/mac" },
-  { name: "Firefox", href: "https://support.mozilla.org/kb/enable-and-disable-cookies-website-preferences" },
-  { name: "Edge", href: "https://support.microsoft.com/microsoft-edge/delete-cookies-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" },
-];
-
-function ExtLink({ href, children, className = "text-orange-600 underline font-semibold hover:text-orange-700" }) {
-  return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
-=======
   {
     name: "Chrome",
     href: "https://support.google.com/chrome/answer/95647",
@@ -146,24 +96,11 @@ function ExtLink({
       rel="noopener noreferrer"
       className={className}
     >
->>>>>>> cron-update
       {children}
     </a>
   );
 }
 
-<<<<<<< HEAD
-function Card({ icon: Icon, title, children, tone = "bg-orange-50 text-orange-600" }) {
-  return (
-    <section className="bg-white p-6 md:p-10 rounded-3xl border border-stone-200 shadow-sm">
-      <div className="flex items-center gap-4 mb-6">
-        <div className={`w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center ${tone}`}>
-          <Icon className="w-6 h-6" />
-        </div>
-        <h2 className="text-xl md:text-2xl font-black tracking-tight">{title}</h2>
-      </div>
-      <div className="space-y-4 text-base text-stone-600 leading-relaxed">{children}</div>
-=======
 function Card({
   icon: Icon,
   title,
@@ -191,7 +128,6 @@ function Card({
       <div className="space-y-4 text-base text-stone-600 leading-relaxed">
         {children}
       </div>
->>>>>>> cron-update
     </section>
   );
 }
@@ -209,13 +145,9 @@ export default function CookiePolicyPage() {
         <Link href="/" className="hover:text-orange-600 transition-colors">
           Home
         </Link>
-<<<<<<< HEAD
-        <ChevronRight className="w-3 h-3" />
-=======
 
         <ChevronRight className="w-3 h-3" />
 
->>>>>>> cron-update
         <span className="text-stone-900">Cookie Policy</span>
       </nav>
 
@@ -223,23 +155,6 @@ export default function CookiePolicyPage() {
       <header className="pt-10 pb-14 px-4">
         <div className="max-w-5xl mx-auto">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white shadow-sm border border-stone-200 rounded-full text-[11px] font-black mb-6 uppercase tracking-widest text-orange-600">
-<<<<<<< HEAD
-            <Cookie className="w-3.5 h-3.5" /> Cookies
-          </div>
-          <h1 className="text-4xl md:text-7xl font-black mb-6 tracking-tighter leading-[0.95]">
-            Cookie <span className="text-orange-600">Policy</span>
-          </h1>
-          <div className="flex flex-col md:flex-row md:items-end gap-6 justify-between border-t border-stone-200 pt-6">
-            <p className="text-lg text-stone-500 font-medium max-w-2xl leading-relaxed">
-              This page explains how RecipeoAI uses cookies and similar technologies, and
-              how you can control them.
-            </p>
-            <div className="flex flex-col">
-              <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">
-                Last Updated
-              </span>
-              <span className="text-lg font-black text-stone-900">{lastUpdated}</span>
-=======
             <Cookie className="w-3.5 h-3.5" />
             Cookies
           </div>
@@ -262,7 +177,6 @@ export default function CookiePolicyPage() {
               <span className="text-lg font-black text-stone-900">
                 {lastUpdated}
               </span>
->>>>>>> cron-update
             </div>
           </div>
         </div>
@@ -270,21 +184,6 @@ export default function CookiePolicyPage() {
 
       <main className="px-4">
         <div className="max-w-4xl mx-auto space-y-8">
-<<<<<<< HEAD
-          {/* 1 */}
-          <Card icon={Info} title="1. What are cookies?">
-            <p>
-              Cookies are small text files that a website stores on your device. They let
-              a site recognise your browser, keep you signed in, remember settings, measure
-              how the site is used, and show advertising. We also use similar technologies
-              such as local storage and pixels, and we refer to all of them as "cookies"
-              on this page.
-            </p>
-          </Card>
-
-          {/* 2 */}
-          <Card icon={SlidersHorizontal} title="2. Cookies we use" tone="bg-blue-50 text-blue-600">
-=======
           {/* 1. What are cookies? */}
           <Card icon={Info} title="1. What are cookies?">
             <p>
@@ -315,25 +214,10 @@ export default function CookiePolicyPage() {
               your settings, and your location.
             </p>
 
->>>>>>> cron-update
             <div className="overflow-x-auto -mx-2 px-2">
               <table className="w-full text-sm text-left border-collapse min-w-[560px]">
                 <thead>
                   <tr className="border-b border-stone-200 text-stone-900">
-<<<<<<< HEAD
-                    <th className="py-3 pr-4 font-black">Category</th>
-                    <th className="py-3 pr-4 font-black">Purpose</th>
-                    <th className="py-3 pr-4 font-black">Set by</th>
-                    <th className="py-3 font-black">Typical duration</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {cookieTable.map((row) => (
-                    <tr key={row.category} className="border-b border-stone-100 align-top">
-                      <td className="py-3 pr-4 font-bold text-stone-900">{row.category}</td>
-                      <td className="py-3 pr-4">{row.purpose}</td>
-                      <td className="py-3 pr-4">{row.setBy}</td>
-=======
                     <th scope="col" className="py-3 pr-4 font-black">
                       Category
                     </th>
@@ -360,33 +244,12 @@ export default function CookiePolicyPage() {
                       </td>
                       <td className="py-3 pr-4">{row.purpose}</td>
                       <td className="py-3 pr-4">{row.provider}</td>
->>>>>>> cron-update
                       <td className="py-3">{row.duration}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-<<<<<<< HEAD
-            <div className="grid md:grid-cols-2 gap-4 pt-2">
-              <div className="p-5 bg-stone-50 rounded-2xl border border-stone-100">
-                <div className="flex items-center gap-2 font-black text-stone-900 mb-2">
-                  <ShieldCheck className="w-4 h-4 text-orange-600" /> Essential cookies
-                </div>
-                <p className="text-sm">
-                  Needed for secure sign-in (handled by Clerk) and to protect the site from
-                  bots and abuse (Arcjet). The site cannot work safely without them, so they
-                  cannot be switched off.
-                </p>
-              </div>
-              <div className="p-5 bg-stone-50 rounded-2xl border border-stone-100">
-                <div className="flex items-center gap-2 font-black text-stone-900 mb-2">
-                  <BarChart className="w-4 h-4 text-blue-600" /> Analytics cookies
-                </div>
-                <p className="text-sm">
-                  Help us see which pages are useful and where the site is slow, so we can
-                  fix problems and improve it.
-=======
 
             <div className="grid md:grid-cols-2 gap-4 pt-2">
               <div className="p-5 bg-stone-50 rounded-2xl border border-stone-100">
@@ -412,107 +275,22 @@ export default function CookiePolicyPage() {
                   If analytics tools are enabled, they may help us understand
                   how visitors use the website, identify technical problems,
                   and improve website performance.
->>>>>>> cron-update
                 </p>
               </div>
             </div>
           </Card>
 
-<<<<<<< HEAD
-          {/* 3 Advertising */}
-=======
           {/* 3. Advertising */}
->>>>>>> cron-update
           <section className="bg-orange-50 p-6 md:p-10 rounded-3xl border border-orange-200 shadow-sm">
             <div className="flex items-center gap-4 mb-6">
               <div className="w-12 h-12 shrink-0 bg-white rounded-2xl flex items-center justify-center text-orange-600 border border-orange-100">
                 <Target className="w-6 h-6" />
               </div>
-<<<<<<< HEAD
-=======
 
->>>>>>> cron-update
               <h2 className="text-xl md:text-2xl font-black tracking-tight">
                 3. Advertising and Google AdSense
               </h2>
             </div>
-<<<<<<< HEAD
-            <div className="space-y-4 text-base text-stone-700 leading-relaxed">
-              <p>
-                RecipeoAI is free to browse and is supported by advertising. We use Google
-                AdSense, and other third-party vendors may also show ads on our site.
-              </p>
-              <ul className="list-disc pl-6 space-y-2">
-                <li>
-                  Third-party vendors, including Google, use cookies to serve ads based on a
-                  visitor's prior visits to RecipeoAI or to other websites.
-                </li>
-                <li>
-                  Google's use of advertising cookies enables it and its partners to serve
-                  ads to our visitors based on their visit to our site and/or other sites
-                  on the Internet.
-                </li>
-                <li>
-                  Visitors in the European Economic Area, the United Kingdom and
-                  Switzerland are asked for consent before personalised advertising cookies
-                  are used, and can change their choice at any time.
-                </li>
-                <li>
-                  Without personalised advertising you may still see ads, but they will
-                  not be based on your interests.
-                </li>
-              </ul>
-              <p>
-                Learn more about how Google uses information from sites that use its
-                services at{" "}
-                <ExtLink href="https://policies.google.com/technologies/partner-sites">
-                  policies.google.com/technologies/partner-sites
-                </ExtLink>
-                . See also our{" "}
-                <Link href="/privacy#cookies-advertising" className="text-orange-600 underline font-semibold">
-                  Privacy Policy
-                </Link>
-                .
-              </p>
-            </div>
-          </section>
-
-          {/* 4 Manage */}
-          <Card icon={Settings} title="4. How to manage or opt out" tone="bg-stone-100 text-stone-700">
-            <p>You can control cookies in several ways:</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                <strong className="text-stone-900">Consent banner:</strong> where shown,
-                use it to accept or reject non-essential cookies, and to change your choice
-                later.
-              </li>
-              <li>
-                <strong className="text-stone-900">Google Ads Settings:</strong> turn
-                personalised ads off at{" "}
-                <ExtLink href="https://adssettings.google.com">adssettings.google.com</ExtLink>.
-              </li>
-              <li>
-                <strong className="text-stone-900">Industry opt-outs:</strong>{" "}
-                <ExtLink href="https://www.aboutads.info">aboutads.info</ExtLink> (US),{" "}
-                <ExtLink href="https://www.youronlinechoices.com">youronlinechoices.com</ExtLink>{" "}
-                (EU/UK) and{" "}
-                <ExtLink href="https://optout.networkadvertising.org">optout.networkadvertising.org</ExtLink>.
-              </li>
-              <li>
-                <strong className="text-stone-900">Your browser:</strong> you can block or
-                delete cookies in your browser settings. If you block essential cookies,
-                sign-in and some features will stop working.
-              </li>
-            </ul>
-            <div className="flex flex-wrap gap-3 pt-2">
-              {browserLinks.map((b) => (
-                <ExtLink
-                  key={b.name}
-                  href={b.href}
-                  className="px-4 py-2 bg-stone-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-orange-600 transition-colors"
-                >
-                  {b.name}
-=======
 
             <div className="space-y-4 text-base text-stone-700 leading-relaxed">
               <p>
@@ -643,20 +421,11 @@ export default function CookiePolicyPage() {
                   className="px-4 py-2 bg-stone-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-orange-600 transition-colors"
                 >
                   {browser.name}
->>>>>>> cron-update
                 </ExtLink>
               ))}
             </div>
           </Card>
 
-<<<<<<< HEAD
-          {/* 5 Changes */}
-          <Card icon={Info} title="5. Changes to this policy" tone="bg-stone-100 text-stone-700">
-            <p>
-              We may update this Cookie Policy when we change the cookies we use or when
-              the law changes. The new version will be posted here with a new "Last
-              Updated" date.
-=======
           {/* 5. Third-party services */}
           <Card
             icon={ShieldCheck}
@@ -712,7 +481,6 @@ export default function CookiePolicyPage() {
               third-party services, or applicable requirements change.
               Updates will be published on this page with a revised
               &quot;Last Updated&quot; date.
->>>>>>> cron-update
             </p>
           </Card>
 
@@ -721,12 +489,6 @@ export default function CookiePolicyPage() {
             <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center mx-auto mb-5 shadow-sm border border-stone-200">
               <Mail className="w-6 h-6 text-orange-600" />
             </div>
-<<<<<<< HEAD
-            <h2 className="text-2xl md:text-3xl font-black mb-3 tracking-tight">
-              Questions about cookies?
-            </h2>
-            <p className="text-stone-600 mb-6">Email us and we will be happy to help.</p>
-=======
 
             <h2 className="text-2xl md:text-3xl font-black mb-3 tracking-tight">
               Questions about cookies?
@@ -737,7 +499,6 @@ export default function CookiePolicyPage() {
               please contact us.
             </p>
 
->>>>>>> cron-update
             <div className="flex flex-wrap justify-center gap-3 text-sm font-bold">
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
@@ -745,28 +506,20 @@ export default function CookiePolicyPage() {
               >
                 {CONTACT_EMAIL}
               </a>
-<<<<<<< HEAD
-=======
 
->>>>>>> cron-update
               <Link
                 href="/privacy"
                 className="px-6 py-3 bg-white border border-stone-300 rounded-xl hover:border-orange-600 hover:text-orange-600 transition-colors"
               >
                 Privacy Policy
               </Link>
-<<<<<<< HEAD
-=======
 
->>>>>>> cron-update
               <Link
                 href="/terms"
                 className="px-6 py-3 bg-white border border-stone-300 rounded-xl hover:border-orange-600 hover:text-orange-600 transition-colors"
               >
                 Terms of Service
               </Link>
-<<<<<<< HEAD
-=======
 
               <Link
                 href="/contact"
@@ -774,7 +527,6 @@ export default function CookiePolicyPage() {
               >
                 Contact page
               </Link>
->>>>>>> cron-update
             </div>
           </section>
         </div>
